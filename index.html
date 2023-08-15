@@ -19,24 +19,102 @@
     <h1>Admir Selimovic</h1>
 
     <p>
-        $$
-        \mathbf{a} \mathbf{b}^T = \mathbf{a}_{(n \times 1)} \mathbf{b}^T_{(1 \times n)}
-        =
-        \left(\begin{smallmatrix}
-        a_1 \\ 
-        a_2 \\ 
-        \vdots \\ a_n
-        \end{smallmatrix}\right)\left
-        (\begin{smallmatrix}
-        b_1 & b_2 & \cdots & b_n
-        \end{smallmatrix}\right)
-        =
-        \left(\begin{smallmatrix}
-        a_1 b_1 & a_1 b_2 & \ldots & a_1 b_n \\ 
-        a_2 b_1 & a_2 b_2 & \ldots & a_2 b_n \\ 
-        \vdots & \vdots & \ddots & \vdots \\ 
-        a_n b_1 & a_n b_2 & \cdots & a_n b_{b n}\end{smallmatrix}\right)
-        $$
+        In complex analysis, the exponential function $e^{i\theta}$ represents a counterclockwise rotation by an angle of $\theta$ in the complex plane. 
+To determine the rotation matrix for $\operatorname{Re}(e^{i \theta})$ and $\operatorname{Im}(e^{i \theta})$, we can use the Euler's formula for complex exponential:
+$$e^{i \theta} = \cos(\theta) + i\sin(\theta).$$
+
+The real part of $e^{i \theta}$ is $\operatorname{Re}(e^{i \theta}) = \cos(\theta)$, and the imaginary part is $\operatorname{Im}(e^{i \theta}) = \sin(\theta)$.
+
+Now, let's consider the rotation matrix in two dimensions, $\mathbf{R}(\theta)$. This matrix represents a counterclockwise rotation by an angle of $\theta$. It can be written as:
+$$
+\mathbf{R}(\theta) = 
+\left(\begin{smallmatrix} \cos(\theta) & -\sin(\theta) \\ \sin(\theta) & \cos(\theta) \end{smallmatrix}\right).
+$$
+
+Applying this matrix to a vector in the plane will result in a rotation of the vector by the given angle. Both $\operatorname{Re}(e^{i \theta})$ and $\operatorname{Im}(e^{i \theta})$ can be rotated using the same rotation matrix $\mathbf{R}(\theta) = \mathbf{R}(\theta)^{Re} = \mathbf{R}(\theta)^{Im}$, as they are both components of the complex exponential function $e^{i \theta}$.
+
+The complex conjugate of $e^{i\theta}$, which is $e^{-i\theta}$, represents a clockwise rotation by an angle of $\theta$ in the complex plane. The associated rotation matrix is the transpose of the rotation matrix for $e^{i\theta}$:
+$$
+\mathbf{R}(\theta)^{-1} =
+\left(
+\begin{smallmatrix}
+\cos \theta & \sin \theta \\
+-\sin \theta & \cos \theta
+\end{smallmatrix}\right).
+$$
+
+Thus, the difference between the rotation matrices for $e^{i\theta}$ and $e^{-i\theta}$ is a reflection about the main diagonal, which changes the sign of the off-diagonal elements.
+
+Let us go through an example of applying a rotation by an angle \(l\theta\) to the decomposed \(e^{i l\alpha}\) into its real and imaginary parts.
+
+Given the rotation matrix and the decomposed complex number:
+$$ 
+\mathbf{R}({l\theta})^{+1} = 
+\left(\begin{smallmatrix}
+\cos(l\theta) & -\sin( \theta) \\
+\sin(l\theta) & \cos(l\theta) \\
+\end{smallmatrix}\right)
+\quad \quad
+Y(e^{i l\alpha}) = 
+\left(\begin{smallmatrix}
+\cos(l\alpha) \\
+\sin(l\alpha) \\
+\end{smallmatrix}\right)
+$$
+
+To apply the rotation matrix to the decomposed complex number, we perform the matrix multiplication:
+$$
+\mathbf{R}({l\theta})^{+1} Y(e^{i l\alpha})
+= 
+\left(\begin{smallmatrix}
+\cos(l\theta) & -\sin(l\theta) \\
+\sin(l\theta) & \cos(l\theta)
+\end{smallmatrix}\right)
+\left(\begin{smallmatrix}
+\cos(l\alpha) \\
+\sin(l\alpha)
+\end{smallmatrix}\right)
+=
+\left(\begin{smallmatrix}
+\cos(l\theta)\cos(2\alpha) - \sin(l\theta)\sin(l\alpha) \\
+\sin(l\theta)\cos(2\alpha) + \cos(l\theta)\sin(l\alpha) \\
+\end{smallmatrix}\right)
+$$
+
+The expression can be further simplified by using trigonometric identities for the sum of angles. We can apply the following trigonometric identities: 
+\begin{align*}
+\cos(\alpha + \beta) &= \cos(\alpha)\cos(\beta) - \sin(\alpha)\sin(\beta) \\
+\sin(\alpha + \beta) &= \sin(\alpha)\cos(\beta) + \cos(\alpha)\sin(\beta)
+\end{align*}
+
+Using these identities, we can simplify the expression:
+$$
+\mathbf{R}({l \theta})^{+1} Y(e^{i l \alpha})
+= 
+\left(\begin{smallmatrix}
+\cos(l\theta + l\alpha) \\
+\sin(l\theta + l\alpha)
+\end{smallmatrix}\right) 
+=
+\left(\begin{smallmatrix}
+\cos(l(\theta + \alpha)) \\
+\sin(l(\theta + \alpha))
+\end{smallmatrix}\right)
+$$
+This represents the real and imaginary parts of the rotated complex number $e^{i l \alpha}$ after applying the rotation matrix $\mathbf{R}({l\theta})^{+1}$.
+
+Let us revisit the concept of steerable basis functions. In practical applications, we often work with real-valued functions. It is worth noting that the real and imaginary parts of the basis functions correspond to $\cos(l \alpha)$ and $\sin(l \alpha)$, respectively. To simplify our computations, we can stack these real and imaginary parts together.
+
+Having stacked the real an imaginary part, the representation matrix turns into its real-valued equivalent. Now, we have blocks of $2 \times 2$ matrices stacked diagonally, each one being an equivalent of a complex representation. For instance,
+$$
+\rho_l(\theta) = e^{-i l \theta} =
+\left(\begin{smallmatrix}
+\cos \theta & \sin \theta \\
+-\sin \theta & \cos \theta
+\end{smallmatrix}\right)
+$$
+Each of the $2 \times 2$ representations act on the corresponding subspace of the basis function. This creates the block diagonal form of the representation matrix. The representation $\rho(\mathbf{R}(\theta)^{\pm 1})$ is thus matrix-valued.
+
     </p>
 </body>
 </html>
