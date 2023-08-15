@@ -4,9 +4,39 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$']]
+          }
+        };
+      </script>
 </head>
 <body>
     <h1>Admir Selimovic</h1>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa neque nostrum magnam veritatis assumenda molestias vero quaerat nemo officiis voluptatibus, sunt, fugiat ut distinctio aliquam praesentium unde quisquam. Accusamus, exercitationem.</p>
+
+    <p>
+        $$
+        \mathbf{a} \mathbf{b}^T = \mathbf{a}_{(n \times 1)} \mathbf{b}^T_{(1 \times n)}
+        =
+        \left(\begin{smallmatrix}
+        a_1 \\ 
+        a_2 \\ 
+        \vdots \\ a_n
+        \end{smallmatrix}\right)\left
+        (\begin{smallmatrix}
+        b_1 & b_2 & \cdots & b_n
+        \end{smallmatrix}\right)
+        =
+        \left(\begin{smallmatrix}
+        a_1 b_1 & a_1 b_2 & \ldots & a_1 b_n \\ 
+        a_2 b_1 & a_2 b_2 & \ldots & a_2 b_n \\ 
+        \vdots & \vdots & \ddots & \vdots \\ 
+        a_n b_1 & a_n b_2 & \cdots & a_n b_{b n}\end{smallmatrix}\right)
+        $$
+    </p>
 </body>
 </html>
