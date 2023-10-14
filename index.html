@@ -16,10 +16,15 @@
         }
         
         .article {
-            flex: 0 0 calc(50% - 10px); /* This will ensure that each article takes up half the width of the container minus 10px */
+            flex: 0 0 calc(50% - 10px);
             max-width: calc(50% - 10px);
             margin-bottom: 20px;
+            margin-right: 20px; /* Add some spacing between articles */
             transition: transform 0.3s ease;
+        }
+        
+        .article:nth-child(2n) {
+            margin-right: 0; /* Remove margin-right for every second article */
         }
 
         .article a {
@@ -72,6 +77,7 @@
                 <div class="article-title">Article 2 Title</div>
             </a>
         </div>
+    </div>
 
     <div class="container">
         <!-- Article 3 -->
