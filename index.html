@@ -16,15 +16,15 @@
         }
         
         .article {
-            flex: 0 0 calc(50% - 10px);
-            max-width: calc(50% - 10px);
+            flex: 0 0 calc(33.33% - 20px); /* Assuming 20px gap between articles */
+            max-width: calc(33.33% - 20px);
             margin-bottom: 20px;
-            margin-right: 20px; /* Add some spacing between articles */
+            margin-right: 20px; /* Spacing between articles */
             transition: transform 0.3s ease;
         }
-        
-        .article:nth-child(2n) {
-            margin-right: 0; /* Remove margin-right for every second article */
+
+        .article:nth-child(3n) {
+            margin-right: 0;
         }
 
         .article a {
@@ -77,7 +77,6 @@
                 <div class="article-title">Article 2 Title</div>
             </a>
         </div>
-    </div>
 
     <div class="container">
         <!-- Article 3 -->
@@ -87,7 +86,8 @@
                 <div class="article-title">Representation Stability under 3D Rotations in Equivariant and Nonequivariant MPNNs</div>
             </a>
         </div>
-
+    </div>
+        
         <!-- Article 4 -->
         <div class="article">
             <a href="article4.html">
