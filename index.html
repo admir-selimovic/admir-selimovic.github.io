@@ -16,14 +16,12 @@
         }
         
         .article {
-            flex-basis: calc(33.33% - 10px);  
-            max-width: calc(33.33% - 10px);   
-            width: 100%;  /* Ensure it takes full width */
-            text-align: center;  /* Center inline or inline-block children */
+            flex: 0 0 calc(50% - 10px); /* This will ensure that each article takes up half the width of the container minus 10px */
+            max-width: calc(50% - 10px);
             margin-bottom: 20px;
             transition: transform 0.3s ease;
         }
-        
+
         .article a {
             display: block;
             margin: 0;
