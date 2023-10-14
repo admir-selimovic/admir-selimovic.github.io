@@ -157,16 +157,16 @@
             counter-reset: figure-counter; /* Initializes the counter */
         }
 
-        @media screen and (max-width: 768px) {  /* adjust 768px if needed */
-            .article-content {
-                font-size: 0.6em;  /* adjust this to the desired size for mobile */
-            }
-        }
-        
         .article-content p {
             margin-bottom: 20px;
             text-align: justify;
             font-size: 22px;
+        }
+
+        @media screen and (max-width: 768px) {  /* adjust 768px if needed */
+            .article-content p {
+                font-size: 0.9em;  /* adjust this to the desired size for mobile */
+            }
         }
 
         .article-content, .article-content h3, .article-content h4 {
