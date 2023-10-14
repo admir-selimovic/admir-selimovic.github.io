@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Research Blog</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 2em;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .article {
+            flex: 0 0 calc(33.33% - 10px); /* Three articles per row, 10px gap */
+            margin-bottom: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            transition: transform 0.2s;
+        }
+
+        .article:hover {
+            transform: scale(1.02);
+        }
+
+        .article img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .article-title {
+            padding: 15px;
+            text-align: center;
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Welcome to My Research Blog</h1>
+
+    <div class="container">
+        <!-- Article 1 -->
+        <div class="article">
+            <a href="article1.html">
+                <img src="path/to/image1.jpg" alt="Article 1 image">
+                <div class="article-title">Article 1 Title</div>
+            </a>
+        </div>
+
+        <!-- Article 2 -->
+        <div class="article">
+            <a href="article2.html">
+                <img src="path/to/image2.jpg" alt="Article 2 image">
+                <div class="article-title">Article 2 Title</div>
+            </a>
+        </div>
+
+        <!-- Add more articles in similar fashion -->
+    </div>
+
+</body>
+
+</html>
