@@ -355,35 +355,38 @@
           
 <div class="tikzjax_inline">
 \begin{tikzpicture}
-    \foreach \i in {1,...,4} {
-      \coordinate (\i) at (90*\i:1);
-      \fill (\i) circle (0.02);
-    }
-    \path[fill=black,opacity=0.05] (1) -- (2)  -- (3) -- (4) -- cycle;
-    \draw (1) -- (2) -- (3) -- (4) -- cycle;
+\def \n {4}
+\def \radius {1}
+\def \circradius {0.02}
+\def \opacity {0.05}
+\def \stealthscale {1.5}
+\def \bend {30}
 
-    % nodes-to-edges messages
-    \draw[-{Stealth[scale=1.5]},bend right=30] (1) to node[pos=0.5,right] {} (-0.5,0.5);
-    \draw[-{Stealth[scale=1.5]},bend left=30] (1) to node[pos=0.5,right] {} (0.5,0.5);
+\foreach \i in {1,...,\n} {
+  \coordinate (\i) at (90*\i:\radius);
+  \fill (\i) circle (\circradius);
+}
+\path[fill=black,opacity=\opacity] (1) -- (2)  -- (3) -- (4) -- cycle;
+\draw (1) -- (2) -- (3) -- (4) -- cycle;
 
-    \draw[-{Stealth[scale=1.5]},bend left=30] (2) to node[pos=0.5,right] {} (-0.5,0.5);
-    \draw[-{Stealth[scale=1.5]},bend right=30] (2) to node[pos=0.5,right] {} (-0.5,-0.5);
+% nodes-to-edges messages
+\draw[-{>},bend right=\bend] (1) to node[pos=0.5,right] {} (-0.5,0.5);
+\draw[-{>},bend left=\bend] (1) to node[pos=0.5,right] {} (0.5,0.5);
 
-    \draw[-{Stealth[scale=1.5]},bend left=30] (3) to node[pos=0.5,right] {} (-0.5,-0.5);
-    \draw[-{Stealth[scale=1.5]},bend right=30] (3) to node[pos=0.5,right] {} (0.5,-0.5);
+\draw[-{>},bend left=\bend] (2) to node[pos=0.5,right] {} (-0.5,0.5);
+\draw[-{>},bend right=\bend] (2) to node[pos=0.5,right] {} (-0.5,-0.5);
 
-    \draw[-{Stealth[scale=1.5]},bend left=30] (4) to node[pos=0.5,right] {} (0.5,-0.5);
-    \draw[-{Stealth[scale=1.5]},bend right=30] (4) to node[pos=0.5,right] {} (0.5,0.5);
+\draw[-{>},bend left=\bend] (3) to node[pos=0.5,right] {} (-0.5,-0.5);
+\draw[-{>},bend right=\bend] (3) to node[pos=0.5,right] {} (0.5,-0.5);
 
-    % edges-to-faces messages
-    \draw[-{Stealth[scale=1.5]},bend right=30] (-0.5,0.5) to node[pos=0.5,right] {} (-0.1,0.1);
+\draw[-{>},bend left=\bend] (4) to node[pos=0.5,right] {} (0.5,-0.5);
+\draw[-{>},bend right=\bend] (4) to node[pos=0.5,right] {} (0.5,0.5);
 
-    \draw[-{Stealth[scale=1.5]},bend right=30] (0.5,0.5) to node[pos=0.5,right] {} (0.1,0.1);
-
-    \draw[-{Stealth[scale=1.5]},bend right=30] (0.5,-0.5) to node[pos=0.5,right] {} (0.1,-0.1);
-
-    \draw[-{Stealth[scale=1.5]},bend right=30] (-0.5,-0.5) to node[pos=0.5,right] {} (-0.1,-0.1);
-    
+% edges-to-faces messages
+\draw[-{>},bend right=\bend] (-0.5,0.5) to node[pos=0.5,right] {} (-0.1,0.1);
+\draw[-{>},bend right=\bend] (0.5,0.5) to node[pos=0.5,right] {} (0.1,0.1);
+\draw[-{>},bend right=\bend] (0.5,-0.5) to node[pos=0.5,right] {} (0.1,-0.1);
+\draw[-{>},bend right=\bend] (-0.5,-0.5) to node[pos=0.5,right] {} (-0.1,-0.1);
 \end{tikzpicture}
 </div>
 
