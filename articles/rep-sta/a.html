@@ -181,22 +181,33 @@
 
         th {
             text-align: left;
-            border-bottom: 1pt solid black; /* Thick line after the header */
-            padding: 8px;  /* Padding around cell content */
+            padding: 8px;
         }
         
         td {
             text-align: left;
-            padding: 8px;  /* Padding around cell content */
+            padding: 8px;
         }
         
-        tr:not(:last-child) {
-            border-bottom: 1px solid black; /* Regular lines between rows */
+        /* Thick line above the header */
+        thead tr:first-child {
+            border-top: 1pt solid black;
         }
         
-        tr:last-child {
-            border-bottom: 1pt solid black; /* Thick line at the bottom */
-        }        
+        /* Thin line below the header */
+        thead tr:last-child {
+            border-bottom: 1px solid black;
+        }
+        
+        /* Regular lines between rows of the body */
+        tbody tr:not(:last-child) {
+            border-bottom: 1px solid black;
+        }
+        
+        /* Thick line at the bottom of the table */
+        tbody tr:last-child {
+            border-bottom: 1pt solid black;
+        }      
 
         table + figcaption::before {
             content: "Table " counter(table-counter) ": ";
@@ -391,7 +402,7 @@
                 </tbody>
             </table>
             <figcaption>
-                Comparison of feature stability under rotation across message passing model variants. ACC (a): validation accuracy; ACC (b): Random rotation test accuracy.
+                Comparison of feature stability under rotation across message passing model variants. ACC (a): validation accuracy; ACC (b): random rotation test accuracy.
             </figcaption>
         </figure>
 
