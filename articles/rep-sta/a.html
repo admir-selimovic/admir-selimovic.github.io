@@ -222,8 +222,7 @@
 
     <div class="article-container">
         <div class="article-content">
-            
-
+        
         <div align="center"> 
           <img src="assets/rep-sta.gif">
         </div>
@@ -258,13 +257,12 @@
         $\mathbf{h}_i^{\prime}=\phi_h \left(\mathbf{h}_i, \sum_{j \in N_i} \mathbf{m}_{i j}\right)$, where $\phi_h$ is a node update function imlemented as an MLP, whose input are the current node features $\mathbf{h}_i$ and the aggregated message $\mathbf{m}_i$.
         
         
+        <h3>Readout</h3>
         
-        \paragraph{Readout}
         We perform a graph-level classification task on the dataset. To obtain a graph-level embedding, we apply a permutation-invariant aggregation of all the nodes' features: $\hat{y} = \sum_{v \in V}(\{\mathbf{h}^T_v\})$, where $T$ denotes the step after the last message passing layer.
-        
-        
-        \subsubsection*{Dataset and input representation}
-        
+
+            
+        <h3>Dataset and input representation</h3>
         
         ModelNet10 dataset \autocite{wu2015} contains 4,899 3D models (meshes) representing an object from 10 classes. We processed the meshes to form graphs embedded in $\mathbb{R}^3$. 
         %We normalised mesh vertex positions to $\{-1,1\}$. 
@@ -275,15 +273,15 @@
         Each graph is assigned a one-dimensional feature vector representing the object class.
         
         We sampled 3.991 graphs for training and 908 for validation.
-        
-        \subsubsection*{Training}
-         Batch size is set to 64; the number of message-passing layers to 2; the number of hidden features to 256; and the learning rate to $3e^{-4}$. Number of epochs is set to 50. SGD uses the ADAM optimiser. Parameter total is 923 K (Method A) and 1.1 M (Method B).
-        
-        
-        
-        \subsubsection*{Results}
+
+            
+        <h3>Training</h3>
+            
+        Batch size is set to 64; the number of message-passing layers to 2; the number of hidden features to 256; and the learning rate to $3e^{-4}$. Number of epochs is set to 50. SGD uses the ADAM optimiser. Parameter total is 923 K (Method A) and 1.1 M (Method B).
         
         
+        <h3>Results</h3>
+
         Method A that does not use edge attributes ($\mathbf{a}_{ij} = \emptyset$) and therefore, it disregards any information the edges may carry, beyond connectivity. It is ignorant of the geometric structure between the nodes and its message passing scheme utilises the node feature vectors. Applying different rotations to the input graph gives the same latent representations. 
         
         Another model following the Method A has the geometric quantity of Euclidean distance injected into the edge attributes, $\mathbf{a}_{ij} = \|\mathbf{r}_{ij}\|^2$.
