@@ -369,192 +369,844 @@
           forward pass comprises two phases: the message passing phase and the
           readout phase.
 
-          <h3>Message passing</h3>
 
-          Consider two nodes $v_i$ and $v_j$, their latent features
-          $\mathbf{h}_i$ and $\mathbf{h}_j$, and the attributes
-          $\mathbf{a}_{ij}$ of the edge that connects them. We update the node
-          features by first computing a message $\mathbf{m}_{ij}$ from $v_j$ to
-          $v_i$. The message function is expressed as: $$\mathbf{m}_{i
-          j}=\phi_m\left(\mathbf{h}_i, \mathbf{h}_j, \mathbf{a}_{i j}\right) ,$$
-          whereby, in Method B, the message function is extended such that,
-          aside the edge attribute, it involves the Euclidean distance:
-          $$\mathbf{m}_{ij}=\phi_m(\mathbf{h}_i,
-          \mathbf{h}_j,||\mathbf{r}_{ij}||^2, a_{i j}).$$ However, for the
-          purposes of this experiment, we will disregard the scalar attribute
-          $a_{i j}$. The message update function $\phi_m$ is directly
-          parameterised by an MLP, i.e., it does not output a matrix that is
-          used to linearly transform the node features but directly computes
-          messages in a nonlinear way. Thus, the messages are nonlinear
-          transformations conditioned on the edge attribute. Note that by
-          conditioning the messages only on the Euclidean distance in Method B,
-          $G$-mapping is guaranteed. Notably, Method B extends message passing
-          such that also the node positions become updatable: \begin{equation}
-          \label{eq:egnn-node-pos-update} \mathbf{x}^{\prime}_i=\mathbf{x}_i +
-          \sum_{j\in N_i}(\mathbf{r}_{ij})\phi_p(\mathbf{m}_{ij}) \end{equation}
-          The position function $\phi_p$ gives a scalar which weighs the amount
-          by which $\mathbf{x}_i$ is translated in the direction of the
-          neighbors or in the opposite direction. This is done in a
-          $G$-equivariant way. Since the position function $\phi_p$ is
-          conditioned on the distance between the node and its neighbors,
-          $\sum_{j \in N} (\mathbf{r}_{ij})$, it is invariant; i.e., since the
-          function gives a scalar, the attributes are invariant. However, the
-          method learns the weights which determine the amount of influence
-          nodes have on each other. Due to this, it allows for more adaptation
-          and flexibility than the basic message passing. While both Method A
-          and Method B preserve preserve permutation $G$-mapping on the set of
-          nodes $V$ in the same way as standard GNNs do, Method B preserves
-          rotation and translation $G$-mapping on the set of coordinates
-          $\mathbf{x}_i$. Equation \ref{eq:egnn-node-pos-update} is the main
-          difference of this method compared to standard GNNs and it is the
-          reason why translation, rotation, and reflection $G$-mapping is
-          preserved. However still, the messages are obtained via invariant
-          attributes $\|\mathbf{r}_{ij}\|^2$, which are limiting despite
-          ensuring a $G$-map. The next step in both methods is to aggregate the
-          computed messages via a permutation-invariant function. Permutation
-          invariance is needed because the way the messages are indexed, just
-          like the way nodes are indexed, meaning the order, should not
-          influence the results. We use sum pooling. The aggregated message
-          $\mathbf{m}_i = \sum_{j \in N_i} \mathbf{m}_{i j}$ is a vector that is
-          used to obtain an updated node representation:
-          $$\mathbf{h}_i^{\prime}=\phi_h \left(\mathbf{h}_i, \sum_{j \in N_i}
-          \mathbf{m}_{i j}\right) ,$$ where $\phi_h$ is a node update function
-          imlemented as an MLP, whose input are the current node features
-          $\mathbf{h}_i$ and the aggregated message $\mathbf{m}_i$.
 
-          <h3>Readout</h3>
 
-          We perform a graph-level classification task on the dataset. To obtain
-          a graph-level embedding, we apply a permutation-invariant aggregation
-          of all the nodes' features: $$\hat{y} = \sum_{v \in
-          V}(\{\mathbf{h}^T_v\}) ,$$ where $T$ denotes the step after the last
-          message passing layer.
+\subsubsection{Geometric message passing on cell complexes with spectral feature fields}
 
-          <h3>Dataset and input representation</h3>
 
-          ModelNet10 dataset
-          <span class="autocite" data-ref="wu2015"></span> contains 4,899 3D
-          models (meshes) representing an object from 10 classes. We processed
-          the meshes to form graphs embedded in $\mathbb{R}^3$. Nodes form an
-          $8\times8\times8$ regular grid. The edges are inferred by connecting
-          nodes within a pre-set maximum radius value. The nodes are assigned
-          one-dimensional feature vectors, representing the Euclidean distance
-          to the closest point on the surface of the initial mesh. The three
-          variants of Method A pose different demands on edge attributes. In the
-          first, edges have no attributes. In the second, Euclidean distance
-          between connected nodes forms attributes. In the third, attributes are
-          formed by computing relative Cartesian coordinates of connected nodes.
-          Each graph is assigned a one-dimensional feature vector representing
-          the object class. We sampled 3.991 graphs for training and 908 for
-          validation.
 
-          <h3>Training</h3>
 
-          Batch size is set to 64; the number of message-passing layers to 2;
-          the number of hidden features to 256; and the learning rate to
-          $3e^{-4}$. Number of epochs is set to 50. SGD uses the ADAM optimiser.
-          Parameter total is 923 K (Method A) and 1.1 M (Method B).
+It is imperative to highlight that models leveraging either linear message passing, which involves matrix-vector multiplications with scalars, or nonlinear message passing through MLP parametrisations, inherently lack the capability to encode directional information. This limitation arises because scalar fields, the common basis for these models, are invariant to transformations. Hence, in network architectures predicated on scalar-based message passing, only attributes exhibiting transformational invariance can be employed. While this invariance ensures robustness to arbitrary transformations, it poses a constraint when rotation $G$-mapping is a requisite feature of the model. Therefore, an alternative to scalar feature fields is necessary for capturing and representing directional attributes effectively.
 
-          <h3>Results</h3>
+To circumvent this limitation and introduce directional attributes into feature representation, we use spectral feature fields. While still operating within the confines of Euclidean space \(X = \mathbb{R}^d\), the utilisation of spectral feature fields affords us the capacity to embed features encapsulating directional attributes. This enrichment extends our feature space beyond mere scalar values, enabling the inclusion of orientation and directional relationships inherent in the data. This necessitates specialised MLPs tailored to process such directional information effectively.
 
-          <figure id="fig-rep-sta-2" class="auto-number-figure">
-            <img src="assets/rep-sta-2.png" style="width: 400px" />
-            <figcaption>
-              Training performance comparison. Method A with edge attributes
-              $\mathbf{a}_{ij} = \emptyset$, $\mathbf{a}_{ij} =
-              \|\mathbf{r}_{ij}\|^2$, and $\mathbf{a}_{ij} = \mathbf{r}_{ij}$.
-              Method B with edge attributes $\mathbf{a}_{ij} =
-              \|\mathbf{r}_{ij}\|^2$ and node position update function $\phi_p$.
-            </figcaption>
-          </figure>
+This leads us to steerable neural networks, where the \textit{SEGNN} \autocite{brandstetter2021} offers a general framework for $\mathrm{E}(3)$ $G$-equivariant graph representation learning. This framework allows for both node and edge attributes to be geometric quantities. Spectral feature fields are inherently $G$-equivariant, facilitating transformation operations within the group and thus offering a robust means of incorporating directional information within the network.
 
-          Method A that does not use edge attributes ($\mathbf{a}_{ij} =
-          \emptyset$) and therefore, it disregards any information the edges may
-          carry, beyond connectivity. It is ignorant of the geometric structure
-          between the nodes and its message passing scheme utilises the node
-          feature vectors. Applying different rotations to the input graph gives
-          the same latent representations. Another model following the Method A
-          has the geometric quantity of Euclidean distance injected into the
-          edge attributes, $\mathbf{a}_{ij} = \|\mathbf{r}_{ij}\|^2$. The
-          representations learned with this rotation-invariant model do not
-          change under the rotation of the input representations. Rotation
-          invariance stems from the norm in the edge attribute definition being
-          invariant to rotations. Last model following the Method A has relative
-          Cartesian coordinates as attributes, $\mathbf{a}_{ij} =
-          \mathbf{r}_{ij}$. Here, latent representations show instability under
-          rotation. The definition of edge attribute here as the distance
-          between two nodes, $\mathbf{r}_{ij}$, does guarantee translation but
-          not rotation $G$-mapping. See <a href="#fig-rep-sta-1">Figure</a> for
-          a visualisation.
+Our main focus lies in ensuring not only translation but also rotation $G$-equivariance. Traditional methods, which might employ regular group convolution, would necessitate a grid structure over \(\mathrm{SO}(d)\) in order to achieve rotation $G$-mapping. Specifically, the convolution kernel must be rotated across all possible orientations and the subsequent responses aggregated. This implies expanding the initial graph to capture a grid of rotations linked to each node, which introduces both computational and methodological challenges, especially when working with \(\mathrm{SO}(3)\).
 
-          <figure id="fig-rep-sta-1" class="auto-number-figure">
-            <img src="assets/rep-sta-1.png" width="600" />
-            <figcaption>
-              Hidden representations of the model before pooling, using relative
-              Cartesian coordinates as edge attributes. The disk radius reflects
-              the first node feature value. For the input representation, 1,500
-              points per 3D model randomly sampled from the embedding space
-              $\mathbb{R}^3$. Two scenarios are shown: (left) with an applied
-              rotation of $ \theta = 0^{\circ} $ and (right) with $ \theta =
-              180^{\circ} $. The input representation for this visualisation
-              differs from the others in the experiment solely in the
-              pre-processing involving random sampling.
-            </figcaption>
-          </figure>
+Spectral feature fields offer a resolution to these challenges by facilitating the development of linear and nonlinear layers as $G$-maps that circumvent the need for grid structures on subgroups like \(\mathrm{SO}(3)\). Rather than sampling rotations on a grid, a function defined on \(\mathrm{SO}(3)\) can encode the convolution operator's response for all possible rotations.
 
-          Next, we compare Method B with the three variants of Method A,
-          presented in the <a href="#tab-egnn-mpnn-compar">Table</a>. Method B
-          is outperformed only by Method A variant with relative Cartesian
-          coordinates as edge attributes. However, in the second part of the
-          experiment, where we apply a random rotation to the input, its
-          accuracy decreases significantly. This is expected, since relative
-          Cartesian coordinates are not invariant to rotation. The other two
-          variants of Method A (no edge attributes and Euclidean distance) fall
-          behind all the others in the first part of the experiment. Since they
-          do not involve information on the direction that the messages come
-          from, the accuracy is unchanged with the transformed input; they are
-          invariant to rotation. Finally, we observe the stability under
-          rotation with Method B and the higher accuracy relative to the
-          rotation-invariant models.
+Models reliant on scalar feature fields are fundamentally limited in their capability to incorporate directional information due to the invariance properties of scalars. Spectral feature fields present an effective solution, integrating seamlessly with existing steerable neural network architectures and alleviating computational inefficiencies associated with rotational $G$-equivariance. 
 
-          <figure>
-            <table id="tab-egnn-mpnn-compar">
-              <thead>
-                <tr>
-                  <th>Method</th>
-                  <th>ACC(a)</th>
-                  <th>ACC(b)</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>A ($\mathbf{a}_{ij} = \emptyset$)</td>
-                  <td>.6398</td>
-                  <td>.6398</td>
-                </tr>
-                <tr>
-                  <td>A ($\mathbf{a}_{ij} = \|\mathbf{r}_{ij}\|^2$)</td>
-                  <td>.6861</td>
-                  <td>.6861</td>
-                </tr>
-                <tr>
-                  <td>A ($\mathbf{a}_{ij} = \mathbf{r}_{ij}$)</td>
-                  <td>.8061</td>
-                  <td>.3876</td>
-                </tr>
-                <tr>
-                  <td>B ($\mathbf{a}_{ij} = \|\mathbf{r}_{ij}\|^2, \phi_p$)</td>
-                  <td>.7643</td>
-                  <td>.7643</td>
-                </tr>
-              </tbody>
-            </table>
-            <figcaption>
-              Comparison of feature stability under rotation across message
-              passing model variants. ACC (a): validation accuracy; ACC (b):
-              Random rotation test accuracy.
-            </figcaption>
-          </figure>
+
+
+%\subsubsection{Geometric message passing with cell complexes}
+
+A message function designed to capture directional attributes can be articulated as \(\mathbf{m}_{ij} = \phi_m (\mathbf{f}_i, \mathbf{f}_j, Y(\mathbf{x}_j, \mathbf{x}_i))\), wherein \(Y(\mathbf{x}_j, \mathbf{x}_i)\) is the harmonic embedding of the inter-nodal directional information between positions \(\mathbf{x}_j\) and \(\mathbf{x}_i\). By integrating this directional information, the message passing mechanism gains the ability to account for orientation and directional relationships between nodes.
+
+Expanding upon this framework, our subsequent focus centres on generalising the message passing formulation to encompass cell complexes. We aim to delineate how this paradigm can be adapted to ingest and propagate directional information across various dimensional cells within these complexes.
+
+
+
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.50]
+
+    \foreach \i in {1,...,4} {
+      \coordinate (\i) at (90*\i:1);
+      \fill (\i) circle (0.02);
+    }
+    \path[fill=black,opacity=0.05] (1) -- (2)  -- (3) -- (4) -- cycle;
+    \draw (1) -- (2) -- (3) -- (4) -- cycle;
+
+    % nodes-to-edges messages
+    \draw[-{Stealth[scale=1.5]},bend right=30] (1) to node[pos=0.5,right] {} (-0.5,0.5);
+    \draw[-{Stealth[scale=1.5]},bend left=30] (1) to node[pos=0.5,right] {} (0.5,0.5);
+
+    \draw[-{Stealth[scale=1.5]},bend left=30] (2) to node[pos=0.5,right] {} (-0.5,0.5);
+    \draw[-{Stealth[scale=1.5]},bend right=30] (2) to node[pos=0.5,right] {} (-0.5,-0.5);
+
+    \draw[-{Stealth[scale=1.5]},bend left=30] (3) to node[pos=0.5,right] {} (-0.5,-0.5);
+    \draw[-{Stealth[scale=1.5]},bend right=30] (3) to node[pos=0.5,right] {} (0.5,-0.5);
+
+    \draw[-{Stealth[scale=1.5]},bend left=30] (4) to node[pos=0.5,right] {} (0.5,-0.5);
+    \draw[-{Stealth[scale=1.5]},bend right=30] (4) to node[pos=0.5,right] {} (0.5,0.5);
+
+    % edges-to-faces messages
+    \draw[-{Stealth[scale=1.5]},bend right=30] (-0.5,0.5) to node[pos=0.5,right] {} (-0.1,0.1);
+
+    \draw[-{Stealth[scale=1.5]},bend right=30] (0.5,0.5) to node[pos=0.5,right] {} (0.1,0.1);
+
+    \draw[-{Stealth[scale=1.5]},bend right=30] (0.5,-0.5) to node[pos=0.5,right] {} (0.1,-0.1);
+
+    \draw[-{Stealth[scale=1.5]},bend right=30] (-0.5,-0.5) to node[pos=0.5,right] {} (-0.1,-0.1);
+    
+\end{tikzpicture}
+\caption{Boundary adjacency message passing on a cell 2-complex.}
+\end{figure}
+
+
+
+We define the boundary adjacency message function $\tilde{\mathbf{m}}_{\mathcal{B}, \sigma \tau}$ on a geometric cell complex $\Delta$ as follows:
+
+\begin{equation} \label{message-eq1}
+\tilde{\mathbf{m}}_{\mathcal{B}, \sigma \tau}^{t+1} &= \bigoplus_{\tau \in \mathcal{B}(\sigma)}\left\biggl(\phi_{\mathcal{B}} (\underbrace{\tilde{\mathbf{f}}_\sigma^{t}, \tilde{\mathbf{f}}_\tau^{t}}_{\tilde{\mathbf{h}}_{\mathcal{B}, \sigma \tau}}) \right\biggl), 
+\quad {\scriptstyle k_{\sigma} = k_{\tau} + 1, \ \tilde{\mathbf{m}}_{\mathcal{B}}^{t+1}(\sigma)  = \emptyset \ \forall \sigma_{k=0} } \label{message-eq1}
+\end{equation}
+
+Here, the message travels from $\tau$ to $\sigma$, where $\tau$ is on the boundary of $\sigma$. For example, $\sigma$ can be an edge and $\tau$ can be a node on its boundary, or $\sigma$ can be a face and $\tau$ can be an edge on its boundary. The boundary message function $\phi_{\mathcal{B}}$ takes the features of the receiver simplex, $\tilde{\mathbf{f}}_\sigma$, and the features of the sender simplex, $\tilde{\mathbf{f}}_\tau$ as input. If $\sigma$ is a $0$-cell, the message $\tilde{\mathbf{m}}_{\mathcal{B}, \sigma \tau}$ is an empty set since a $0$-cell has no interior or boundary.
+
+
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.50]
+    \foreach \i in {1,...,4} {
+      \coordinate (\i) at (90*\i:1);
+      \fill (\i) circle (0.02);
+    }
+    \path[fill=black,opacity=0.05] (1) -- (2)  -- (3) -- (4) -- cycle;
+    \draw (1) -- (2) -- (3) -- (4) -- cycle;
+
+    % edges-to-nodes messages
+    \draw[-{Stealth[scale=1.5]},bend left=30] (-0.5,0.5) to node[pos=0.5,right] {} (1);
+    \draw[-{Stealth[scale=1.5]},bend right=30] (0.5,0.5) to node[pos=0.5,right] {} (1);
+
+    \draw[-{Stealth[scale=1.5]},bend right=30] (-0.5,0.5) to node[pos=0.5,right] {} (2);
+    \draw[-{Stealth[scale=1.5]},bend left=30] (-0.5,-0.5) to node[pos=0.5,right] {} (2);
+
+    \draw[-{Stealth[scale=1.5]},bend right=30] (-0.5,-0.5) to node[pos=0.5,right] {} (3);
+    \draw[-{Stealth[scale=1.5]},bend left=30] (0.5,-0.5) to node[pos=0.5,right] {} (3);
+
+    \draw[-{Stealth[scale=1.5]},bend right=30] (0.5,-0.5) to node[pos=0.5,right] {} (4);
+    \draw[-{Stealth[scale=1.5]},bend left=30] (0.5,0.5) to node[pos=0.5,right] {} (4);
+
+    % faces-to-edges messages
+    \draw[-{Stealth[scale=1.5]},bend right=30] (-0.1,0.1) to node[pos=0.5,right] {} (-0.5,0.5);
+    \draw[-{Stealth[scale=1.5]},bend right=30] (0.1,0.1) to node[pos=0.5,right] {} (0.5,0.5);
+    \draw[-{Stealth[scale=1.5]},bend right=30] (0.1,-0.1) to node[pos=0.5,right] {} (0.5,-0.5);
+    \draw[-{Stealth[scale=1.5]},bend right=30] (-0.1,-0.1) to node[pos=0.5,right] {} (-0.5,-0.5);
+\end{tikzpicture}
+\caption{Co-boundary adjacency message passing on a cell 2-complex.}
+\end{figure}
+
+
+We define the co-boundary adjacency message function $\tilde{\mathbf{m}}_{\mathcal{C}, \sigma \tau}$ as:
+
+\begin{equation} \label{message-eq2}
+\tilde{\mathbf{m}}_{\mathcal{C}, \sigma \tau}^{t+1}
+= 
+\bigoplus_{\tau \in \mathcal{C}(\sigma)}\left\biggl(\phi_{\mathcal{C}} (\underbrace{\tilde{\mathbf{f}}_\sigma^{t}, \tilde{\mathbf{f}}_\tau^{t}}_{\tilde{\mathbf{h}}_{\mathcal{C}, \sigma \tau}}) \right\biggl), 
+\quad {\scriptstyle k_{\sigma} = k_{\tau} - 1, \ \tilde{\mathbf{m}}_{\mathcal{C}, \sigma \tau}^{t+1} = \emptyset \ \forall \sigma_{k=3} } \label{message-eq2}
+\end{equation}
+
+
+While the boundary adjacency message travels from a lower-dimensional simplex to a higher-dimensional one, the co-boundary adjacency message travels down the dimensional hierarchy. This means that a cell, denoted as $\tau$, sends a message to another cell, $\sigma$, located on its boundary (for instance, $\sigma$ could be a 1-cell or edge on the boundary of the 2-cell $\tau$). Given that the maximum dimension of our embedding space, $\mathbb{R}^{d}$, is $d=3$, if $\sigma$ is a $3$-cell, then the message $\tilde{\mathbf{m}}_{\mathcal{C}, \sigma \tau}$ becomes an empty set, as there isn't a $4$-cell present as a co-boundary of $\sigma$.
+
+
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.50]
+
+    \foreach \i in {1,...,4} {
+      \coordinate (\i) at (90*\i:1);
+      \fill (\i) circle (0.02);
+    }
+    \path[fill=black,opacity=0.05] (1) -- (2)  -- (3) -- (4) -- cycle;
+    \draw (1) -- (2) -- (3) -- (4) -- cycle;
+
+    % edges-to-edges messages
+    \draw[-{Stealth[scale=1.5]},bend right=20] (-0.5,0.5) to node[pos=0.5,right] {} (0.5,0.5);
+    \draw[-{Stealth[scale=1.5]},bend left=20] (-0.5,0.5) to node[pos=0.5,right] {} (-0.5,-0.5);
+    
+    \draw[-{Stealth[scale=1.5]},bend left=20] (-0.5,-0.5) to node[pos=0.5,right] {} (-0.5,0.5);
+    \draw[-{Stealth[scale=1.5]},bend right=20] (-0.5,-0.5) to node[pos=0.5,right] {} (0.5,-0.5);
+
+    \draw[-{Stealth[scale=1.5]},bend right=20] (0.5,-0.5) to node[pos=0.5,right] {} (-0.5,-0.5);
+    \draw[-{Stealth[scale=1.5]},bend left=20] (0.5,-0.5) to node[pos=0.5,right] {} (0.5,0.5);
+
+    \draw[-{Stealth[scale=1.5]},bend left=20] (0.5,0.5) to node[pos=0.5,right] {} (0.5,-0.5);
+    \draw[-{Stealth[scale=1.5]},bend right=20] (0.5,0.5) to node[pos=0.5,right] {} (-0.5,0.5);
+
+\end{tikzpicture}
+\caption{Lower adjacency message passing on a cell 2-complex.}
+\end{figure}
+
+
+We define the lower adjacency message function $\tilde{\mathbf{m}}_{\mathcal{L}, \sigma \tau}$ as:
+
+\begin{equation} \label{message-eq3}
+\tilde{\mathbf{m}}_{\mathcal{L}, \sigma \tau}^{t+1}
+=
+\bigoplus_{\tau \in \mathcal{L} (\sigma)}\left\biggl(\phi_{\mathcal{L}} (\underbrace{\tilde{\mathbf{f}}_\sigma^{t}, \tilde{\mathbf{f}}_\tau^{t}, \tilde{\mathbf{f}}_{\delta}^{t}}_{\tilde{\mathbf{h}}_{\mathcal{L}, \sigma \tau}}, \tilde{\mathbf{a}}_\delta)\right\biggl), 
+\quad {\scriptstyle k_{\sigma} = k_{\tau}, \ k_{\delta} = k_{\sigma}+1 \ \tilde{\mathbf{m}}_{\mathcal{L}, \sigma \tau}^{t+1} = \emptyset \ \forall \sigma_{k=0},\tau_{k=0} } 
+\end{equation}
+
+
+The lower adjacency message is transmitted between two cells of the same dimension $k$ that share a common cell of dimension $k-1$ as their face. For example, two $1$-cells or edges are considered lower adjacent because they both have the same $0$-cell (vertex) as their face. 
+Since $0$-cells do not have a face, the message $\tilde{\mathbf{m}}_{\mathcal{L}}$ is an empty set if $\sigma$ and $\tau$ are $0$-cells. Note that the input to the message function $\phi_{\mathcal{L}}$ includes the features of the lower-adjacent cell, $\tilde{\mathbf{f}}_{\delta}$, and its attributes $\tilde{\mathbf{a}}_\delta$.
+
+Note that attributes and features refer to different types of information associated with the cells in a complex. While features refer to learned representations of the cells, attributes typically refer to domain-specific information that is associated with the cells. 
+%For example, in a social network, attributes could include demographic information about users, such as age, gender, and location. In a molecule, attributes could include information about the chemical properties of atoms or bonds.
+
+
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.50]
+    \foreach \i in {1,...,4} {
+      \coordinate (\i) at (90*\i:1);
+      \fill (\i) circle (0.02);
+    }
+    \path[fill=black,opacity=0.05] (1) -- (2)  -- (3) -- (4) -- cycle;
+    \draw (1) -- (2) -- (3) -- (4) -- cycle;
+
+    % nodes-to-nodes messages
+    \draw[-{Stealth[scale=1.5]},bend right=30] (1) to node[pos=0.5,right] {} (2);
+    %\draw[-{Stealth[scale=1.0]},bend right=20,densely dashed] (1) to node[pos=0.5,right] {} (3);
+    \draw[-{Stealth[scale=1.5]},bend right=30] (1) to node[pos=0.5,right] {} (4);
+    \draw[-{Stealth[scale=1.5]},bend right=30] (2) to node[pos=0.5,right] {} (1);
+    \draw[-{Stealth[scale=1.5]},bend right=30] (2) to node[pos=0.5,right] {} (3);    
+    %\draw[-{Stealth[scale=1.0]},bend right=20,densely dashed] (2) to node[pos=0.5,right] {} (4);    
+    %\draw[-{Stealth[scale=1.0]},bend right=20,densely dashed] (3) to node[pos=0.5,right] {} (1);
+    \draw[-{Stealth[scale=1.5]},bend right=30] (3) to node[pos=0.5,right] {} (2);
+    \draw[-{Stealth[scale=1.5]},bend right=30] (3) to node[pos=0.5,right] {} (4);
+    \draw[-{Stealth[scale=1.5]},bend right=30] (4) to node[pos=0.5,right] {} (1);
+    %\draw[-{Stealth[scale=1.0]},bend right=20,densely dashed] (4) to node[pos=0.5,right] {} (2);
+    \draw[-{Stealth[scale=1.5]},bend right=30] (4) to node[pos=0.5,right] {} (3);
+
+    % edges-to-edges messages
+    \draw[-{Stealth[scale=1.5]},bend right=20] (-0.5,0.5) to node[pos=0.5,right] {} (0.5,0.5);
+    \draw[-{Stealth[scale=1.5]},bend left=20] (-0.5,0.5) to node[pos=0.5,right] {} (-0.5,-0.5);
+    
+    \draw[-{Stealth[scale=1.5]},bend left=20] (-0.5,-0.5) to node[pos=0.5,right] {} (-0.5,0.5);
+    \draw[-{Stealth[scale=1.5]},bend right=20] (-0.5,-0.5) to node[pos=0.5,right] {} (0.5,-0.5);
+
+    \draw[-{Stealth[scale=1.5]},bend right=20] (0.5,-0.5) to node[pos=0.5,right] {} (-0.5,-0.5);
+    \draw[-{Stealth[scale=1.5]},bend left=20] (0.5,-0.5) to node[pos=0.5,right] {} (0.5,0.5);
+
+    \draw[-{Stealth[scale=1.5]},bend left=20] (0.5,0.5) to node[pos=0.5,right] {} (0.5,-0.5);
+    \draw[-{Stealth[scale=1.5]},bend right=20] (0.5,0.5) to node[pos=0.5,right] {} (-0.5,0.5);
+    %
+    \draw[-{Stealth[scale=1.5]},bend right=20] (-0.5,0.5) to node[pos=0.5,right] {} (0.5,-0.5);
+    \draw[-{Stealth[scale=1.5]},bend right=20] (0.5,-0.5) to node[pos=0.5,right] {} (-0.5,0.5);
+
+    \draw[-{Stealth[scale=1.5]},bend right=20] (-0.5,-0.5) to node[pos=0.5,right] {} (0.5,0.5);
+    \draw[-{Stealth[scale=1.5]},bend right=20] (0.5,0.5) to node[pos=0.5,right] {} (-0.5,-0.5);
+
+\end{tikzpicture}
+\caption{Upper adjacency message passing on a cell 2-complex.}
+\end{figure}
+
+
+We define the upper adjacency message function $\tilde{\mathbf{m}}_{\mathcal{U}, \sigma \tau}$ as:
+
+\begin{equation} \label{message-eq4}
+\tilde{\mathbf{m}}_{\mathcal{U}, \sigma \tau}^{t+1} 
+= 
+\bigoplus_{\tau \in \mathcal{U} (\sigma)}\left\biggl(\phi_{\mathcal{U}} (\underbrace{\tilde{\mathbf{f}}_\sigma^{t}, \tilde{\mathbf{f}}_\tau^{t}, \tilde{\mathbf{f}}_{\delta}^{t}, \mathbf{r}_{\sigma \tau}}_{\tilde{\mathbf{h}}_{\mathcal{U}, \sigma \tau}}, \tilde{\mathbf{a}}_{\delta})\right\biggl), 
+\quad {\scriptstyle k_{\sigma} = k_{\tau}, \ k_{\delta} = k_{\sigma} + 1, \ \mathbf{r}_{\sigma \tau} \neq \emptyset \text{ iff } k_{\sigma} = k_{\tau} = 0}
+\end{equation}
+
+The upper adjacency message is transmitted between two cells of the same dimension $k$, namely $\sigma$ and $\tau$, which share a common upper-adjacent cell of dimension $k+1$, referred to as $\delta$. For example, $\sigma$ and $\tau$ can be $1$-cells or edges with a common upper-adjacent $2$-cell or face $\delta$. 
+The quantity $\mathbf{r}_{\sigma \tau}$ represents the relative distance between two $0$-cells $\sigma$ and $\tau$, $| \mathbf{p}_{\tau} - \mathbf{p}_{\sigma} |$ or squared relative distance $| \mathbf{p}_{\tau} - \mathbf{p}_{\sigma} |^2$. If $\sigma$ and $\tau$ are cells of any other order, then $\mathbf{r}_{\sigma \tau}$ is an empty set.
+
+We define the cell update function as:
+
+\begin{equation} \label{update-eq1}
+\tilde{\mathbf{f}}^{t+1}_{\sigma} &= 
+\phi_f \left(\underbrace{
+\tilde{\mathbf{f}}^{t}_{\sigma}, 
+\tilde{\mathbf{m}}_{\mathcal{B}, \sigma \tau}^{t}, 
+\tilde{\mathbf{m}}_{\mathcal{C}, \sigma \tau}^{t},
+\tilde{\mathbf{m}}_{\mathcal{L}, \sigma \tau}^{t+1},
+\tilde{\mathbf{m}}_{\mathcal{U}, \sigma \tau}^{t+1} }_{\tilde{\mathbf{h}}_{\sigma}}, \tilde{\mathbf{a}}_{\sigma} \right)
+\end{equation}
+
+
+
+
+
+
+
+
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[x={(1.414cm,-0.707cm)},y={(-1.414cm,-0.707cm)},z={(0cm,1.75cm)},scale=0.8]
+\tikzset{
+    every path/.style={line cap=round},
+    every node/.style={fill=white},
+    snake it/.style={decorate, decoration={snake,amplitude=0.50pt,segment length=3.5pt}},
+    tshift/.style={xshift=0.25cm}
+}
+
+\coordinate (1) at (0,4,4);
+\coordinate (2) at (2,4,4);
+\coordinate (3) at (4,4,4);
+\coordinate (4) at (0,2,4);
+\coordinate (5) at (2,2,4);
+\coordinate (6) at (4,2,4);
+\coordinate (7) at (0,0,4);
+\coordinate (8) at (2,0,4);
+\coordinate (9) at (4,0,4);
+
+\coordinate (10) at (0,4,2);
+\coordinate (11) at (2,4,2);
+\coordinate (12) at (4,4,2);
+\coordinate (13) at (0,2,2);
+\coordinate (14) at (2,2,2);
+\coordinate (15) at (4,2,2);
+\coordinate (16) at (0,0,2);
+\coordinate (17) at (2,0,2);
+\coordinate (18) at (4,0,2);
+
+
+\coordinate (19) at (0,4,0);
+\coordinate (20) at (2,4,0);
+\coordinate (21) at (4,4,0);
+\coordinate (22) at (0,2,0);
+\coordinate (23) at (2,2,0);
+\coordinate (24) at (4,2,0);
+\coordinate (25) at (0,0,0);
+\coordinate (26) at (2,0,0);
+\coordinate (27) at (4,0,0);
+
+%\draw[very thick] (1) -- (2) -- (3) -- (6) -- (9) -- (8) -- (7) -- (4) -- cycle;
+%\draw[very thick] (3) -- (12) -- (21) -- (20) -- (19) -- (10) -- (1) -- (2) -- cycle;
+%\draw[very thick] (3) -- (6) -- (9) -- (18) -- (27) -- (24) -- (21) -- (12) -- (3) -- cycle;
+\draw[very thick] (1) -- ([yshift=1.12cm]10);
+\draw[very thick] (3) -- ([yshift=1.12cm]12);
+\draw[very thick] (9) -- ([yshift=1.12cm]18);
+\draw[very thick] (19) -- ([yshift=-1.405cm]10);
+\draw[very thick] (21) -- ([yshift=-1.405cm]12);
+\draw[very thick] (27) -- ([yshift=-1.405cm]18);
+\draw[very thick] (19) -- ([xshift=-0.8cm,yshift=0.4cm]20);
+\draw[very thick] (1) -- ([xshift=-0.8cm,yshift=0.4cm]2);
+\draw[very thick] (7) -- ([xshift=-0.8cm,yshift=0.4cm]8);
+\draw[very thick] (27) -- ([xshift=0.8cm,yshift=0.4cm]24);
+\draw[very thick] (9) -- ([xshift=0.8cm,yshift=0.4cm]6);
+\draw[very thick] (7) -- ([xshift=0.8cm,yshift=0.4cm]4);
+\draw[very thick] (21) -- ([xshift=0.9cm,yshift=-0.45cm]20);
+\draw[very thick] (3) -- ([xshift=0.9cm,yshift=-0.45cm]2);
+\draw[very thick] (9) -- ([xshift=0.9cm,yshift=-0.45cm]8);
+\draw[very thick] (21) -- ([xshift=-0.9cm,yshift=-0.45cm]24);
+\draw[very thick] (3) -- ([xshift=-0.9cm,yshift=-0.45cm]6);
+\draw[very thick] (1) -- ([xshift=-0.9cm,yshift=-0.45cm]4);
+%% Length of arrows are given as 0.7 unit
+
+\begin{scope}[canvas is xz plane at y=4,shift={(2,2)}]
+\draw[dash pattern=on 2pt off 1pt, -{Stealth[inset=6pt,length=7.5pt,width=10pt]},yshift=0.075cm] (0.1,0.725) -- (0.1,1.425);
+\draw[dash pattern=on 2pt off 1pt, -{Stealth[inset=6pt,length=7.5pt,width=10pt]}] (-0.1,-0.725) -- (-0.1,-1.425);
+\draw[dash pattern=on 2pt off 1pt, -{Stealth[inset=6pt,length=7.5pt,width=10pt]}] (-0.65,0.1) -- (-1.35,0.1);
+\draw[dash pattern=on 2pt off 1pt, -{Stealth[inset=6pt,length=7.5pt,width=10pt]},xshift=-0.075cm] (0.65,-0.1) -- (1.35,-0.1);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-] (-0.1,0.725) -- (-0.1,1.425);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,yshift=0.075cm] (0.1,-0.725) -- (0.1,-1.425);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,xshift=-0.075cm] (-0.65,-0.1) -- (-1.35,-0.1);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-] (0.65,0.1) -- (1.35,0.1);
+
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,dash pattern=on 0.1pt off 0.8pt] (1.5,0.3) -- (0.4,1.4);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,dash pattern=on 0.1pt off 0.8pt] (0.7,1.5) -- (1.5,0.7);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,dash pattern=on 0.1pt off 0.8pt] (-0.65,1.25) -- (-1.25,0.65);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,dash pattern=on 0.1pt off 0.8pt] (-1.35,0.75) -- (-0.75,1.35);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,dash pattern=on 0.1pt off 0.8pt] (-1.45,-0.35) -- (-0.35,-1.45);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,dash pattern=on 0.1pt off 0.8pt] (-0.7,-1.5) -- (-1.5,-0.7);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,dash pattern=on 0.1pt off 0.8pt] (0.65,-1.25) -- (1.25,-0.65);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,dash pattern=on 0.1pt off 0.8pt] (1.35,-0.75) -- (0.75,-1.35);
+
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,snake it] (1.15,0.25) -- (0.35,1.05);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,snake it] (1,1.6) -- (1.5,1.1);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,snake it] (-0.55,1.15) -- (-1.15,0.55);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,snake it] (-1.45,0.85) -- (-0.85,1.45);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,snake it] (-1.15,-0.25) -- (-0.35,-1.05);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,snake it] (-1,-1.6) -- (-1.5,-1.1);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,snake it] (0.55,-1.15) -- (1.15,-0.55);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,snake it] (1.45,-0.85) -- (0.85,-1.45);
+\end{scope}
+
+\begin{scope}[canvas is xz plane at y=3.6,shift={(2,2)}]
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-] (-2,0.47) -- (-2,1.17);
+\draw[dash pattern=on 2pt off 1pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]}] (-2,-0.98) -- (-2,-1.68);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,tshift] (-0.98,-2) -- (-1.68,-2);
+\draw[dash pattern=on 2pt off 1pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]}] (0.47,-2) -- (1.17,-2);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-] (2,0.47) -- (2,1.17);
+\draw[dash pattern=on 2pt off 1pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]}] (2,-0.98) -- (2,-1.68);
+\draw[dash pattern=on 2pt off 1pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]}] (0.47,2) -- (1.17,2);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,tshift] (-0.98,2) -- (-1.68,2);
+\end{scope}
+
+\begin{scope}[canvas is xz plane at y=3.8,shift={(2,2)}]
+\draw[dash pattern=on 0.1pt off 0.8pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]}] (-2,0.555) -- (-2,1.255);
+\draw[dash pattern=on 0.1pt off 0.8pt] (-2,-0.895) -- (-2,-1.595);
+\draw[dash pattern=on 0.1pt off 0.8pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]},tshift] (-0.895,-2) -- (-1.595,-2);
+\draw[dash pattern=on 0.1pt off 0.8pt] (0.555,-2) -- (1.255,-2);
+\draw[dash pattern=on 0.1pt off 0.8pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]}] (2,0.555) -- (2,1.255);
+\draw[dash pattern=on 0.1pt off 0.8pt] (2,-0.895) -- (2,-1.595);
+\draw[dash pattern=on 0.1pt off 0.8pt] (0.555,2) -- (1.255,2);
+\draw[dash pattern=on 0.1pt off 0.8pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]},tshift] (-0.895,2) -- (-1.595,2);
+\end{scope}
+
+\begin{scope}[canvas is xz plane at y=4.2,shift={(2,2)}]
+\draw[dash pattern=on 0.1pt off 0.8pt] (-2,0.725) -- (-2,1.425);
+\draw[dash pattern=on 0.1pt off 0.8pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]}] (-2,-0.725) -- (-2,-1.425);
+\draw[dash pattern=on 0.1pt off 0.8pt,tshift] (-0.725,-2) -- (-1.425,-2);
+\draw[dash pattern=on 0.1pt off 0.8pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]}] (0.725,-2) -- (1.425,-2);
+\draw[dash pattern=on 0.1pt off 0.8pt] (2,0.725) -- (2,1.425);
+\draw[dash pattern=on 0.1pt off 0.8pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]}] (2,-0.725) -- (2,-1.425);
+\draw[dash pattern=on 0.1pt off 0.8pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]}] (0.725,2) -- (1.425,2);
+\draw[dash pattern=on 0.1pt off 0.8pt,tshift] (-0.725,2) -- (-1.425,2);
+\end{scope}
+
+\begin{scope}[canvas is xz plane at y=4.4,shift={(2,2)}]
+\draw[dash pattern=on 2pt off 1pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]}] (-2,0.81) -- (-2,1.51);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-] (-2,-0.64) -- (-2,-1.34);
+\draw[dash pattern=on 2pt off 1pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]},tshift] (-0.64,-2) -- (-1.34,-2);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-] (0.81,-2) -- (1.51,-2);
+\draw[dash pattern=on 2pt off 1pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]}] (2,0.81) -- (2,1.51);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-] (2,-0.64) -- (2,-1.34);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-] (0.81,2) -- (1.51,2);
+\draw[dash pattern=on 2pt off 1pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]},tshift] (-0.64,2) -- (-1.34,2);
+\end{scope}
+
+\begin{scope}[canvas is xz plane at y=-0.4,shift={(2,2)}]
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-] (2,0.47) -- (2,1.17);
+\draw[dash pattern=on 2pt off 1pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]}] (2,-0.98) -- (2,-1.68);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,tshift] (-0.98,2) -- (-1.68,2);
+\draw[dash pattern=on 2pt off 1pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]}] (0.47,2) -- (1.17,2);
+\end{scope}
+
+\begin{scope}[canvas is xz plane at y=-0.2,shift={(2,2)}]
+\draw[dash pattern=on 0.1pt off 0.8pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]}] (2,0.555) -- (2,1.255);
+\draw[dash pattern=on 0.1pt off 0.8pt] (2,-0.895) -- (2,-1.595);
+\draw[dash pattern=on 0.1pt off 0.8pt] (0.555,2) -- (1.255,2);
+\draw[dash pattern=on 0.1pt off 0.8pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]},tshift] (-0.895,2) -- (-1.595,2);
+\end{scope}
+
+\begin{scope}[canvas is xz plane at y=0.2,shift={(2,2)}]
+\draw[dash pattern=on 0.1pt off 0.8pt] (2,0.725) -- (2,1.425);
+\draw[dash pattern=on 0.1pt off 0.8pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]}] (2,-0.725) -- (2,-1.425);
+\draw[dash pattern=on 0.1pt off 0.8pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]}] (0.725,2) -- (1.425,2);
+\draw[dash pattern=on 0.1pt off 0.8pt,tshift] (-0.725,2) -- (-1.425,2);
+\end{scope}
+
+\begin{scope}[canvas is xz plane at y=0.4,shift={(2,2)}]
+\draw[dash pattern=on 2pt off 1pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]}] (2,0.81) -- (2,1.51);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-] (2,-0.64) -- (2,-1.34);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-] (0.81,2) -- (1.51,2);
+\draw[dash pattern=on 2pt off 1pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]},tshift] (-0.64,2) -- (-1.34,2);
+\end{scope}
+
+\begin{scope}[canvas is yz plane at x=4,shift={(2,2)},xscale=-1,rotate=90]
+\draw[dash pattern=on 2pt off 1pt, -{Stealth[inset=6pt,length=7.5pt,width=10pt]},yshift=0.075cm] (0.1,0.725) -- (0.1,1.425);
+\draw[dash pattern=on 2pt off 1pt, -{Stealth[inset=6pt,length=7.5pt,width=10pt]}] (-0.1,-0.725) -- (-0.1,-1.425);
+\draw[dash pattern=on 2pt off 1pt, -{Stealth[inset=6pt,length=7.5pt,width=10pt]}] (-0.65,0.1) -- (-1.35,0.1);
+\draw[dash pattern=on 2pt off 1pt, -{Stealth[inset=6pt,length=7.5pt,width=10pt]},xshift=-0.075cm] (0.65,-0.1) -- (1.35,-0.1);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-] (-0.1,0.725) -- (-0.1,1.425);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,yshift=0.075cm] (0.1,-0.725) -- (0.1,-1.425);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,xshift=-0.075cm] (-0.65,-0.1) -- (-1.35,-0.1);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-] (0.65,0.1) -- (1.35,0.1);
+
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,dash pattern=on 0.1pt off 0.8pt] (1.5,0.3) -- (0.4,1.4);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,dash pattern=on 0.1pt off 0.8pt] (0.7,1.5) -- (1.5,0.7);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,dash pattern=on 0.1pt off 0.8pt] (-0.65,1.25) -- (-1.25,0.65);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,dash pattern=on 0.1pt off 0.8pt] (-1.35,0.75) -- (-0.75,1.35);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,dash pattern=on 0.1pt off 0.8pt] (-1.45,-0.35) -- (-0.35,-1.45);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,dash pattern=on 0.1pt off 0.8pt] (-0.7,-1.5) -- (-1.5,-0.7);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,dash pattern=on 0.1pt off 0.8pt] (0.65,-1.25) -- (1.25,-0.65);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,dash pattern=on 0.1pt off 0.8pt] (1.35,-0.75) -- (0.75,-1.35);
+
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,snake it] (1.15,0.25) -- (0.35,1.05);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,snake it] (1.1,1.5) -- (1.6,1);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,snake it] (-0.55,1.15) -- (-1.15,0.55);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,snake it] (-1.45,0.85) -- (-0.85,1.45);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,snake it] (-1.15,-0.25) -- (-0.35,-1.05);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,snake it] (-1.1,-1.5) -- (-1.6,-1);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,snake it] (0.55,-1.15) -- (1.15,-0.55);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,snake it] (1.45,-0.85) -- (0.85,-1.45);
+\end{scope}
+
+\begin{scope}[canvas is yz plane at x=3.6,shift={(2,2)}]
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-] (0.47,-2) -- (1.17,-2);
+\draw[dash pattern=on 2pt off 1pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]},tshift] (-0.98,-2) -- (-1.68,-2);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-] (0.47,2) -- (1.17,2);
+\draw[dash pattern=on 2pt off 1pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]},tshift] (-0.98,2) -- (-1.68,2);
+\end{scope}
+
+\begin{scope}[canvas is yz plane at x=3.8,shift={(2,2)}]
+\draw[dash pattern=on 0.1pt off 0.8pt,tshift] (-0.895,-2) -- (-1.595,-2);
+\draw[dash pattern=on 0.1pt off 0.8pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]}] (0.555,-2) -- (1.255,-2);
+\draw[dash pattern=on 0.1pt off 0.8pt,tshift] (-0.895,2) -- (-1.595,2);
+\draw[dash pattern=on 0.1pt off 0.8pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]}] (0.555,2) -- (1.255,2);
+\end{scope}
+
+\begin{scope}[canvas is yz plane at x=4.2,shift={(2,2)}]
+\draw[dash pattern=on 0.1pt off 0.8pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]},tshift] (-0.725,-2) -- (-1.425,-2);
+\draw[dash pattern=on 0.1pt off 0.8pt] (0.725,-2) -- (1.425,-2);
+\draw[dash pattern=on 0.1pt off 0.8pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]},tshift] (-0.725,2) -- (-1.425,2);
+\draw[dash pattern=on 0.1pt off 0.8pt] (0.725,2) -- (1.425,2);
+\end{scope}
+
+\begin{scope}[canvas is yz plane at x=4.4,shift={(2,2)}]
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,tshift] (-0.64,-2) -- (-1.34,-2);
+\draw[dash pattern=on 2pt off 1pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]}] (0.81,-2) -- (1.51,-2);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,tshift] (-0.64,2) -- (-1.34,2);
+\draw[dash pattern=on 2pt off 1pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]}] (0.81,2) -- (1.51,2);
+\end{scope}
+
+\begin{scope}[canvas is yz plane at x=-0.4,shift={(2,2)}]
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-] (0.47,2) -- (1.17,2);
+\draw[dash pattern=on 2pt off 1pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]},tshift] (-0.98,2) -- (-1.68,2);
+\end{scope}
+
+\begin{scope}[canvas is yz plane at x=-0.2,shift={(2,2)}]
+\draw[dash pattern=on 0.1pt off 0.8pt,tshift] (-0.895,2) -- (-1.595,2);
+\draw[dash pattern=on 0.1pt off 0.8pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]}] (0.555,2) -- (1.255,2);
+\end{scope}
+
+\begin{scope}[canvas is yz plane at x=0.2,shift={(2,2)}]
+\draw[dash pattern=on 0.1pt off 0.8pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]},tshift] (-0.725,2) -- (-1.425,2);
+\draw[dash pattern=on 0.1pt off 0.8pt] (0.725,2) -- (1.425,2);
+\end{scope}
+
+\begin{scope}[canvas is yz plane at x=0.4,shift={(2,2)}]
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,tshift] (-0.64,2) -- (-1.34,2);
+\draw[dash pattern=on 2pt off 1pt,-{Stealth[inset=6pt,length=7.5pt,width=10pt]}] (0.81,2) -- (1.51,2);
+\end{scope}
+
+\begin{scope}[canvas is yx plane at z=4,shift={(2,2)},xscale=-1,yscale=-1]
+\draw[dash pattern=on 2pt off 1pt, -{Stealth[inset=6pt,length=7.5pt,width=10pt]},yshift=0.075cm] (0.1,0.725) -- (0.1,1.425);
+\draw[dash pattern=on 2pt off 1pt, -{Stealth[inset=6pt,length=7.5pt,width=10pt]}] (-0.1,-0.725) -- (-0.1,-1.425);
+\draw[dash pattern=on 2pt off 1pt, -{Stealth[inset=6pt,length=7.5pt,width=10pt]}] (-0.65,0.1) -- (-1.35,0.1);
+\draw[dash pattern=on 2pt off 1pt, -{Stealth[inset=6pt,length=7.5pt,width=10pt]},xshift=-0.075cm] (0.65,-0.1) -- (1.35,-0.1);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-] (-0.1,0.725) -- (-0.1,1.425);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,yshift=0.075cm] (0.1,-0.725) -- (0.1,-1.425);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,xshift=-0.075cm] (-0.65,-0.1) -- (-1.35,-0.1);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-] (0.65,0.1) -- (1.35,0.1);
+
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,dash pattern=on 0.1pt off 0.8pt] (1.5,0.3) -- (0.4,1.4);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,dash pattern=on 0.1pt off 0.8pt] (0.7,1.5) -- (1.5,0.7);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,dash pattern=on 0.1pt off 0.8pt] (-0.65,1.25) -- (-1.25,0.65);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,dash pattern=on 0.1pt off 0.8pt] (-1.35,0.75) -- (-0.75,1.35);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,dash pattern=on 0.1pt off 0.8pt] (-1.45,-0.35) -- (-0.35,-1.45);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,dash pattern=on 0.1pt off 0.8pt] (-0.7,-1.5) -- (-1.5,-0.7);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,dash pattern=on 0.1pt off 0.8pt] (0.65,-1.25) -- (1.25,-0.65);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,dash pattern=on 0.1pt off 0.8pt] (1.35,-0.75) -- (0.75,-1.35);
+
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,snake it] (1.15,0.25) -- (0.35,1.05);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,snake it] (1.1,1.5) -- (1.5,1.1);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,snake it] (-0.55,1.15) -- (-1.15,0.55);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,snake it] (-1.45,0.85) -- (-0.85,1.45);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,snake it] (-1.15,-0.25) -- (-0.35,-1.05);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,snake it] (-1.1,-1.5) -- (-1.5,-1.1);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,snake it] (0.55,-1.15) -- (1.15,-0.55);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,snake it] (1.45,-0.85) -- (0.85,-1.45);
+\end{scope}
+
+\node[anchor=east,xshift=15pt,rounded corners=10pt] at (1) {$\tilde{\mathbf{f}}_{\sigma_1},\tilde{\mathbf{a}}_{\sigma_1},\mathbf{p}_{\sigma_1}$};
+\node[circle,inner sep=1pt] at (2){$\tilde{\mathbf{f}}_{\tau_4},\tilde{\mathbf{a}}_{\tau_4}$};
+\node[anchor=center,align=center,yshift=5pt,circle,inner sep=1pt,yshift=-8pt] at (3){$\tilde{\mathbf{f}}_{\sigma_4},$\\$\tilde{\mathbf{a}}_{\sigma_4},$\\$\mathbf{p}_{\sigma_4}$};
+\node[circle,inner sep=1pt] at (4){$\tilde{\mathbf{f}}_{\tau_1},\tilde{\mathbf{a}}_{\tau_1}$};
+\node[circle,inner sep=1pt] at (5){$\tilde{\mathbf{f}}_{\delta_1},\tilde{\mathbf{a}}_{\delta_1}$};
+\node[circle,inner sep=1pt] at (6){$\tilde{\mathbf{f}}_{\tau_3},\tilde{\mathbf{a}}_{\tau_3}$};
+\node[anchor=center,align=center,yshift=5pt,circle,inner sep=0pt,yshift=2pt] at (7){$\tilde{\mathbf{f}}_{\sigma_2},$\\$\tilde{\mathbf{a}}_{\sigma_2},$\\$\mathbf{p}_{\sigma_2}$};
+\node[circle,inner sep=1pt] at (8){$\tilde{\mathbf{f}}_{\tau_2},\tilde{\mathbf{a}}_{\tau_2}$};
+\node[anchor=west,xshift=-15pt,rounded corners=10pt,inner sep=5pt] at (9) {$\tilde{\mathbf{f}}_{\sigma_3},\tilde{\mathbf{a}}_{\sigma_3},\mathbf{p}_{\sigma_3}$};
+\node[circle,inner sep=1pt] at (10){$\tilde{\mathbf{f}}_{\tau_7},\tilde{\mathbf{a}}_{\tau_7}$};
+\node[circle,inner sep=1pt] at (11){$\tilde{\mathbf{f}}_{\delta_3},\tilde{\mathbf{a}}_{\delta_3}$};
+\node[circle,inner sep=1pt] at (12){$\tilde{\mathbf{f}}_{\tau_6},\tilde{\mathbf{a}}_{\tau_6}$};
+\node[circle,inner sep=1pt] at (15){$\tilde{\mathbf{f}}_{\delta_2},\tilde{\mathbf{a}}_{\delta_2}$};
+\node[circle,inner sep=1pt] at (18){$\tilde{\mathbf{f}}_{\tau_5},\tilde{\mathbf{a}}_{\tau_5}$};
+\node[anchor=east,xshift=15pt,rounded corners=10pt,inner sep=5pt] at (19) {$\tilde{\mathbf{f}}_{\sigma_7},\tilde{\mathbf{a}}_{\sigma_7},\mathbf{p}_{\sigma_7}$};
+\node[circle,inner sep=1pt] at (20){$\tilde{\mathbf{f}}_{\tau_9},\tilde{\mathbf{a}}_{\tau_9}$};
+\node[anchor=center,align=center,yshift=-5pt,circle,inner sep=1pt] at (21){$\tilde{\mathbf{f}}_{\sigma_6},$\\$\tilde{\mathbf{a}}_{\sigma_6},$\\$\mathbf{p}_{\sigma_6}$};
+\node[circle,inner sep=1pt] at (24){$\tilde{\mathbf{f}}_{\tau_8},\tilde{\mathbf{a}}_{\tau_8}$};
+\node[anchor=west,xshift=-15pt,rounded corners=10pt,inner sep=5pt] at (27) {$\tilde{\mathbf{f}}_{\sigma_5},\tilde{\mathbf{a}}_{\sigma_5},\mathbf{p}_{\sigma_5}$};
+
+\begin{scope}[shift={(4,4,4)}]
+\draw[-{Stealth[inset=6pt,length=7.5pt,width=10pt]},snake it] ([xshift=0.9cm,yshift=-0.1cm]11) -- ([xshift=-0.9cm,yshift=-0.1cm]15);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,snake it] ([xshift=0.9cm,yshift=0.25cm]11) -- ([xshift=-0.9cm,yshift=0.25cm]15);
+\draw[-{Stealth[inset=6pt,length=7.5pt,width=10pt]},snake it] ([xshift=0.7cm,yshift=0.8cm]11) -- ([xshift=-0.2cm,yshift=-0.7cm]5);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,snake it] ([xshift=0.4cm,yshift=0.9cm]11) -- ([xshift=-0.5cm,yshift=-0.6cm]5);
+\draw[-{Stealth[inset=6pt,length=7.5pt,width=10pt]},snake it] ([xshift=-0.7cm,yshift=0.8cm]15) -- ([xshift=0.2cm,yshift=-0.7cm]5);
+\draw[{Stealth[inset=6pt,length=7.5pt,width=10pt]}-,snake it] ([xshift=-0.4cm,yshift=0.9cm]15) -- ([xshift=0.5cm,yshift=-0.6cm]5);
+\end{scope}
+
+\node[rectangle] (a) at (-2.5,2.4,3.75){$\phi_{\mathcal{B}}(\tilde{\mathbf{f}}_{\tau_1},\tilde{\mathbf{f}}_{\sigma_1})$};
+\draw[-{Stealth[inset=6pt,length=7.5pt,width=10pt]}] (a.east) to[out=0,in=90] (0,3.1,4.325);
+\node[rectangle] (b) at (-2.5,0.55,3.75){$\phi_{\mathcal{C}}(\tilde{\mathbf{f}}_{\sigma_2},\tilde{\mathbf{f}}_{\tau_1})$};
+\draw[-{Stealth[inset=6pt,length=7.5pt,width=10pt]}] (b.east) to[out=0,in=90] (0,1.25,4.325);
+\node[rectangle] (c) at (2.5,-0.75,5.35){$\phi_{\mathcal{L}}(\tilde{\mathbf{f}}_{\tau_2},\tilde{\mathbf{f}}_{\tau_1},\tilde{\mathbf{f}}_{\sigma_2},\tilde{\mathbf{a}}_{\sigma_2})$};
+\draw[-{Stealth[inset=6pt,length=7.5pt,width=10pt]}] (c.west) to[out=180,in=90] (0.9,0.65,4.1);
+\node[rectangle] (d) at (4,0,5.75){$\phi_{\mathcal{U}}(\tilde{\mathbf{f}}_{\sigma_2},\tilde{\mathbf{f}}_{\sigma_3},\tilde{\mathbf{f}}_{\tau_2},\mathbf{r}_{\sigma_2\sigma_3},\tilde{\mathbf{a}}_{\tau_2})$};
+\draw[-{Stealth[inset=6pt,length=7.5pt,width=10pt]}] (d.west) to[out=180,in=90] (1.46,0,4.15);
+\end{tikzpicture}
+\caption{Message passing on a cell complex \(\Delta^2\), geometrically realised in \(\mathbb{R}^3\). \(k(\sigma)=0\), \(k(\tau)=1\), \(k(\delta)=2\). \(\tilde{\mathbf{f}}\) and \(\tilde{\mathbf{a}}\): cell features and attributes, respectively, in the spherical harmonics basis. Each \(\sigma\) is associated with a position \(\mathbf{p}\). Boundary adjacency message functions \(\phi_{\mathcal{B}}\) (solid). Co-boundary adjacency message functions \(\phi_{\mathcal{C}}\) (dashed). Lower adjacency message functions \(\phi_{\mathcal{L}}\) (sinusoidal). Upper adjacency message functions \(\phi_{\mathcal{U}}\) (dotted).}
+\end{figure}
+
+
+Message passing on a cell complex $\Delta^2$, geometrically realised in $\mathbb{R}^3$. $k(\sigma)=0$, $k(\tau)=1$, $k(\delta)=2$. $\tilde{\mathbf{f}}$ and $\tilde{\mathbf{a}}$: cell features and attributes, respectively, in spherical harmonics basis. All $\sigma$ associated with a position $\mathbf{p}$. Boundary adjacency message functions $\phi_{\mathcal{B}}$ (solid). Co-boundary adjacency message functions $\phi_{\mathcal{C}}$ (dashed). Lower adjacency message functions $\phi_{\mathcal{L}}$ (sinusoidal). Upper adjacency message functions $\phi_{\mathcal{U}}$ (dotted).
+
+
+
+
+
+
+
+
+
+
+\begin{algorithm}
+
+\caption{Message passing layer. Updates steerable cell features {$\tilde{\mathbf{f}}^{\prime \prime \prime}_{\sigma} \gets \tilde{\mathbf{f}}_{\sigma}$}.}
+\label{alg:cap}
+
+\begin{algorithmic} % the [1] argument is for line numbering
+
+\Require $\tilde{\mathbf{f}}_\sigma$, $\mathbf{r}_{\sigma \tau}$  \Comment{\tiny Steerable cell features $\tilde{\mathbf{f}}_\sigma$, relative position vector $\mathbf{r}_{\sigma \tau}$ \normalsize} 
+
+%\\
+
+\Function{$\textsc{SiLU\_Gate}$}{input}
+\State output \oplus  \ \mathbf{s}_{i} \gets \text{input} + \text{bias} \Comment{\tiny Add bias to $l=0$ irreps \normalsize}
+\State output 
+$\gets$ 
+\textsc{Gate}(output, \textsc{SiLU}($\mathbf{s}_{i}$)) 
+\Comment{\tiny Transform output using gated non-linearities \normalsize}
+\State return output
+\EndFunction
+
+%\\
+
+\Function{$\textsc{O3\_TP}$}{input1,input2}
+\State output $\gets$ CG\_TP(input1,input2) \Comment{\tiny CG tensor product (Eq.\ref{eq:cg-tp-1}) \normalsize}
+\State output $\gets$ output + bias \Comment{\tiny Add bias to $l=0$ irreps \normalsize}
+\State return output
+\EndFunction
+
+%\\
+
+\Function{$\textsc{O3\_TP\_Gate}$}{input1,input2}
+\State output \oplus \ \mathbf{s}_{i} $\gets$ O3\_TP(input1,input2) \Comment{\tiny Sum product of output and scalar irreps $\mathbf{s}_{i}$ \normalsize}
+\State output_{gated} 
+$\gets$ \textsc{Gate}(output, \textsc{SiLU}($\mathbf{s}_{i}$)) 
+\Comment{\tiny Transform using gated non-linearities \normalsize}
+\State return output
+\EndFunction
+
+\\
+
+%\State \Comment{Boundary messages:}
+%\Procedure{BoundaryMessages}{}
+\If{$k_\sigma \neq 0$} \Comment{\tiny If $\sigma$ is not a $0$-cell \normalsize}
+
+    \State $\tilde{\mathbf{h}}_{\mathcal{B}, \sigma \tau} 
+    \gets \tilde{\mathbf{f}}_\sigma 
+    \oplus \tilde{\mathbf{f}}_\tau$ 
+    \Comment{\tiny Concatenate input for $\mathcal{B}$ messages between $\sigma$ and $\tau$ \normalsize}
+
+\State $ \tilde{\mathbf{m}}_{\mathcal{B}, \sigma \tau} 
+\gets 
+\textsc{SiLU\_Gate}(\tilde{\mathbf{h}}_{\mathcal{B}, \sigma \tau})$
+\Comment{\tiny Non-linear message layer \normalsize}
+
+\State $\tilde{\mathbf{m}}_{\mathcal{B}, \sigma} 
+\gets 
+\bigoplus_{\tau} \tilde{\mathbf{m}}_{\mathcal{B}, \sigma \tau}
+$
+\Comment{\tiny Aggregate messages $\tilde{\mathbf{m}}_{\mathcal{B}, \sigma \tau}$ \normalsize}
+
+\EndIf
+%\EndProcedure
+
+\\
+
+%\State \Comment{Co-boundary messages:}
+%\Procedure{CoboundaryMessages}{}
+
+\If{$k_\sigma \neq 3$} \Comment{\tiny If $\sigma$ is not a $3$-cell \normalsize}
+
+\State $\tilde{\mathbf{h}}_{\mathcal{C}, \sigma \tau} 
+\gets \tilde{\mathbf{f}}_\sigma 
+\oplus \tilde{\mathbf{f}}_\tau$ 
+\Comment{\tiny Concatenate input for $\mathcal{C}$ messages between $\sigma$ and $\tau$ \normalsize}
+
+\State $ \tilde{\mathbf{m}}_{\mathcal{C}, \sigma \tau} 
+\gets 
+\textsc{SiLU\_Gate}(\tilde{\mathbf{h}}_{\mathcal{C}, \sigma \tau})$
+\Comment{\tiny Non-linear message layer \normalsize}
+
+\State $\tilde{\mathbf{m}}_{\mathcal{C}, \sigma} 
+\gets 
+\bigoplus_{\tau} \tilde{\mathbf{m}}_{\mathcal{C}, \sigma \tau}
+$
+\Comment{\tiny Aggregate messages $\tilde{\mathbf{m}}_{\mathcal{C}, \sigma \tau}$ \normalsize}
+%\EndProcedure
+\EndIf
+
+\\
+
+\State $\tilde{\mathbf{f}}^{\prime}_\sigma 
+\gets 
+\textsc{O3\_TP\_Gate}(\tilde{\mathbf{f}}_\sigma
+\oplus 
+\tilde{\mathbf{m}}_{\mathcal{B}, \sigma} 
+\oplus 
+\tilde{\mathbf{m}}_{\mathcal{C}, \sigma}, 
+\tilde{\mathbf{a}}_{\sigma}) $ 
+\Comment{\tiny Non-linear update layer ($\mathcal{B}$, $\mathcal{C}$)\normalsize}
+
+\State $\tilde{\mathbf{f}}^{\prime}_\sigma 
+\gets 
+\tilde{\mathbf{f}}_\sigma 
++
+\textsc{O3\_TP}(\tilde{\mathbf{f}}^{\prime}_\sigma,
+\tilde{\mathbf{a}}_{\sigma}) $ 
+\Comment{\tiny Linear update layer \normalsize}
+
+\\
+
+%\State \Comment{Lower messages:}
+%\Procedure{LowerMessages}{}
+\If{$k_\sigma \neq 0$} \Comment{\tiny If $\sigma$ is not a $0$-cell \normalsize}
+
+\State $\tilde{\mathbf{a}}_{\delta}$ $\gets$ $\textsc{SHT}(\mathbf{a}_{\delta})$ \Comment{\tiny Spherical harmonic transform of $\mathbf{a}_{\delta}$ (Eq.\ref{eq4}) \normalsize}
+
+\State $\tilde{\mathbf{h}}_{\mathcal{L}, \sigma \tau}  
+\gets 
+\tilde{\mathbf{f}}_\sigma^{\prime}
+\oplus \tilde{\mathbf{f}}_\tau 
+\oplus \tilde{\mathbf{f}}_\delta$ 
+\Comment{\tiny Concatenate input for $\mathcal{L}$ messages between $\sigma$ and $\tau$ \normalsize}
+
+\State $\tilde{\mathbf{m}}_{\mathcal{L}, \sigma \tau} 
+\gets 
+\textsc{O3\_TP\_GATE}(\tilde{\mathbf{h}}_{\mathcal{L}, \sigma \tau}, \tilde{\mathbf{a}}_{\delta}) $
+\Comment{\tiny Non-linear message layer \normalsize}
+
+\State $\tilde{\mathbf{m}}_{\mathcal{L}, \sigma} 
+\gets 
+\bigoplus_{\tau} \tilde{\mathbf{m}}_{\mathcal{L}, \sigma \tau}
+$
+\Comment{\tiny Aggregate messages $\tilde{\mathbf{m}}_{\mathcal{L}, \sigma \tau}$ \normalsize}
+\EndIf
+%\EndProcedure
+
+
+\end{algorithmic}
+\end{algorithm}
+
+
+
+\newpage
+
+
+
+
+\begin{algorithm}
+\ContinuedFloat % continue from the last float
+\caption{Message passing layer. Updates steerable cell features {$\tilde{\mathbf{f}}^{\prime \prime \prime}_{\sigma} \gets \tilde{\mathbf{f}}_{\sigma}$}. (Continued)}
+\begin{algorithmic} % the [1] argument is for line numbering
+
+
+%\Procedure{UpperMessages}{}
+\If{$k_\sigma \neq 3$} \Comment{\tiny If $\sigma$ is not a $3$-cell \normalsize}
+
+\State $\tilde{\mathbf{a}}_{\delta}$ $\gets$ $\textsc{SHT}(\mathbf{a}_{\delta})$ \Comment{\tiny Spherical harmonic transform of $\mathbf{a}_{\delta}$ (Eq.\ref{eq4}) \normalsize}
+
+\If{$k_\sigma=k_\tau=0$} \Comment{\tiny If $\sigma$ and $\tau$ are $0$-cells \normalsize}
+    \State $\tilde{\mathbf{h}}_{\mathcal{U}, \sigma \tau} 
+    \gets 
+    \tilde{\mathbf{f}}_\sigma^{\prime}
+    \oplus 
+    \tilde{\mathbf{f}}_\tau 
+    \oplus 
+    \tilde{\mathbf{f}}_{\delta} 
+    \oplus 
+    \|\mathbf{r}_{\sigma \tau}\|^2$ 
+    \Comment{\tiny Concatenate input for $\mathcal{U}$ messages between $\tilde{\mathbf{f}}_\sigma$ and $\tilde{\mathbf{f}}_\tau$ \normalsize}
+\ElsIf{$k_\sigma = k_\tau \neq 0$}
+
+    \State $\tilde{\mathbf{h}}_{\mathcal{U}, \sigma \tau}  
+    \gets 
+    \tilde{\mathbf{f}}_\sigma^{\prime}
+    \oplus 
+    \tilde{\mathbf{f}}_\tau 
+    \oplus 
+    \tilde{\mathbf{f}}_\delta$ 
+    \Comment{\tiny Concatenate input for $\mathcal{U}$ messages between $\tilde{\mathbf{f}}_\sigma$ and $\tilde{\mathbf{f}}_\tau$ \normalsize}
+\EndIf
+
+\State $\tilde{\mathbf{m}}_{\mathcal{U}, \sigma \tau} 
+\gets 
+\textsc{O3\_TP\_Gate}(\tilde{\mathbf{h}}_{\mathcal{U}, \sigma \tau}, \tilde{\mathbf{a}}_{\delta}) $
+\Comment{\tiny Non-linear message layer \normalsize}
+
+\State $\tilde{\mathbf{m}}_{\mathcal{U}, \sigma} 
+\gets 
+\bigoplus_{\tau} \tilde{\mathbf{m}}_{\mathcal{U}, \sigma \tau}
+$
+\Comment{\tiny Aggregate messages $\tilde{\mathbf{m}}_{\mathcal{U}, \sigma \tau}$ \normalsize}
+
+\EndIf
+
+%\EndProcedure
+
+
+\\
+
+
+\State $\tilde{\mathbf{f}}^{\prime \prime}_\sigma 
+\gets 
+\textsc{O3\_TP\_Gate}(\tilde{\mathbf{f}}^{\prime}_\sigma
+\oplus 
+\tilde{\mathbf{m}}_{\mathcal{L}, \sigma} 
+\oplus 
+\tilde{\mathbf{m}}_{\mathcal{U}, \sigma}, 
+\tilde{\mathbf{a}}_{\sigma}) $ 
+\Comment{\tiny Non-linear update layer ($\mathcal{L}$,  $\mathcal{U}$) \normalsize}
+
+\State $\tilde{\mathbf{f}}^{\prime \prime}_\sigma 
+\gets 
+\tilde{\mathbf{f}}_\sigma^{\prime}
++
+\textsc{O3\_TP}(\tilde{\mathbf{f}}^{\prime \prime \prime}_\sigma,
+\tilde{\mathbf{a}}_{\sigma}) $ 
+\Comment{\tiny Linear update layer \normalsize}
+
+
+\end{algorithmic}
+\end{algorithm}
+
+
+
+
+
+\subsection{$\sigma$- and $\Delta$-level readout}
+%\subsection{Generic learning tasks and readout functions}
+
+\begin{figure}[h!]
+\centering
+%\makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{img/cell-complex-architecture.png}}
+\includegraphics[scale=0.85]{img/cell-complex-architecture-2.png}
+\caption{Architecture outline for cell-level predictions $\hat{\mathbf{y}}_n$ and complex-level predictions $\hat{\mathbf{y}}_{\Delta}$. Example with cell complex $\Delta$ of dimension $2$ embedded in ambient space $\mathbb{R}^3$. 
+\textbf{(a)} Geometric cell complex $\Delta$ with cell features $\mathbf{f}_i \in \mathbb{R}^{C_c}$, cell attributes $\mathbf{a}_i \in$ $\mathbb{R}^{C_a}$, and 0 -cell positions $p_i \in \mathbb{R}^3$. \textbf{(b)} Spherical harmonic transform of features, ${\mathbf{f}_i \rightarrow \tilde{\mathbf{h}}_i}$ and attributes, $\mathbf{a}_i \rightarrow \tilde{\mathbf{a}}_i$. \textbf{(c)} Message passing mechanism; updated cell features $\tilde{\mathbf{h}}_i$. \textbf{(d)} Local (cell-level) readout MLPs with cell features, $\tilde{\mathbf{h}}_i$, as input. \textbf{(e)} Reduction to multi-sets of features wrt to cell dimension; global (complex-level) embedding, $\tilde{\mathbf{h}}_{\Delta} = \left(\left\{\tilde{\mathbf{h}}_\sigma\right\}_{k_\sigma=0},\left\{\tilde{\mathbf{h}}_\sigma\right\}_{k_\sigma=1},\left\{\tilde{\mathbf{h}}_\sigma\right\}_{k_\sigma=2}\right)$, and readout MLP. \textbf{(f)} Local predictions, $\hat{\mathbf{y}}_i$. \textbf{(g)} Global prediction, $\hat{\mathbf{y}}_{\Delta}$.
+}
+\end{figure}
+
+Once the cell complex structured data inputs have been transformed into latent representations, a wide range of learning tasks can be performed on the transformed data. Two principal learning tasks that can be undertaken are cell-level prediction and complex-level prediction. 
+After the final message passing layer $L$, we can apply a readout function $\hat{\mathbf{y}}$, which can take different forms depending on the task of interest. 
+
+One option is that $\hat{\mathbf{y}}$ aggregates in a permutation invariant way the features of cells of the same dimension $k$, after which it applies a non-linearity $\phi$: 
+
+$$
+{\hat{\mathbf{y}}_{\sigma} = \phi \left( \bigoplus_{\sigma_{k=0} \in \Delta} \mathbf{h}^L_{\sigma}, \bigoplus_{\sigma_{k=1} \in \Delta} \mathbf{h}^L_{\sigma}, \dots , \bigoplus_{\sigma_{k=n} \in \Delta} \mathbf{h}^L_{\sigma}\right)}
+$$
+
+Another task may not need the distinguishing of cells by the their dimension and the readout function can aggregate the features of all cells (of different dimensions) in order to obtain an complex-level output: 
+$$
+{\hat{\mathbf{y}}_{\Delta} = \phi \left( \bigoplus_{\sigma \in \Delta} \mathbf{h}^L_{\sigma}\right)} 
+$$
+
+In both cases, the latent representations of the cells are combined using suitable aggregation methods, such as direct sum operations or other fusion techniques. 
+It is important to note that cell-level and complex-level prediction tasks are not mutually exclusive, and a learning model can be designed to address both simultaneously. By jointly learning from the individual cells and the complex as a whole, the model can leverage the local and global information encoded in the latent representations to gain a comprehensive understanding of the cell complex. This combination of tasks allows for a more comprehensive analysis, enabling the extraction of both fine-grained and global insights from the transformed cell complex data.
+
+
+
+
+          
         </div>
 
         <div class="references-section">
