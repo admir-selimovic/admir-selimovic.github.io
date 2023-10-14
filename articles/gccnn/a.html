@@ -405,15 +405,7 @@
           
 
 <script type="text/tikz">
-\begin{tikzpicture}[scale=1.50]
-
-    \foreach \i in {1,...,4} {
-      \coordinate (\i) at (90*\i:1);
-      \fill (\i) circle (0.02);
-    }
-    \path[fill=black,opacity=0.05] (1) -- (2)  -- (3) -- (4) -- cycle;
-    \draw (1) -- (2) -- (3) -- (4) -- cycle;
-
+  \begin{tikzpicture}
     % nodes-to-edges messages
     \draw[-{Stealth[scale=1.5]},bend right=30] (1) to node[pos=0.5,right] {} (-0.5,0.5);
     \draw[-{Stealth[scale=1.5]},bend left=30] (1) to node[pos=0.5,right] {} (0.5,0.5);
@@ -435,10 +427,8 @@
     \draw[-{Stealth[scale=1.5]},bend right=30] (0.5,-0.5) to node[pos=0.5,right] {} (0.1,-0.1);
 
     \draw[-{Stealth[scale=1.5]},bend right=30] (-0.5,-0.5) to node[pos=0.5,right] {} (-0.1,-0.1);
-    
-\end{tikzpicture}
+  \end{tikzpicture}
 </script>
-
 
 \begin{figure}[H]
 \centering
