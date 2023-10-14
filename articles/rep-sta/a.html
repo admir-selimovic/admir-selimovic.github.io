@@ -45,8 +45,6 @@
     
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // ... [keep the existing code for figure references]
-    
         // Update citations in the text
         const citationPlaceholders = document.querySelectorAll('.autocite');
         citationPlaceholders.forEach(placeholder => {
@@ -68,6 +66,34 @@
     });
     </script>
 
+    script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get all figures and tables to be numbered
+        const items = document.querySelectorAll('.auto-number-figure, table');
+        
+        // Number the figures and tables
+        items.forEach((item, index) => {
+            const number = index + 1;
+            item.setAttribute('data-number', number);
+        });
+        
+        // Update links that reference figures and tables
+        const links = document.querySelectorAll('a[href^="#fig-"], a[href^="#tab-"]');
+        links.forEach(link => {
+            const targetId = link.getAttribute('href');
+            const targetItem = document.querySelector(targetId);
+            if (targetItem) {
+                const itemNumber = targetItem.getAttribute('data-number');
+                if (targetId.startsWith('#fig-')) {
+                    link.innerHTML = `Figure ${itemNumber}`;
+                } else if (targetId.startsWith('#tab-')) {
+                    link.innerHTML = `Table ${itemNumber}`;
+                }
+            }
+        });
+    });
+    </script>
+    
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         const content = document.querySelector('.content');
@@ -84,6 +110,7 @@
             margin: 0;
             padding: 0;
             counter-reset: figure-counter;
+            counter-reset: table-counter;
         }
 
         h1 {
@@ -164,6 +191,14 @@
         
         figcaption::before {
             content: "Figure " counter(figure-counter) ": ";
+        }
+
+        table {
+            counter-increment: table-counter;
+        }
+        
+        table + figcaption::before {
+            content: "Table " counter(table-counter) ": ";
         }
         
         .article-content img {
@@ -299,6 +334,45 @@
         
         
         The other two variants of Method A (no edge attributes and Euclidean distance) fall behind all the others in the first part of the experiment. Since they do not involve information on the direction that the messages come from, the accuracy is unchanged with the transformed input; they are invariant to rotation. Finally, we observe the stability under rotation with Method B and the higher accuracy relative to the rotation-invariant models.
+
+
+                    
+        <figure id="tab-egnn-mpnn-compar">
+            <table border="1" style="border-collapse: collapse; width: 70%; margin: auto;">
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>ACC(a)</th>
+                        <th>ACC(b)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>A ($\mathbf{a}_{ij} = \emptyset$)</td>
+                        <td>.6398</td>
+                        <td>.6398</td>
+                    </tr>
+                    <tr>
+                        <td>A ($\mathbf{a}_{ij} = \|\mathbf{r}_{ij}\|^2$)</td>
+                        <td>.6861</td>
+                        <td>.6861</td>
+                    </tr>
+                    <tr>
+                        <td>A ($\mathbf{a}_{ij} = \mathbf{r}_{ij}$)</td>
+                        <td>.8061</td>
+                        <td>.3876</td>
+                    </tr>
+                    <tr>
+                        <td>B ($\mathbf{a}_{ij} = \|\mathbf{r}_{ij}\|^2, \phi_p$)</td>
+                        <td>.7643</td>
+                        <td>.7643</td>
+                    </tr>
+                </tbody>
+            </table>
+            <figcaption>
+                Comparison of feature stability under rotation accross message passing model variants. ACC (a): validation accuracy; ACC (b): Random rotation test accuracy.
+            </figcaption>
+        </figure>
 
 
         <table border="1" style="border-collapse: collapse; width: 70%; margin: auto;">
