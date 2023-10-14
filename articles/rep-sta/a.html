@@ -76,16 +76,8 @@
     document.addEventListener('DOMContentLoaded', function() {
         const content = document.querySelector('.content');
         if (content) {
-            const paragraphs = content.innerHTML.split('\n'); // Split content at each new line
-            content.innerHTML = paragraphs.map(p => {
-                const trimmed = p.trim();
-                
-                // Check if line starts with an HTML tag or known patterns
-                if (/^<[^>]+>/.test(trimmed) || trimmed.startsWith("Figure ") || trimmed.startsWith("Table ")) {
-                    return trimmed;
-                }
-                return trimmed ? `<p>${trimmed}</p>` : '';  // Wrap each split content in <p> tags, but skip empty strings
-            }).join('');
+            const paragraphs = content.innerHTML.split(/\n\s*\n/); // Split content at empty lines
+            content.innerHTML = paragraphs.map(p => `<p>${p.trim()}</p>`).join(''); // Wrap each split content in <p> tags
         }
     });
     </script>
