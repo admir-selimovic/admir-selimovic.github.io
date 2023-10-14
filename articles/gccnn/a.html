@@ -352,6 +352,33 @@
             \end{tikzpicture}
           </script>
 
+
+<script type="text/tikz">
+  \begin{tikzpicture}
+    % nodes-to-edges messages
+    \draw[-{Stealth[scale=1.5]},bend right=30] (1) to node[pos=0.5,right] {} (-0.5,0.5);
+    \draw[-{Stealth[scale=1.5]},bend left=30] (1) to node[pos=0.5,right] {} (0.5,0.5);
+
+    \draw[-{Stealth[scale=1.5]},bend left=30] (2) to node[pos=0.5,right] {} (-0.5,0.5);
+    \draw[-{Stealth[scale=1.5]},bend right=30] (2) to node[pos=0.5,right] {} (-0.5,-0.5);
+
+    \draw[-{Stealth[scale=1.5]},bend left=30] (3) to node[pos=0.5,right] {} (-0.5,-0.5);
+    \draw[-{Stealth[scale=1.5]},bend right=30] (3) to node[pos=0.5,right] {} (0.5,-0.5);
+
+    \draw[-{Stealth[scale=1.5]},bend left=30] (4) to node[pos=0.5,right] {} (0.5,-0.5);
+    \draw[-{Stealth[scale=1.5]},bend right=30] (4) to node[pos=0.5,right] {} (0.5,0.5);
+
+    % edges-to-faces messages
+    \draw[-{Stealth[scale=1.5]},bend right=30] (-0.5,0.5) to node[pos=0.5,right] {} (-0.1,0.1);
+
+    \draw[-{Stealth[scale=1.5]},bend right=30] (0.5,0.5) to node[pos=0.5,right] {} (0.1,0.1);
+
+    \draw[-{Stealth[scale=1.5]},bend right=30] (0.5,-0.5) to node[pos=0.5,right] {} (0.1,-0.1);
+
+    \draw[-{Stealth[scale=1.5]},bend right=30] (-0.5,-0.5) to node[pos=0.5,right] {} (-0.1,-0.1);
+  \end{tikzpicture}
+</script>
+
           This experiment examines the representation stability of graph neural
           networks when subjected to 3D rotation of input data. Focusing on two
           leading methods, E(n) Equivariant Graph Neural Networks and Message
@@ -404,31 +431,7 @@
           Expanding upon this framework, our subsequent focus centres on generalising the message passing formulation to encompass cell complexes. We aim to delineate how this paradigm can be adapted to ingest and propagate directional information across various dimensional cells within these complexes.
           
 
-<script type="text/tikz">
-  \begin{tikzpicture}
-    % nodes-to-edges messages
-    \draw[-{Stealth[scale=1.5]},bend right=30] (1) to node[pos=0.5,right] {} (-0.5,0.5);
-    \draw[-{Stealth[scale=1.5]},bend left=30] (1) to node[pos=0.5,right] {} (0.5,0.5);
 
-    \draw[-{Stealth[scale=1.5]},bend left=30] (2) to node[pos=0.5,right] {} (-0.5,0.5);
-    \draw[-{Stealth[scale=1.5]},bend right=30] (2) to node[pos=0.5,right] {} (-0.5,-0.5);
-
-    \draw[-{Stealth[scale=1.5]},bend left=30] (3) to node[pos=0.5,right] {} (-0.5,-0.5);
-    \draw[-{Stealth[scale=1.5]},bend right=30] (3) to node[pos=0.5,right] {} (0.5,-0.5);
-
-    \draw[-{Stealth[scale=1.5]},bend left=30] (4) to node[pos=0.5,right] {} (0.5,-0.5);
-    \draw[-{Stealth[scale=1.5]},bend right=30] (4) to node[pos=0.5,right] {} (0.5,0.5);
-
-    % edges-to-faces messages
-    \draw[-{Stealth[scale=1.5]},bend right=30] (-0.5,0.5) to node[pos=0.5,right] {} (-0.1,0.1);
-
-    \draw[-{Stealth[scale=1.5]},bend right=30] (0.5,0.5) to node[pos=0.5,right] {} (0.1,0.1);
-
-    \draw[-{Stealth[scale=1.5]},bend right=30] (0.5,-0.5) to node[pos=0.5,right] {} (0.1,-0.1);
-
-    \draw[-{Stealth[scale=1.5]},bend right=30] (-0.5,-0.5) to node[pos=0.5,right] {} (-0.1,-0.1);
-  \end{tikzpicture}
-</script>
 
 \begin{figure}[H]
 \centering
