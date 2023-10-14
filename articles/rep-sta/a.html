@@ -181,9 +181,9 @@ Rotation invariance stems from the norm in the edge attribute definition
 %$\mathbf{a}_{ij} = \|\mathbf{x}_j - \mathbf{x}_i\|$ 
 being invariant to rotations. 
 
-Last model following the Method A has relative Cartesian coordinates as attributes, $\mathbf{a}_{ij} = \mathbf{r}_{ij}$. Here, latent representations show instability under rotation. The definition of edge attribute here as the distance between two nodes, $\mathbf{r}_{ij}$, does guarantee translation but not rotation $G$-mapping. See Figure \ref{fig:mpnn} for a visualisation.
+Last model following the Method A has relative Cartesian coordinates as attributes, $\mathbf{a}_{ij} = \mathbf{r}_{ij}$. Here, latent representations show instability under rotation. The definition of edge attribute here as the distance between two nodes, $\mathbf{r}_{ij}$, does guarantee translation but not rotation $G$-mapping. See <a href="#fig-rep-sta-1">Figure</a> for a visualisation.
 
-<figure>
+<figure id="fig-rep-sta-1">
     <img src="assets/rep-sta-1.png" width="600">
     <figcaption>
         Hidden representations of the model before pooling, using relative Cartesian coordinates as edge attributes. The disk radius reflects the first node feature value. For the input representation, 1,500 points per 3D model randomly sampled from the embedding space $\mathbb{R}^3$. Two scenarios are shown: (a) with an applied rotation of $ \theta = 0^{\circ} $ and (b) with $ \theta = 180^{\circ} $. The input representation for this visualisation differs from the others in the experiment solely in the pre-processing involving random sampling.
