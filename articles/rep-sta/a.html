@@ -21,14 +21,20 @@
     
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Auto-numbering for figures and tables
-        const items = document.querySelectorAll('.auto-number-figure, table');
-        
-        items.forEach((item, index) => {
+        // Auto-numbering for figures
+        const figures = document.querySelectorAll('.auto-number-figure');
+        figures.forEach((fig, index) => {
             const number = index + 1;
-            item.setAttribute('data-number', number);
+            fig.setAttribute('data-number', number);
         });
-        
+    
+        // Auto-numbering for tables
+        const tables = document.querySelectorAll('table');
+        tables.forEach((table, index) => {
+            const number = index + 1;
+            table.setAttribute('data-number', number);
+        });
+    
         const links = document.querySelectorAll('a[href^="#fig-"], a[href^="#tab-"]');
         links.forEach(link => {
             const targetId = link.getAttribute('href');
