@@ -59,6 +59,7 @@
 
         .article-content {
             font-size: 22px; 
+            counter-reset: figure-counter; /* Initializes the counter */
         }
         
         .article-content p {
@@ -83,8 +84,9 @@
         figure {
             text-align: center; /* centers the content */
             margin: 20px 0; /* adds some margin on top and bottom */
+            counter-increment: figure-counter; /* Increments the counter for each figure */
         }
-    
+        
         figcaption {
             font-style: italic; /* makes the caption italic */
             font-size: 0.9em;  /* makes the caption slightly smaller than regular text */
@@ -93,7 +95,11 @@
             margin: 0 100px;
             text-align: left;
         }
-
+        
+        figcaption::before {
+            content: "Figure " counter(figure-counter) ": ";
+        }
+        
         .article-content img {
             width: 100%;
             max-width: 100%;
@@ -189,7 +195,7 @@ Last model following the Method A has relative Cartesian coordinates as attribut
         Hidden representations of the model before pooling, using relative Cartesian coordinates as edge attributes. The disk radius reflects the first node feature value. For the input representation, 1,500 points per 3D model randomly sampled from the embedding space $\mathbb{R}^3$. Two scenarios are shown: (a) with an applied rotation of $ \theta = 0^{\circ} $ and (b) with $ \theta = 180^{\circ} $. The input representation for this visualisation differs from the others in the experiment solely in the pre-processing involving random sampling.
     </figcaption>
 </figure>
-                
+
 Next, we compare Method B with the three variants of Method A, presented in the Table \ref{tab:egnn-mpnn-compar}. Method B is outperformed only by Method A variant with relative Cartesian coordinates as edge attributes. However, in the second part of the experiment, where we apply a random rotation to the input, its accuracy decreases significantly. This is expected, since relative Cartesian coordinates are not invariant to rotation. 
 
 
