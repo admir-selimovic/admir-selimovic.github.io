@@ -270,8 +270,11 @@
         While both Method A and Method B preserve preserve permutation $G$-mapping on the set of nodes $V$ in the same way as standard GNNs do, Method B preserves rotation and translation $G$-mapping on the set of coordinates $\mathbf{x}_i$. Equation \ref{eq:egnn-node-pos-update} is the main difference of this method compared to standard GNNs and it is the reason why translation, rotation, and reflection $G$-mapping is preserved.
         However still, the messages are obtained via invariant attributes $\|\mathbf{r}_{ij}\|^2$, which are limiting despite ensuring a $G$-map.
         
-        The next step in both methods is to aggregate the computed messages via a permutation-invariant function. Permutation invariance is needed because the way the messages are indexed, just like the way nodes are indexed, meaning the order, should not influence the results. We use sum pooling. The aggregated message $\mathbf{m}_i = \sum_{j \in N_i} \mathbf{m}_{i j}$ is a vector that is used to obtain an updated node representation
-        $\mathbf{h}_i^{\prime}=\phi_h \left(\mathbf{h}_i, \sum_{j \in N_i} \mathbf{m}_{i j}\right)$, where $\phi_h$ is a node update function imlemented as an MLP, whose input are the current node features $\mathbf{h}_i$ and the aggregated message $\mathbf{m}_i$.
+        The next step in both methods is to aggregate the computed messages via a permutation-invariant function. Permutation invariance is needed because the way the messages are indexed, just like the way nodes are indexed, meaning the order, should not influence the results. We use sum pooling. The aggregated message 
+        $$\mathbf{m}_i = \sum_{j \in N_i} \mathbf{m}_{i j}$$ 
+        is a vector that is used to obtain an updated node representation
+        $$\mathbf{h}_i^{\prime}=\phi_h \left(\mathbf{h}_i, \sum_{j \in N_i} \mathbf{m}_{i j}\right) ,$$
+        where $\phi_h$ is a node update function imlemented as an MLP, whose input are the current node features $\mathbf{h}_i$ and the aggregated message $\mathbf{m}_i$.
         
         
         <h3>Readout</h3>
