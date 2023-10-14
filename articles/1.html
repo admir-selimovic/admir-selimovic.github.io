@@ -81,101 +81,121 @@
         <div class="article-content">
             <p>
                 
-In complex analysis, the exponential function $e^{i\theta}$ represents a counterclockwise rotation by an angle of $\theta$ in the complex plane. 
-To determine the rotation matrix for $\operatorname{Re}(e^{i \theta})$ and $\operatorname{Im}(e^{i \theta})$, we can use the Euler's formula for complex exponential:
-$$e^{i \theta} = \cos(\theta) + i\sin(\theta).$$
 
-The real part of $e^{i \theta}$ is $\operatorname{Re}(e^{i \theta}) = \cos(\theta)$, and the imaginary part is $\operatorname{Im}(e^{i \theta}) = \sin(\theta)$.
+\subsubsection{Experiment: ModelNet10}
 
-Now, let's consider the rotation matrix in two dimensions, $\mathbf{R}(\theta)$. This matrix represents a counterclockwise rotation by an angle of $\theta$. It can be written as:
-$$
-\mathbf{R}(\theta) = 
-\left(\begin{smallmatrix} \cos(\theta) & -\sin(\theta) \\ \sin(\theta) & \cos(\theta) \end{smallmatrix}\right).
-$$
+We are processing undirected graphs $G = (V,E)$, consisting of nodes $v_i \in V$ and edges $e_{ij} \in E$. Nodes are assigned features $\mathbf{f}_i \in \mathbb{R}^{C_v}$ and edges are assigned attributes $\mathbf{a}_{ij} \in \mathbb{R}^{C_e}$, where $C_v$ and $C_e$ stand for the cardinality of features and attributes channel, respectively. The graph is embedded in $\mathbb{R}^3$; the nodes possess position vectors $\mathbf{x}_i \in \mathbf{X}$.
 
-Applying this matrix to a vector in the plane will result in a rotation of the vector by the given angle. Both $\operatorname{Re}(e^{i \theta})$ and $\operatorname{Im}(e^{i \theta})$ can be rotated using the same rotation matrix $\mathbf{R}(\theta) = \mathbf{R}(\theta)^{Re} = \mathbf{R}(\theta)^{Im}$, as they are both components of the complex exponential function $e^{i \theta}$.
 
-The complex conjugate of $e^{i\theta}$, which is $e^{-i\theta}$, represents a clockwise rotation by an angle of $\theta$ in the complex plane. The associated rotation matrix is the transpose of the rotation matrix for $e^{i\theta}$:
-$$
-\mathbf{R}(\theta)^{-1} =
-\left(
-\begin{smallmatrix}
-\cos \theta & \sin \theta \\
--\sin \theta & \cos \theta
-\end{smallmatrix}\right).
-$$
+We follow the methods from \autocite{gilmer2017} (A) and \autocite{satorras2021} (B). The forward pass has two phases, a message passing phase and a readout phase.
 
-Thus, the difference between the rotation matrices for $e^{i\theta}$ and $e^{-i\theta}$ is a reflection about the main diagonal, which changes the sign of the off-diagonal elements.
 
-Let us go through an example of applying a rotation by an angle \(l\theta\) to the decomposed \(e^{i l\alpha}\) into its real and imaginary parts.
+\paragraph{Message passing}
+Consider two nodes $v_i$ and $v_j$, their latent features $\mathbf{h}_i$ and $\mathbf{h}_j$, and the attributes $\mathbf{a}_{ij}$ of the edge that connects them. We update the node features by first computing a message $\mathbf{m}_{ij}$ from $v_j$ to $v_i$. 
+The message function is expressed as $\mathbf{m}_{i j}=\phi_m\left(\mathbf{h}_i, \mathbf{h}_j, \mathbf{a}_{i j}\right)$, whereby, in Method B, the message function is extended such that, aside the edge attribute, it involves the Euclidean distance: $\mathbf{m}_{ij}=\phi_m(\mathbf{h}_i, \mathbf{h}_j,||\mathbf{r}_{ij}||^2, a_{i j})$. However, for the purposes of this experiment, we will disregard the scalar attribute $a_{i j}$.
 
-Given the rotation matrix and the decomposed complex number:
-$$ 
-\mathbf{R}({l\theta})^{+1} = 
-\left(\begin{smallmatrix}
-\cos(l\theta) & -\sin( \theta) \\
-\sin(l\theta) & \cos(l\theta) \\
-\end{smallmatrix}\right)
-\quad \quad
-Y(e^{i l\alpha}) = 
-\left(\begin{smallmatrix}
-\cos(l\alpha) \\
-\sin(l\alpha) \\
-\end{smallmatrix}\right)
-$$
+The message update function $\phi_m$  is directly parameterised by an MLP, i.e., it does not output a matrix that is used to linearly transform the node features but directly computes messages in a nonlinear way. Thus, the messages are nonlinear transformations conditioned on the edge attribute. Note that by conditioning the messages only on the Euclidean distance in Method B, $G$-mapping is guaranteed. 
 
-To apply the rotation matrix to the decomposed complex number, we perform the matrix multiplication:
-$$
-\mathbf{R}({l\theta})^{+1} Y(e^{i l\alpha})
-= 
-\left(\begin{smallmatrix}
-\cos(l\theta) & -\sin(l\theta) \\
-\sin(l\theta) & \cos(l\theta)
-\end{smallmatrix}\right)
-\left(\begin{smallmatrix}
-\cos(l\alpha) \\
-\sin(l\alpha)
-\end{smallmatrix}\right)
-=
-\left(\begin{smallmatrix}
-\cos(l\theta)\cos(2\alpha) - \sin(l\theta)\sin(l\alpha) \\
-\sin(l\theta)\cos(2\alpha) + \cos(l\theta)\sin(l\alpha) \\
-\end{smallmatrix}\right)
-$$
 
-The expression can be further simplified by using trigonometric identities for the sum of angles. We can apply the following trigonometric identities: 
-\begin{align*}
-\cos(\alpha + \beta) &= \cos(\alpha)\cos(\beta) - \sin(\alpha)\sin(\beta) \\
-\sin(\alpha + \beta) &= \sin(\alpha)\cos(\beta) + \cos(\alpha)\sin(\beta)
-\end{align*}
+Notably, Method B extends message passing such that also the node positions become updatable: 
+\begin{equation} \label{eq:egnn-node-pos-update}
+\mathbf{x}^{\prime}_i=\mathbf{x}_i + \sum_{j\in N_i}(\mathbf{r}_{ij})\phi_p(\mathbf{m}_{ij})
+\end{equation} 
+The position function $\phi_p$ gives a scalar which weighs the amount by which $\mathbf{x}_i$ is translated in the direction of the neighbors or in the opposite direction. This is done in a $G$-equivariant way. 
+Since the position function $\phi_p$ is conditioned on the distance between the node and its neighbors, $\sum_{j \in N} (\mathbf{r}_{ij})$, it is invariant; i.e., since the function gives a scalar, the attributes are invariant. 
+%Recall that scalar fields are contrasted with spectral feature fields, where attributes can be $G$-equivariant. 
+However, the method learns the weights which determine the amount of influence nodes have on each other. Due to this, it allows for more adaptation and flexibility than the basic message passing. 
 
-Using these identities, we can simplify the expression:
-$$
-\mathbf{R}({l \theta})^{+1} Y(e^{i l \alpha})
-= 
-\left(\begin{smallmatrix}
-\cos(l\theta + l\alpha) \\
-\sin(l\theta + l\alpha)
-\end{smallmatrix}\right) 
-=
-\left(\begin{smallmatrix}
-\cos(l(\theta + \alpha)) \\
-\sin(l(\theta + \alpha))
-\end{smallmatrix}\right)
-$$
-This represents the real and imaginary parts of the rotated complex number $e^{i l \alpha}$ after applying the rotation matrix $\mathbf{R}({l\theta})^{+1}$.
+While both Method A and Method B preserve preserve permutation $G$-mapping on the set of nodes $V$ in the same way as standard GNNs do, Method B preserves rotation and translation $G$-mapping on the set of coordinates $\mathbf{x}_i$. Equation \ref{eq:egnn-node-pos-update} is the main difference of this method compared to standard GNNs and it is the reason why translation, rotation, and reflection $G$-mapping is preserved.
+However still, the messages are obtained via invariant attributes $\|\mathbf{r}_{ij}\|^2$, which are limiting despite ensuring a $G$-map.
 
-Let us revisit the concept of steerable basis functions. In practical applications, we often work with real-valued functions. It is worth noting that the real and imaginary parts of the basis functions correspond to $\cos(l \alpha)$ and $\sin(l \alpha)$, respectively. To simplify our computations, we can stack these real and imaginary parts together.
+The next step in both methods is to aggregate the computed messages via a permutation-invariant function. Permutation invariance is needed because the way the messages are indexed, just like the way nodes are indexed, meaning the order, should not influence the results. We use sum pooling. The aggregated message $\mathbf{m}_i = \sum_{j \in N_i} \mathbf{m}_{i j}$ is a vector that is used to obtain an updated node representation
+$\mathbf{h}_i^{\prime}=\phi_h \left(\mathbf{h}_i, \sum_{j \in N_i} \mathbf{m}_{i j}\right)$, where $\phi_h$ is a node update function imlemented as an MLP, whose input are the current node features $\mathbf{h}_i$ and the aggregated message $\mathbf{m}_i$.
 
-Having stacked the real an imaginary part, the representation matrix turns into its real-valued equivalent. Now, we have blocks of $2 \times 2$ matrices stacked diagonally, each one being an equivalent of a complex representation. For instance,
-$$
-\rho_l(\theta) = e^{-i l \theta} =
-\left(\begin{smallmatrix}
-\cos \theta & \sin \theta \\
--\sin \theta & \cos \theta
-\end{smallmatrix}\right)
-$$
-Each of the $2 \times 2$ representations act on the corresponding subspace of the basis function. This creates the block diagonal form of the representation matrix. The representation $\rho(\mathbf{R}(\theta)^{\pm 1})$ is thus matrix-valued.
+
+
+
+
+
+
+\paragraph{Readout}
+We perform a graph-level classification task on the dataset. To obtain a graph-level embedding, we apply a permutation-invariant aggregation of all the nodes' features: $\hat{y} = \sum_{v \in V}(\{\mathbf{h}^T_v\})$, where $T$ denotes the step after the last message passing layer.
+
+
+\subsubsection*{Dataset and input representation}
+
+
+ModelNet10 dataset \autocite{wu2015} contains 4,899 3D models (meshes) representing an object from 10 classes. We processed the meshes to form graphs embedded in $\mathbb{R}^3$. 
+%We normalised mesh vertex positions to $\{-1,1\}$. 
+Nodes form an $8\times8\times8$ regular grid. The edges are inferred by connecting nodes within a pre-set maximum radius value. The nodes are assigned one-dimensional feature vectors, representing the Euclidean distance to the closest point on the surface of the initial mesh.
+
+The three variants of Method A pose different demands on edge attributes. In the first, edges have no attributes. In the second, Euclidean distance between connected nodes forms attributes. In the third, attributes are formed by computing relative Cartesian coordinates of connected nodes.
+
+Each graph is assigned a one-dimensional feature vector representing the object class.
+
+We sampled 3.991 graphs for training and 908 for validation.
+
+\subsubsection*{Training}
+ Batch size is set to 64; the number of message-passing layers to 2; the number of hidden features to 256; and the learning rate to $3e^{-4}$. Number of epochs is set to 50. SGD uses the ADAM optimiser. Parameter total is 923 K (Method A) and 1.1 M (Method B).
+
+
+
+\subsubsection*{Results}
+
+
+Method A that does not use edge attributes ($\mathbf{a}_{ij} = \emptyset$) and therefore, it disregards any information the edges may carry, beyond connectivity. It is ignorant of the geometric structure between the nodes and its message passing scheme utilises the node feature vectors. Applying different rotations to the input graph gives the same latent representations. 
+
+Another model following the Method A has the geometric quantity of Euclidean distance injected into the edge attributes, $\mathbf{a}_{ij} = \|\mathbf{r}_{ij}\|^2$.
+%The result is identical to the first model. 
+The representations learned with this rotation-invariant model do not change under the rotation of the input representations. 
+%This implies that the model would not distinguish an object from its rotated instance during classification. 
+Rotation invariance stems from the norm in the edge attribute definition 
+%$\mathbf{a}_{ij} = \|\mathbf{x}_j - \mathbf{x}_i\|$ 
+being invariant to rotations. 
+
+Last model following the Method A has relative Cartesian coordinates as attributes, $\mathbf{a}_{ij} = \mathbf{r}_{ij}$. Here, latent representations show instability under rotation. The definition of edge attribute here as the distance between two nodes, $\mathbf{r}_{ij}$, does guarantee translation but not rotation $G$-mapping. See Figure \ref{fig:mpnn} for a visualisation.
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.8]{img/mpnn-test-cartesian-hidden-reps-0-deg.png}
+    \quad % Adds some space between the two images
+    \includegraphics[scale=0.8]{img/mpnn-test-cartesian-hidden-reps-180-deg.png}
+    \\ % Moves to the next line
+    (a) \hspace{5cm} (b) % Assuming the images are about 5cm wide, adjust as needed
+    \caption{Hidden representations of the model before pooling, using relative Cartesian coordinates as edge attributes. The disk radius reflects the first node feature value. For the input representation, 1,500 points per 3D model randomly sampled from the embedding space \(\mathbb{R}^3\). Two scenarios are shown: (a) with an applied rotation of \( \theta = 0^{\circ} \) and (b) with \( \theta = 180^{\circ} \). The input representation for this visualisation differs from the others in the experiment solely in the pre-processing involving random sampling.}
+    \label{fig:mpnn}
+\end{figure}
+
+
+Next, we compare Method B with the three variants of Method A, presented in the Table \ref{tab:egnn-mpnn-compar}. Method B is outperformed only by Method A variant with relative Cartesian coordinates as edge attributes. However, in the second part of the experiment, where we apply a random rotation to the input, its accuracy decreases significantly. This is expected, since relative Cartesian coordinates are not invariant to rotation. 
+
+
+The other two variants of Method A (no edge attributes and Euclidean distance) fall behind all the others in the first part of the experiment. Since they do not involve information on the direction that the messages come from, the accuracy is unchanged with the transformed input; they are invariant to rotation. Finally, we observe the stability under rotation with Method B and the higher accuracy relative to the rotation-invariant models.
+
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{lccc}
+\hline 
+Method & ACC(a) & ACC(b) \\
+\hline 
+A ($\mathbf{a}_{ij} = \emptyset$) & .6398 & .6398 \\
+A ($\mathbf{a}_{ij} = \|\mathbf{r}_{ij}\|^2$) & .6861 & .6861 \\
+A ($\mathbf{a}_{ij} = \mathbf{r}_{ij}$) & .8061 & .3876 \\
+B ($\mathbf{a}_{ij} = \|\mathbf{r}_{ij}\|^2, \phi_p$) & .7643 & .7643 \\
+\hline
+\end{tabular}
+\caption{Comparison of feature stability under rotation accross message passing model variants. ACC (a): validation accuracy; ACC (b): Random rotation test accuracy} \label{tab:egnn-mpnn-compar}
+\end{center}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.55]{img/egnn-valid-acc-comparison.png}
+\caption{Training performance comparison. Method A with edge attributes $\mathbf{a}_{ij} = \emptyset$, $\mathbf{a}_{ij} = \|\mathbf{r}_{ij}\|^2$, and $\mathbf{a}_{ij} = \mathbf{r}_{ij}$. Method B with edge attributes $\mathbf{a}_{ij} = \|\mathbf{r}_{ij}\|^2$ and node position update function $\phi_p$.}
+\end{figure}
+
 
 
             <p>Thank you for reading!</p>
