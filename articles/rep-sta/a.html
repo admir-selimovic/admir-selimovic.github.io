@@ -247,7 +247,6 @@
         \end{equation} 
         The position function $\phi_p$ gives a scalar which weighs the amount by which $\mathbf{x}_i$ is translated in the direction of the neighbors or in the opposite direction. This is done in a $G$-equivariant way. 
         Since the position function $\phi_p$ is conditioned on the distance between the node and its neighbors, $\sum_{j \in N} (\mathbf{r}_{ij})$, it is invariant; i.e., since the function gives a scalar, the attributes are invariant. 
-        %Recall that scalar fields are contrasted with spectral feature fields, where attributes can be $G$-equivariant. 
         However, the method learns the weights which determine the amount of influence nodes have on each other. Due to this, it allows for more adaptation and flexibility than the basic message passing. 
         
         While both Method A and Method B preserve preserve permutation $G$-mapping on the set of nodes $V$ in the same way as standard GNNs do, Method B preserves rotation and translation $G$-mapping on the set of coordinates $\mathbf{x}_i$. Equation \ref{eq:egnn-node-pos-update} is the main difference of this method compared to standard GNNs and it is the reason why translation, rotation, and reflection $G$-mapping is preserved.
@@ -265,7 +264,6 @@
         <h3>Dataset and input representation</h3>
         
         ModelNet10 dataset <span class="autocite" data-ref="2015"></span> contains 4,899 3D models (meshes) representing an object from 10 classes. We processed the meshes to form graphs embedded in $\mathbb{R}^3$. 
-        %We normalised mesh vertex positions to $\{-1,1\}$. 
         Nodes form an $8\times8\times8$ regular grid. The edges are inferred by connecting nodes within a pre-set maximum radius value. The nodes are assigned one-dimensional feature vectors, representing the Euclidean distance to the closest point on the surface of the initial mesh.
         
         The three variants of Method A pose different demands on edge attributes. In the first, edges have no attributes. In the second, Euclidean distance between connected nodes forms attributes. In the third, attributes are formed by computing relative Cartesian coordinates of connected nodes.
@@ -285,12 +283,8 @@
         Method A that does not use edge attributes ($\mathbf{a}_{ij} = \emptyset$) and therefore, it disregards any information the edges may carry, beyond connectivity. It is ignorant of the geometric structure between the nodes and its message passing scheme utilises the node feature vectors. Applying different rotations to the input graph gives the same latent representations. 
         
         Another model following the Method A has the geometric quantity of Euclidean distance injected into the edge attributes, $\mathbf{a}_{ij} = \|\mathbf{r}_{ij}\|^2$.
-        %The result is identical to the first model. 
         The representations learned with this rotation-invariant model do not change under the rotation of the input representations. 
-        %This implies that the model would not distinguish an object from its rotated instance during classification. 
-        Rotation invariance stems from the norm in the edge attribute definition 
-        %$\mathbf{a}_{ij} = \|\mathbf{x}_j - \mathbf{x}_i\|$ 
-        being invariant to rotations. 
+        Rotation invariance stems from the norm in the edge attribute definition being invariant to rotations. 
         
         Last model following the Method A has relative Cartesian coordinates as attributes, $\mathbf{a}_{ij} = \mathbf{r}_{ij}$. Here, latent representations show instability under rotation. The definition of edge attribute here as the distance between two nodes, $\mathbf{r}_{ij}$, does guarantee translation but not rotation $G$-mapping. See <a href="#fig-rep-sta-1">Figure</a> for a visualisation.
         
@@ -305,7 +299,6 @@
         
         
         The other two variants of Method A (no edge attributes and Euclidean distance) fall behind all the others in the first part of the experiment. Since they do not involve information on the direction that the messages come from, the accuracy is unchanged with the transformed input; they are invariant to rotation. Finally, we observe the stability under rotation with Method B and the higher accuracy relative to the rotation-invariant models.
-        
         
         \begin{table}[H]
         \begin{center}
@@ -322,7 +315,8 @@
         \caption{Comparison of feature stability under rotation accross message passing model variants. ACC (a): validation accuracy; ACC (b): Random rotation test accuracy} \label{tab:egnn-mpnn-compar}
         \end{center}
         \end{table}
-        
+
+            
         \begin{figure}[H]
         \centering
         \includegraphics[scale=0.55]{img/egnn-valid-acc-comparison.png}
