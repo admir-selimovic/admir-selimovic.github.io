@@ -23,10 +23,15 @@
     document.addEventListener('DOMContentLoaded', function() {
         // Auto-numbering for figures and tables
         const items = document.querySelectorAll('.auto-number-figure, table');
+        
+        // Debug: Log the items being selected for numbering
+        console.log('Items to be numbered:', items);
+        
         items.forEach((item, index) => {
             const number = index + 1;
             item.setAttribute('data-number', number);
         });
+        
         const links = document.querySelectorAll('a[href^="#fig-"], a[href^="#tab-"]');
         links.forEach(link => {
             const targetId = link.getAttribute('href');
@@ -40,6 +45,9 @@
                     link.innerHTML = `Table ${itemNumber}`;
                     link.style.color = 'blue'; // Ensuring the table reference appears blue
                 }
+            } else {
+                // Debug: Log any link that couldn't find its target
+                console.warn('Could not find target for link:', link);
             }
         });
     
