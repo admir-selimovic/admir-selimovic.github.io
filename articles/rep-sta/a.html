@@ -69,17 +69,24 @@
                 placeholder.innerHTML = citationText;
             }
         });
-    
-        // Wrapping loose content in <p> tags
-        const content = document.querySelector('.article-content');
-        if (content) {
-            const paragraphs = content.innerHTML.split('\n'); // Split content at each new line
-            content.innerHTML = paragraphs.map(p => {
-                const trimmed = p.trim();
-                return trimmed ? `<p>${trimmed}</p>` : '';  // Wrap each split content in <p> tags, but skip empty strings
-            }).join('');
-        }
     });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // All your JavaScript code
+            // ... (Auto-numbering for figures, tables, etc.)
+            
+            // Wrapping loose content in <p> tags
+            const content = document.querySelector('.content');
+            if (content) {
+                const paragraphs = content.innerHTML.split('\n'); // Split content at each new line
+                content.innerHTML = paragraphs.map(p => {
+                    const trimmed = p.trim();
+                    return trimmed ? `<p>${trimmed}</p>` : '';  // Wrap each split content in <p> tags, but skip empty strings
+                }).join('');
+            }
+        });
     </script>
 
 
