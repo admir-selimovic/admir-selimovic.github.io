@@ -174,7 +174,29 @@
         table {
             counter-increment: table-counter;
             font-size: 0.8em;
+            width: 70%;
+            margin: auto;
+            border-collapse: collapse;  /* Ensures borders don't double up */
         }
+
+        th {
+            text-align: left;
+            border-bottom: 1pt solid black; /* Thick line after the header */
+            padding: 8px;  /* Padding around cell content */
+        }
+        
+        td {
+            text-align: left;
+            padding: 8px;  /* Padding around cell content */
+        }
+        
+        tr:not(:last-child) {
+            border-bottom: 1px solid black; /* Regular lines between rows */
+        }
+        
+        tr:last-child {
+            border-bottom: 1pt solid black; /* Thick line at the bottom */
+        }        
 
         table + figcaption::before {
             content: "Table " counter(table-counter) ": ";
@@ -337,32 +359,32 @@
 
                     
         <figure>
-            <table id="tab-egnn-mpnn-compar" border="1" style="border-collapse: collapse; width: 70%; margin: auto;">
+            <table id="tab-egnn-mpnn-compar">
                 <thead>
                     <tr>
-                        <th style="text-align: left;">Method</th>
+                        <th>Method</th>
                         <th>ACC(a)</th>
                         <th>ACC(b)</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td style="text-align: left;">A ($\mathbf{a}_{ij} = \emptyset$)</td>
+                        <td>A ($\mathbf{a}_{ij} = \emptyset$)</td>
                         <td>.6398</td>
                         <td>.6398</td>
                     </tr>
                     <tr>
-                        <td style="text-align: left;">A ($\mathbf{a}_{ij} = \|\mathbf{r}_{ij}\|^2$)</td>
+                        <td>A ($\mathbf{a}_{ij} = \|\mathbf{r}_{ij}\|^2$)</td>
                         <td>.6861</td>
                         <td>.6861</td>
                     </tr>
                     <tr>
-                        <td style="text-align: left;">A ($\mathbf{a}_{ij} = \mathbf{r}_{ij}$)</td>
+                        <td>A ($\mathbf{a}_{ij} = \mathbf{r}_{ij}$)</td>
                         <td>.8061</td>
                         <td>.3876</td>
                     </tr>
                     <tr>
-                        <td style="text-align: left;">B ($\mathbf{a}_{ij} = \|\mathbf{r}_{ij}\|^2, \phi_p$)</td>
+                        <td>B ($\mathbf{a}_{ij} = \|\mathbf{r}_{ij}\|^2, \phi_p$)</td>
                         <td>.7643</td>
                         <td>.7643</td>
                     </tr>
@@ -372,6 +394,7 @@
                 Comparison of feature stability under rotation across message passing model variants. ACC (a): validation accuracy; ACC (b): Random rotation test accuracy.
             </figcaption>
         </figure>
+
 
         </div>
 
