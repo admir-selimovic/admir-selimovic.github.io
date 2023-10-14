@@ -306,7 +306,7 @@
             </figcaption>
         </figure>
         
-        Next, we compare Method B with the three variants of Method A, presented in the <a href="#tab-egnn-mpnn-compar"></a>). Method B is outperformed only by Method A variant with relative Cartesian coordinates as edge attributes. However, in the second part of the experiment, where we apply a random rotation to the input, its accuracy decreases significantly. This is expected, since relative Cartesian coordinates are not invariant to rotation. 
+        Next, we compare Method B with the three variants of Method A, presented in the <a href="#tab-egnn-mpnn-compar">Table</a>). Method B is outperformed only by Method A variant with relative Cartesian coordinates as edge attributes. However, in the second part of the experiment, where we apply a random rotation to the input, its accuracy decreases significantly. This is expected, since relative Cartesian coordinates are not invariant to rotation. 
         
         
         The other two variants of Method A (no edge attributes and Euclidean distance) fall behind all the others in the first part of the experiment. Since they do not involve information on the direction that the messages come from, the accuracy is unchanged with the transformed input; they are invariant to rotation. Finally, we observe the stability under rotation with Method B and the higher accuracy relative to the rotation-invariant models.
