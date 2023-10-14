@@ -70,6 +70,19 @@
         a:hover {
             text-decoration: underline;
         }
+
+        figure {
+            text-align: center; /* centers the content */
+            margin: 20px 0; /* adds some margin on top and bottom */
+        }
+    
+        figcaption {
+            font-style: italic; /* makes the caption italic */
+            font-size: 0.9em;  /* makes the caption slightly smaller than regular text */
+            color: #666;       /* makes the caption a bit lighter than regular text */
+            padding-top: 10px; /* adds some padding between image and caption */
+        }
+            
     </style>
 </head>
 
@@ -81,10 +94,6 @@
         <div class="article-content">
             <p>
                 
-<div align="center"> 
-  <img src="assets/rep-sta-1.png" width="600">
-</div>
-
 <h3>Experiment: ModelNet10</h3>
 
 We are processing undirected graphs $G = (V,E)$, consisting of nodes $v_i \in V$ and edges $e_{ij} \in E$. Nodes are assigned features $\mathbf{f}_i \in \mathbb{R}^{C_v}$ and edges are assigned attributes $\mathbf{a}_{ij} \in \mathbb{R}^{C_e}$, where $C_v$ and $C_e$ stand for the cardinality of features and attributes channel, respectively. The graph is embedded in $\mathbb{R}^3$; the nodes possess position vectors $\mathbf{x}_i \in \mathbf{X}$.
@@ -114,10 +123,6 @@ However still, the messages are obtained via invariant attributes $\|\mathbf{r}_
 
 The next step in both methods is to aggregate the computed messages via a permutation-invariant function. Permutation invariance is needed because the way the messages are indexed, just like the way nodes are indexed, meaning the order, should not influence the results. We use sum pooling. The aggregated message $\mathbf{m}_i = \sum_{j \in N_i} \mathbf{m}_{i j}$ is a vector that is used to obtain an updated node representation
 $\mathbf{h}_i^{\prime}=\phi_h \left(\mathbf{h}_i, \sum_{j \in N_i} \mathbf{m}_{i j}\right)$, where $\phi_h$ is a node update function imlemented as an MLP, whose input are the current node features $\mathbf{h}_i$ and the aggregated message $\mathbf{m}_i$.
-
-
-
-
 
 
 
@@ -158,19 +163,13 @@ being invariant to rotations.
 
 Last model following the Method A has relative Cartesian coordinates as attributes, $\mathbf{a}_{ij} = \mathbf{r}_{ij}$. Here, latent representations show instability under rotation. The definition of edge attribute here as the distance between two nodes, $\mathbf{r}_{ij}$, does guarantee translation but not rotation $G$-mapping. See Figure \ref{fig:mpnn} for a visualisation.
 
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.8]{img/mpnn-test-cartesian-hidden-reps-0-deg.png}
-    \quad % Adds some space between the two images
-    \includegraphics[scale=0.8]{img/mpnn-test-cartesian-hidden-reps-180-deg.png}
-    \\ % Moves to the next line
-    (a) \hspace{5cm} (b) % Assuming the images are about 5cm wide, adjust as needed
-    \caption{Hidden representations of the model before pooling, using relative Cartesian coordinates as edge attributes. The disk radius reflects the first node feature value. For the input representation, 1,500 points per 3D model randomly sampled from the embedding space \(\mathbb{R}^3\). Two scenarios are shown: (a) with an applied rotation of \( \theta = 0^{\circ} \) and (b) with \( \theta = 180^{\circ} \). The input representation for this visualisation differs from the others in the experiment solely in the pre-processing involving random sampling.}
-    \label{fig:mpnn}
-\end{figure}
-
-
+<figure>
+    <img src="assets/rep-sta-1.png" width="600">
+    <figcaption>
+        Hidden representations of the model before pooling, using relative Cartesian coordinates as edge attributes. The disk radius reflects the first node feature value. For the input representation, 1,500 points per 3D model randomly sampled from the embedding space \(\mathbb{R}^3\). Two scenarios are shown: (a) with an applied rotation of \( \theta = 0^{\circ} \) and (b) with \( \theta = 180^{\circ} \). The input representation for this visualisation differs from the others in the experiment solely in the pre-processing involving random sampling.
+    </figcaption>
+</figure>
+                
 Next, we compare Method B with the three variants of Method A, presented in the Table \ref{tab:egnn-mpnn-compar}. Method B is outperformed only by Method A variant with relative Cartesian coordinates as edge attributes. However, in the second part of the experiment, where we apply a random rotation to the input, its accuracy decreases significantly. This is expected, since relative Cartesian coordinates are not invariant to rotation. 
 
 
