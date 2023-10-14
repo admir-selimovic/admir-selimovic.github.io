@@ -299,14 +299,6 @@
 
         <h3>Summary</h3>
 
-        ...
-        \begin{align} \label{eq:egnn-node-pos-update}
-        \mathbf{x}^{\prime}_i=\mathbf{x}_i + \sum_{j\in N_i}(\mathbf{r}_{ij})\phi_p(\mathbf{m}_{ij})
-        \end{align}
-        ...
-        See Equation \eqref{eq:egnn-node-pos-update} for details.
-        ...
-
         This experiment examines the representation stability of graph neural networks when subjected to 3D rotation of input data. 
         Focusing on two leading methods, E(n) Equivariant Graph Neural Networks and Message Passing Neural Networks, we aim to discern their mechanisms in updating node features of graphs embedded in 3D space. 
         Using undirected graphs from the ModelNet10 dataset, the study offers a comprehensive analysis of each method's resilience and efficiency in retaining essential information amid 3D rotational perturbations. 
@@ -318,7 +310,7 @@
                     
         We follow the methods from <span class="autocite" data-ref="gilmer2017"></span> (A) and <span class="autocite" data-ref="satorras2021"></span> (B). The forward pass has two phases, a message passing phase and a readout phase.
         
-        
+    
         <h3>Message passing</h3>
         Consider two nodes $v_i$ and $v_j$, their latent features $\mathbf{h}_i$ and $\mathbf{h}_j$, and the attributes $\mathbf{a}_{ij}$ of the edge that connects them. We update the node features by first computing a message $\mathbf{m}_{ij}$ from $v_j$ to $v_i$. 
         The message function is expressed as: 
@@ -328,8 +320,7 @@
         However, for the purposes of this experiment, we will disregard the scalar attribute $a_{i j}$.
         
         The message update function $\phi_m$  is directly parameterised by an MLP, i.e., it does not output a matrix that is used to linearly transform the node features but directly computes messages in a nonlinear way. Thus, the messages are nonlinear transformations conditioned on the edge attribute. Note that by conditioning the messages only on the Euclidean distance in Method B, $G$-mapping is guaranteed. 
-        
-        
+            
         Notably, Method B extends message passing such that also the node positions become updatable: 
         \begin{equation} \label{eq:egnn-node-pos-update}
         \mathbf{x}^{\prime}_i=\mathbf{x}_i + \sum_{j\in N_i}(\mathbf{r}_{ij})\phi_p(\mathbf{m}_{ij})
