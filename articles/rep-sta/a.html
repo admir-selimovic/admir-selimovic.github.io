@@ -284,7 +284,7 @@
             
         <h3>Dataset and input representation</h3>
         
-        ModelNet10 dataset <span class="autocite" data-ref="2015"></span> contains 4,899 3D models (meshes) representing an object from 10 classes. We processed the meshes to form graphs embedded in $\mathbb{R}^3$. 
+        ModelNet10 dataset <span class="autocite" data-ref="wu2015"></span> contains 4,899 3D models (meshes) representing an object from 10 classes. We processed the meshes to form graphs embedded in $\mathbb{R}^3$. 
         Nodes form an $8\times8\times8$ regular grid. The edges are inferred by connecting nodes within a pre-set maximum radius value. The nodes are assigned one-dimensional feature vectors, representing the Euclidean distance to the closest point on the surface of the initial mesh.
         
         The three variants of Method A pose different demands on edge attributes. In the first, edges have no attributes. In the second, Euclidean distance between connected nodes forms attributes. In the third, attributes are formed by computing relative Cartesian coordinates of connected nodes.
