@@ -24,9 +24,6 @@
         // Auto-numbering for figures and tables
         const items = document.querySelectorAll('.auto-number-figure, table');
         
-        // Debug: Log the items being selected for numbering
-        console.log('Items to be numbered:', items);
-        
         items.forEach((item, index) => {
             const number = index + 1;
             item.setAttribute('data-number', number);
@@ -40,14 +37,11 @@
                 const itemNumber = targetItem.getAttribute('data-number');
                 if (targetId.startsWith('#fig-')) {
                     link.innerHTML = `Figure ${itemNumber}`;
-                    link.style.color = 'blue'; // Ensuring the figure reference appears blue
+                    link.style.color = 'blue';
                 } else if (targetId.startsWith('#tab-')) {
                     link.innerHTML = `Table ${itemNumber}`;
-                    link.style.color = 'blue'; // Ensuring the table reference appears blue
+                    link.style.color = 'blue';
                 }
-            } else {
-                // Debug: Log any link that couldn't find its target
-                console.warn('Could not find target for link:', link);
             }
         });
     
@@ -313,8 +307,8 @@
 
 
                     
-        <figure id="tab-egnn-mpnn-compar">
-            <table border="1" style="border-collapse: collapse; width: 70%; margin: auto;">
+        <figure>
+            <table id="tab-egnn-mpnn-compar" border="1" style="border-collapse: collapse; width: 70%; margin: auto;">
                 <thead>
                     <tr>
                         <th style="text-align: left;">Method</th>
