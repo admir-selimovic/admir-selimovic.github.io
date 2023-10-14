@@ -112,11 +112,13 @@
         }
 
         .article-title {
+            max-width: 1000px; /* Adjust this to be wider than your article-container's max-width. */
+            margin: 80px auto; /* This will center the title. */
             font-size: 48px;
-            margin-top: 80px;
-            margin-bottom: 20px;
+            text-align: center; /* Center the title text. */
+            padding: 0 20px; /* Add some side padding to ensure the title doesn't touch the edges of the screen on smaller devices. */
         }
-
+        
         .article-content {
             font-size: 22px; 
             counter-reset: figure-counter; /* Initializes the counter */
@@ -215,9 +217,10 @@
     <h1><a href="/"> Admir Selimovic</a></h1>
 
     <div class="content">
-    
+        
+    <h2 class="article-title">Representation Stability under 3D Rotations in Equivariant and Nonequivariant MPNNs</h2>
+
     <div class="article-container">
-        <h2 class="article-title">Representation Stability under 3D Rotations in Equivariant and Nonequivariant MPNNs</h2>
         <div class="article-content">
             
 
