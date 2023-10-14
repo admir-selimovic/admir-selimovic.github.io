@@ -68,6 +68,16 @@
     });
     </script>
 
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const content = document.querySelector('.content');
+        if (content) {
+            const paragraphs = content.innerHTML.split(/\n\s*\n/); // Split content at empty lines
+            content.innerHTML = paragraphs.map(p => `<p>${p.trim()}</p>`).join(''); // Wrap each split content in <p> tags
+        }
+    });
+    </script>
+
     <style>
         body {
             font-family: 'Roboto', Arial, sans-serif;
@@ -193,7 +203,11 @@
            font-size: 1.5em;
            margin-bottom: 20px;
         }        
-        
+
+        .content p {
+            margin-bottom: 1em; // or any other styling you want for paragraphs
+        }
+
     </style>
 </head>
 
