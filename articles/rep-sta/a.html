@@ -55,13 +55,13 @@
             if (targetCitation) {
                 const authors = targetCitation.getAttribute('data-authors').split(',');
                 const year = targetCitation.getAttribute('data-year');
-                let citationText = `(`;
+                let citationText = `<a href="#${refId}" class="citation-link">(`;
                 if (authors.length === 1) {
                     citationText += `${authors[0]} ${year}`;
                 } else {
                     citationText += `${authors[0]} et al. ${year}`;
                 }
-                citationText += `)`;
+                citationText += `)</a>`;
                 placeholder.innerHTML = citationText;
             }
         });
@@ -167,6 +167,15 @@
 
         .citation a {
             color: blue;
+        }
+        
+        .citation-link {
+            text-decoration: none;
+            color: blue;
+        }
+        
+        .citation-link:hover {
+            text-decoration: underline;
         }
         
         .reference {
