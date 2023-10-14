@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Article Title - Admir Selimovic</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Latin+Modern+Roman&display=swap">
     
     <script type="text/javascript" id="MathJax-script" async
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
@@ -20,26 +19,17 @@
     </script>
     
     <style>
-        @font-face {
-            font-family: 'Latin Modern Roman';
-            src: url('https://public.opendatasoft.com/fonts/latin-modern/lmroman10-regular.woff2') format('woff2'),
-                 url('https://public.opendatasoft.com/fonts/latin-modern/lmroman10-regular.woff') format('woff');
-            font-weight: normal;
-            font-style: normal;
-        }
-        /* Resetting default styles for consistency */
-        html, body, h1, h2, p, a {
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
             margin: 0;
             padding: 0;
         }
-    
-        body {
-            font-family: 'Latin Modern Roman', serif;
-        }
-        
-        h1, /* Add other selectors separated by commas if needed */
-        a {
-            font-family: 'Roboto', Arial, sans-serif;
+
+        h1 {
+            font-size: 48px;
+            text-align: center;
+            margin-top: 50px;
+            margin-bottom: 30px;
         }
 
         h1 a {
@@ -47,28 +37,22 @@
             color: #333;
         }
 
-        h1 a:hover {
-            text-decoration: none; /* Remove underline on hover */
-        }
-
         .article-container {
-            max-width: 800px; /* Standard blog width */
-            margin: 0 auto; /* Center the container */
+            max-width: 800px;
+            margin: 0 auto;
             padding: 20px 20px 50px 20px;
         }
 
         .article-title {
-            font-size: 48px;
+            font-size: 32px;
             margin-top: 20px;
             margin-bottom: 20px;
-            font-family: 'Roboto', Arial, sans-serif; /* This line ensures that the title uses Roboto */
-
         }
 
         .article-content p {
             margin-bottom: 20px;
             text-align: justify;
-            font-size: 24px;
+            font-size: 18px;
         }
 
         a {
