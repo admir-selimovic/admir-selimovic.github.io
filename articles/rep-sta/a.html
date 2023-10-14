@@ -18,33 +18,31 @@
           }
         };
     </script>
-
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Get all figures to be numbered
-        const figures = document.querySelectorAll('.auto-number-figure');
-        
-        // Number the figures
-        figures.forEach((fig, index) => {
-            const number = index + 1;
-            fig.setAttribute('data-number', number);
-        });
-        
-        // Update links that reference figures
-        const links = document.querySelectorAll('a[href^="#fig-"]');
-        links.forEach(link => {
-            const targetId = link.getAttribute('href');
-            const targetFigure = document.querySelector(targetId);
-            if (targetFigure) {
-                const figureNumber = targetFigure.getAttribute('data-number');
-                link.innerHTML = `Figure ${figureNumber}`;
-            }
-        });
-    });
-    </script>
     
     <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // Auto-numbering for figures and tables
+        const items = document.querySelectorAll('.auto-number-figure, table');
+        items.forEach((item, index) => {
+            const number = index + 1;
+            item.setAttribute('data-number', number);
+        });
+        const links = document.querySelectorAll('a[href^="#fig-"], a[href^="#tab-"]');
+        links.forEach(link => {
+            const targetId = link.getAttribute('href');
+            const targetItem = document.querySelector(targetId);
+            if (targetItem) {
+                const itemNumber = targetItem.getAttribute('data-number');
+                if (targetId.startsWith('#fig-')) {
+                    link.innerHTML = `Figure ${itemNumber}`;
+                    link.style.color = 'blue'; // Ensuring the figure reference appears blue
+                } else if (targetId.startsWith('#tab-')) {
+                    link.innerHTML = `Table ${itemNumber}`;
+                    link.style.color = 'blue'; // Ensuring the table reference appears blue
+                }
+            }
+        });
+    
         // Update citations in the text
         const citationPlaceholders = document.querySelectorAll('.autocite');
         citationPlaceholders.forEach(placeholder => {
@@ -63,39 +61,8 @@
                 placeholder.innerHTML = citationText;
             }
         });
-    });
-    </script>
-
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Get all figures and tables to be numbered
-        const items = document.querySelectorAll('.auto-number-figure, table');
-        
-        // Number the figures and tables
-        items.forEach((item, index) => {
-            const number = index + 1;
-            item.setAttribute('data-number', number);
-        });
-        
-        // Update links that reference figures and tables
-        const links = document.querySelectorAll('a[href^="#fig-"], a[href^="#tab-"]');
-        links.forEach(link => {
-            const targetId = link.getAttribute('href');
-            const targetItem = document.querySelector(targetId);
-            if (targetItem) {
-                const itemNumber = targetItem.getAttribute('data-number');
-                if (targetId.startsWith('#fig-')) {
-                    link.innerHTML = `Figure ${itemNumber}`;
-                } else if (targetId.startsWith('#tab-')) {
-                    link.innerHTML = `Table ${itemNumber}`;
-                }
-            }
-        });
-    });
-    </script>
     
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
+        // Wrapping loose content in <p> tags
         const content = document.querySelector('.content');
         if (content) {
             const paragraphs = content.innerHTML.split(/\n\s*\n/); // Split content at empty lines
@@ -103,6 +70,7 @@
         }
     });
     </script>
+
 
     <style>
         body {
