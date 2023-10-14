@@ -231,7 +231,7 @@
         
         We are processing undirected graphs $G = (V,E)$, consisting of nodes $v_i \in V$ and edges $e_{ij} \in E$. Nodes are assigned features $\mathbf{f}_i \in \mathbb{R}^{C_v}$ and edges are assigned attributes $\mathbf{a}_{ij} \in \mathbb{R}^{C_e}$, where $C_v$ and $C_e$ stand for the cardinality of features and attributes channel, respectively. The graph is embedded in $\mathbb{R}^3$; the nodes possess position vectors $\mathbf{x}_i \in \mathbf{X}$.
                     
-        We follow the methods from <span class="autocite" data-ref="gilmer2017"></span> (A) and \autocite{satorras2021} (B). The forward pass has two phases, a message passing phase and a readout phase.
+        We follow the methods from <span class="autocite" data-ref="gilmer2017"></span> (A) and <span class="autocite" data-ref="satorras2021"></span> (B). The forward pass has two phases, a message passing phase and a readout phase.
         
         
         <h3>Message passing</h3>
@@ -338,10 +338,15 @@
         
         <div class="references-section">
            <h2>References</h2>
-            <div class="citation" id="gilmer2017" data-authors="Gilmer" data-year="2017">
+            <div class="citation" id="gilmer2017" data-authors="Gilmer et al." data-year="2017">
                Justin Gilmer, Samuel S. Schoenholz, Patrick F. Riley, Oriol Vinyals, George E. Dahl. 
                <a href="http://proceedings.mlr.press/v70/gilmer17a/gilmer17a.pdf">"Neural Message Passing for Quantum Chemistry"</a>. 
                Proceedings of the 34th International Conference on Machine Learning, 2017. pp. 1263-1272.
+            </div>
+            <div class="citation" id="satorras2021" data-authors="Satorras et al." data-year="2017">
+               Victor Garcia Satorras, Emiel Hoogeboom, Max Welling 
+               <a href="https://arxiv.org/abs/2102.09844">"E(n) Equivariant Graph Neural Networks"</a>. 
+               CoRR, 2021.
             </div>
            <!-- ... Other citations ... -->
         </div>
