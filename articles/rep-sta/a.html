@@ -73,20 +73,21 @@
     </script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // All your JavaScript code
-            // ... (Auto-numbering for figures, tables, etc.)
-            
-            // Wrapping loose content in <p> tags
-            const content = document.querySelector('.content');
-            if (content) {
-                const paragraphs = content.innerHTML.split('\n'); // Split content at each new line
-                content.innerHTML = paragraphs.map(p => {
-                    const trimmed = p.trim();
-                    return trimmed ? `<p>${trimmed}</p>` : '';  // Wrap each split content in <p> tags, but skip empty strings
-                }).join('');
-            }
-        });
+    document.addEventListener('DOMContentLoaded', function() {
+        const content = document.querySelector('.content');
+        if (content) {
+            const paragraphs = content.innerHTML.split('\n'); // Split content at each new line
+            content.innerHTML = paragraphs.map(p => {
+                const trimmed = p.trim();
+    
+                // Skip wrapping if the content starts with known patterns like "Figure X:" or "Table X:"
+                if (trimmed.startsWith("Figure ") || trimmed.startsWith("Table ")) {
+                    return trimmed; 
+                }
+                return trimmed ? `<p>${trimmed}</p>` : '';  // Wrap each split content in <p> tags, but skip empty strings
+            }).join('');
+        }
+    });
     </script>
 
 
