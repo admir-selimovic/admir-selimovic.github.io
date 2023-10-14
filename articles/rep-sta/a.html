@@ -374,57 +374,6 @@
             </figcaption>
         </figure>
 
-
-        <table border="1" style="border-collapse: collapse; width: 70%; margin: auto;">
-            <caption>Comparison of feature stability under rotation across message passing model variants. ACC (a): validation accuracy; ACC (b): Random rotation test accuracy</caption>
-            <thead>
-                <tr>
-                    <th style="text-align: left;">Method</th>
-                    <th>ACC(a)</th>
-                    <th>ACC(b)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td style="text-align: left;">A ($\mathbf{a}_{ij} = \emptyset$)</td>
-                    <td>.6398</td>
-                    <td>.6398</td>
-                </tr>
-                <tr>
-                    <td style="text-align: left;">A ($\mathbf{a}_{ij} = \|\mathbf{r}_{ij}\|^2$)</td>
-                    <td>.6861</td>
-                    <td>.6861</td>
-                </tr>
-                <tr>
-                    <td style="text-align: left;">A ($\mathbf{a}_{ij} = \mathbf{r}_{ij}$)</td>
-                    <td>.8061</td>
-                    <td>.3876</td>
-                </tr>
-                <tr>
-                    <td style="text-align: left;">B ($\mathbf{a}_{ij} = \|\mathbf{r}_{ij}\|^2, \phi_p$)</td>
-                    <td>.7643</td>
-                    <td>.7643</td>
-                </tr>
-            </tbody>
-        </table>
-
-            
-        \begin{table}[H]
-        \begin{center}
-        \begin{tabular}{lccc}
-        \hline 
-        Method & ACC(a) & ACC(b) \\
-        \hline 
-        A ($\mathbf{a}_{ij} = \emptyset$) & .6398 & .6398 \\
-        A ($\mathbf{a}_{ij} = \|\mathbf{r}_{ij}\|^2$) & .6861 & .6861 \\
-        A ($\mathbf{a}_{ij} = \mathbf{r}_{ij}$) & .8061 & .3876 \\
-        B ($\mathbf{a}_{ij} = \|\mathbf{r}_{ij}\|^2, \phi_p$) & .7643 & .7643 \\
-        \hline
-        \end{tabular}
-        \caption{Comparison of feature stability under rotation accross message passing model variants. ACC (a): validation accuracy; ACC (b): Random rotation test accuracy} \label{tab:egnn-mpnn-compar}
-        \end{center}
-        \end{table}
-
             
         \begin{figure}[H]
         \centering
@@ -434,8 +383,6 @@
 
 
         </div>
-
-
 
 
         
