@@ -215,14 +215,15 @@
         table {
             counter-increment: table-counter;
             font-size: 0.8em;
-            width: 100%;
-            margin: 20px 10%;;
-            border-collapse: collapse;  /* Ensures borders don't double up */
+            width: 80%;
+            margin: 20px 10%;
+            border-collapse: collapse; 
         }
-
-        @media screen and (max-width: 768px) {  /* adjust 768px if needed */
+        
+        @media screen and (max-width: 768px) {
             table {
-                font-size: 0.55em;  /* adjust this to the desired size for mobile */
+                font-size: 0.55em;
+                width: 90%;  /* Adjusted for the 5% margins on each side */
                 margin: 5% 5% 0 5%; 
             }
         }
