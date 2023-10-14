@@ -24,6 +24,7 @@
             font-family: 'Roboto', Arial, sans-serif;
             margin: 0;
             padding: 0;
+            counter-reset: figure-counter;
         }
 
         h1 {
@@ -84,7 +85,7 @@
         figure {
             text-align: center; /* centers the content */
             margin: 20px 0; /* adds some margin on top and bottom */
-            counter-increment: figure-counter; /* Increments the counter for each figure */
+            counter-increment: figure-counter;
         }
         
         figcaption {
@@ -105,6 +106,15 @@
             max-width: 100%;
         }
 
+        a[href="#fig-rep-sta-1"]:before {
+            content: "Figure " counter(figure-counter);
+            display: none;
+        }
+
+        #fig-rep-sta-1:target + a[href="#fig-rep-sta-1"]:before {
+            display: inline;
+        }
+                
     </style>
 </head>
 
