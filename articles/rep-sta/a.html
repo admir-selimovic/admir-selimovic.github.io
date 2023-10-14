@@ -250,7 +250,11 @@
         
         <h3>Message passing</h3>
         Consider two nodes $v_i$ and $v_j$, their latent features $\mathbf{h}_i$ and $\mathbf{h}_j$, and the attributes $\mathbf{a}_{ij}$ of the edge that connects them. We update the node features by first computing a message $\mathbf{m}_{ij}$ from $v_j$ to $v_i$. 
-        The message function is expressed as $\mathbf{m}_{i j}=\phi_m\left(\mathbf{h}_i, \mathbf{h}_j, \mathbf{a}_{i j}\right)$, whereby, in Method B, the message function is extended such that, aside the edge attribute, it involves the Euclidean distance: $\mathbf{m}_{ij}=\phi_m(\mathbf{h}_i, \mathbf{h}_j,||\mathbf{r}_{ij}||^2, a_{i j})$. However, for the purposes of this experiment, we will disregard the scalar attribute $a_{i j}$.
+        The message function is expressed as: 
+        $$\mathbf{m}_{i j}=\phi_m\left(\mathbf{h}_i, \mathbf{h}_j, \mathbf{a}_{i j}\right) ,$$ 
+        whereby, in Method B, the message function is extended such that, aside the edge attribute, it involves the Euclidean distance: 
+        $$\mathbf{m}_{ij}=\phi_m(\mathbf{h}_i, \mathbf{h}_j,||\mathbf{r}_{ij}||^2, a_{i j}).$$
+        However, for the purposes of this experiment, we will disregard the scalar attribute $a_{i j}$.
         
         The message update function $\phi_m$  is directly parameterised by an MLP, i.e., it does not output a matrix that is used to linearly transform the node features but directly computes messages in a nonlinear way. Thus, the messages are nonlinear transformations conditioned on the edge attribute. Note that by conditioning the messages only on the Euclidean distance in Method B, $G$-mapping is guaranteed. 
         
