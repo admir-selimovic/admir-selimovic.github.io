@@ -301,6 +301,13 @@
         
         <h3>Results</h3>
 
+        <figure id="fig-rep-sta-2" class="auto-number-figure">
+            <img src="assets/rep-sta-2.png"  style="width:400px;">
+            <figcaption>
+                Training performance comparison. Method A with edge attributes $\mathbf{a}_{ij} = \emptyset$, $\mathbf{a}_{ij} = \|\mathbf{r}_{ij}\|^2$, and $\mathbf{a}_{ij} = \mathbf{r}_{ij}$. Method B with edge attributes $\mathbf{a}_{ij} = \|\mathbf{r}_{ij}\|^2$ and node position update function $\phi_p$.
+            </figcaption>
+        </figure>
+
         Method A that does not use edge attributes ($\mathbf{a}_{ij} = \emptyset$) and therefore, it disregards any information the edges may carry, beyond connectivity. It is ignorant of the geometric structure between the nodes and its message passing scheme utilises the node feature vectors. Applying different rotations to the input graph gives the same latent representations. 
         
         Another model following the Method A has the geometric quantity of Euclidean distance injected into the edge attributes, $\mathbf{a}_{ij} = \|\mathbf{r}_{ij}\|^2$.
@@ -356,13 +363,6 @@
             </table>
             <figcaption>
                 Comparison of feature stability under rotation across message passing model variants. ACC (a): validation accuracy; ACC (b): Random rotation test accuracy.
-            </figcaption>
-        </figure>
-
-        <figure id="fig-rep-sta-2" class="auto-number-figure">
-            <img src="assets/rep-sta-2.png"  style="width:500px;">
-            <figcaption>
-                Training performance comparison. Method A with edge attributes $\mathbf{a}_{ij} = \emptyset$, $\mathbf{a}_{ij} = \|\mathbf{r}_{ij}\|^2$, and $\mathbf{a}_{ij} = \mathbf{r}_{ij}$. Method B with edge attributes $\mathbf{a}_{ij} = \|\mathbf{r}_{ij}\|^2$ and node position update function $\phi_p$.
             </figcaption>
         </figure>
 
