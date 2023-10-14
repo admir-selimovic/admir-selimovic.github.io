@@ -70,6 +70,12 @@
             }
         });
     });
+
+    // Assign numbers to equations
+    let equations = document.querySelectorAll(".equation");
+    equations.forEach((equation, index) => {
+        equation.querySelector(".eq-number").innerText = `( ${index + 1} )`;
+    });
     </script>
     
     <script>
@@ -252,6 +258,18 @@
             margin-bottom: 1em; // or any other styling you want for paragraphs
         }
 
+        .equation {
+            text-align: center;
+            position: relative;
+        }
+        
+        .eq-number {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
     </style>
 </head>
 
@@ -270,6 +288,13 @@
         </div>
 
         <h3>Summary</h3>
+
+        <div class="equation" id="eq-egnn-node-pos-update">
+            <span>𝐱′<sub>i</sub> = 𝐱<sub>i</sub> + Σ<sub>j∈N<sub>i</sub></sub> (𝐫<sub>ij</sub>)φ<sub>p</sub>(𝐦<sub>ij</sub>)</span>
+            <span class="eq-number"></span>
+        </div>
+
+        <a href="#eq-egnn-node-pos-update">Equation 1</a>
 
         This experiment examines the representation stability of graph neural networks when subjected to 3D rotation of input data. 
         Focusing on two leading methods, E(n) Equivariant Graph Neural Networks and Message Passing Neural Networks, we aim to discern their mechanisms in updating node features of graphs embedded in 3D space. 
