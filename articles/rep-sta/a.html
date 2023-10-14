@@ -45,19 +45,24 @@
     
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const citations = document.querySelectorAll('.citation');
-        citations.forEach((citation, index) => {
-            const number = index + 1;
-            citation.setAttribute('data-number', number);
-        });
+        // ... [keep the existing code for figure references]
     
-        const refs = document.querySelectorAll('a.reference');
-        refs.forEach(ref => {
-            const targetId = ref.getAttribute('href').slice(1); // Remove the '#'
-            const targetCitation = document.getElementById(targetId);
+        // Update citations in the text
+        const citationPlaceholders = document.querySelectorAll('.autocite');
+        citationPlaceholders.forEach(placeholder => {
+            const refId = placeholder.getAttribute('data-ref');
+            const targetCitation = document.querySelector(`#${refId}`);
             if (targetCitation) {
-                const citationNumber = targetCitation.getAttribute('data-number');
-                ref.innerHTML = `[${citationNumber}]`;
+                const authors = targetCitation.getAttribute('data-authors').split(',');
+                const year = targetCitation.getAttribute('data-year');
+                let citationText = `(`;
+                if (authors.length === 1) {
+                    citationText += `${authors[0]} ${year}`;
+                } else {
+                    citationText += `${authors[0]} et al. ${year}`;
+                }
+                citationText += `)`;
+                placeholder.innerHTML = citationText;
             }
         });
     });
@@ -199,10 +204,8 @@
 
 We are processing undirected graphs $G = (V,E)$, consisting of nodes $v_i \in V$ and edges $e_{ij} \in E$. Nodes are assigned features $\mathbf{f}_i \in \mathbb{R}^{C_v}$ and edges are assigned attributes $\mathbf{a}_{ij} \in \mathbb{R}^{C_e}$, where $C_v$ and $C_e$ stand for the cardinality of features and attributes channel, respectively. The graph is embedded in $\mathbb{R}^3$; the nodes possess position vectors $\mathbf{x}_i \in \mathbf{X}$.
 
-
-<a href="#gilmer2017" class="reference">[1]</a>
             
-We follow the methods from \autocite{gilmer2017} (A) and \autocite{satorras2021} (B). The forward pass has two phases, a message passing phase and a readout phase.
+We follow the methods from <span class="autocite" data-ref="gilmer2017"></span> (A) and \autocite{satorras2021} (B). The forward pass has two phases, a message passing phase and a readout phase.
 
 
 \paragraph{Message passing}
@@ -304,13 +307,17 @@ B ($\mathbf{a}_{ij} = \|\mathbf{r}_{ij}\|^2, \phi_p$) & .7643 & .7643 \\
 
         </div>
 
+
+
+
+        
         <div class="references-section">
            <h2>References</h2>
-           <div class="citation" id="gilmer2017">
-              Justin Gilmer, Samuel S. Schoenholz, Patrick F. Riley, Oriol Vinyals, George E. Dahl. 
-              <a href="http://proceedings.mlr.press/v70/gilmer17a/gilmer17a.pdf">"Neural Message Passing for Quantum Chemistry"</a>. 
-              Proceedings of the 34th International Conference on Machine Learning, 2017. pp. 1263-1272.
-           </div>
+            <div class="citation" id="gilmer2017" data-authors="Gilmer" data-year="2017">
+               Justin Gilmer, Samuel S. Schoenholz, Patrick F. Riley, Oriol Vinyals, George E. Dahl. 
+               <a href="http://proceedings.mlr.press/v70/gilmer17a/gilmer17a.pdf">"Neural Message Passing for Quantum Chemistry"</a>. 
+               Proceedings of the 34th International Conference on Machine Learning, 2017. pp. 1263-1272.
+            </div>
            <!-- ... Other citations ... -->
         </div>
         
