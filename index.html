@@ -1,72 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Article Title - Admir Selimovic</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    
-    <script type="text/javascript" id="MathJax-script" async
-        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-    </script>
-    <script>
-        MathJax = {
-          tex: {
-            inlineMath: [['$', '$']]
-          }
-        };
-    </script>
-    
+    <title>Admir Selimovic</title>
     <style>
         body {
             font-family: 'Roboto', Arial, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .article {
+            flex: 0 0 calc(33.33% - 20px); /* Assuming 20px gap between articles */
+            max-width: calc(33.33% - 20px);
+            margin-bottom: 20px;
+            margin-right: 20px; /* Spacing between articles */
+            transition: transform 0.3s ease;
+        }
+
+        .article:nth-child(3n) {
+            margin-right: 0;
+        }
+
+        .article a {
+            display: block;
             margin: 0;
             padding: 0;
-            background-color: #f5f5f5; /* Add a background color */
+            box-sizing: border-box; /* This ensures padding and border are included in the element's total width and height */
         }
 
-        h1 {
-            font-size: 48px;
-            text-align: center;
-            margin-top: 50px; /* Increase margin to add some spacing */
-            margin-bottom: 30px;
+        .article:hover {
+            transform: scale(1.02);
         }
 
-        h1 a {
-            text-decoration: none;
-            color: #333;
+        .article img {
+            max-width: 100%;
+            height: auto;
+            display: block;  /* Images are inline by default. Making them block will fill the width of their container */
+            margin: 0 auto;  /* Center block elements horizontally */
         }
-
-        .article-container {
-            max-width: 800px; /* Standard blog width */
-            margin: 0 auto; /* Center the container */
-            padding: 20px 20px 50px 20px;
-            background-color: #ffffff; /* Make the container white */
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
-            border-radius: 5px; /* Round the corners */
-        }
-
+        
         .article-title {
-            font-size: 32px; /* Slightly smaller than homepage's title */
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-
-        .article-content p {
-            margin-bottom: 20px;
-            text-align: justify;
-            font-size: 18px; /* Adjust font size for the article content */
+            padding: 15px;
+            text-align: center;
+            margin: 0; 
         }
 
         a {
             text-decoration: none;
             color: #333;
-        }
-
-        a:hover {
-            text-decoration: underline;
         }
     </style>
 </head>
