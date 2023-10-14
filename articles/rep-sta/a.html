@@ -337,42 +337,39 @@
 
 
                     
-        <figure id="tab-egnn-mpnn-compar">
-            <table border="1" style="border-collapse: collapse; width: 70%; margin: auto;">
-                <thead>
-                    <tr>
-                        <th>Method</th>
-                        <th>ACC(a)</th>
-                        <th>ACC(b)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>A ($\mathbf{a}_{ij} = \emptyset$)</td>
-                        <td>.6398</td>
-                        <td>.6398</td>
-                    </tr>
-                    <tr>
-                        <td>A ($\mathbf{a}_{ij} = \|\mathbf{r}_{ij}\|^2$)</td>
-                        <td>.6861</td>
-                        <td>.6861</td>
-                    </tr>
-                    <tr>
-                        <td>A ($\mathbf{a}_{ij} = \mathbf{r}_{ij}$)</td>
-                        <td>.8061</td>
-                        <td>.3876</td>
-                    </tr>
-                    <tr>
-                        <td>B ($\mathbf{a}_{ij} = \|\mathbf{r}_{ij}\|^2, \phi_p$)</td>
-                        <td>.7643</td>
-                        <td>.7643</td>
-                    </tr>
-                </tbody>
-            </table>
-            <figcaption>
-                Comparison of feature stability under rotation accross message passing model variants. ACC (a): validation accuracy; ACC (b): Random rotation test accuracy.
-            </figcaption>
-        </figure>
+        <table border="1" style="border-collapse: collapse; width: 70%; margin: auto;">
+            <caption>Comparison of feature stability under rotation across message passing model variants. ACC (a): validation accuracy; ACC (b): Random rotation test accuracy</caption>
+            <thead>
+                <tr>
+                    <th style="text-align: left;">Method</th>
+                    <th>ACC(a)</th>
+                    <th>ACC(b)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="text-align: left;">A ($\mathbf{a}_{ij} = \emptyset$)</td>
+                    <td>.6398</td>
+                    <td>.6398</td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;">A ($\mathbf{a}_{ij} = \|\mathbf{r}_{ij}\|^2$)</td>
+                    <td>.6861</td>
+                    <td>.6861</td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;">A ($\mathbf{a}_{ij} = \mathbf{r}_{ij}$)</td>
+                    <td>.8061</td>
+                    <td>.3876</td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;">B ($\mathbf{a}_{ij} = \|\mathbf{r}_{ij}\|^2, \phi_p$)</td>
+                    <td>.7643</td>
+                    <td>.7643</td>
+                </tr>
+            </tbody>
+        </table>
+
 
             
         \begin{figure}[H]
