@@ -279,7 +279,9 @@
         
         <h3>Readout</h3>
         
-        We perform a graph-level classification task on the dataset. To obtain a graph-level embedding, we apply a permutation-invariant aggregation of all the nodes' features: $\hat{y} = \sum_{v \in V}(\{\mathbf{h}^T_v\})$, where $T$ denotes the step after the last message passing layer.
+        We perform a graph-level classification task on the dataset. To obtain a graph-level embedding, we apply a permutation-invariant aggregation of all the nodes' features: 
+        $$\hat{y} = \sum_{v \in V}(\{\mathbf{h}^T_v\}) ,$$
+        where $T$ denotes the step after the last message passing layer.
 
             
         <h3>Dataset and input representation</h3>
