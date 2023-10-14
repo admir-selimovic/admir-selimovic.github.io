@@ -264,7 +264,7 @@
             
         <h3>Dataset and input representation</h3>
         
-        ModelNet10 dataset \autocite{wu2015} contains 4,899 3D models (meshes) representing an object from 10 classes. We processed the meshes to form graphs embedded in $\mathbb{R}^3$. 
+        ModelNet10 dataset <span class="autocite" data-ref="2015"></span> contains 4,899 3D models (meshes) representing an object from 10 classes. We processed the meshes to form graphs embedded in $\mathbb{R}^3$. 
         %We normalised mesh vertex positions to $\{-1,1\}$. 
         Nodes form an $8\times8\times8$ regular grid. The edges are inferred by connecting nodes within a pre-set maximum radius value. The nodes are assigned one-dimensional feature vectors, representing the Euclidean distance to the closest point on the surface of the initial mesh.
         
@@ -347,6 +347,11 @@
                Victor Garcia Satorras, Emiel Hoogeboom, Max Welling 
                <a href="https://arxiv.org/abs/2102.09844">"E(n) Equivariant Graph Neural Networks"</a>. 
                CoRR, 2021.
+            </div>
+            <div class="citation" id="wu2015" data-authors="Wu et al." data-year="2015">
+                Zhirong Wu, Shuran Song, Aditya Khosla, Fisher Yu, Linguang Zhang, Xiaoou Tang, Jianxiong Xiao. 
+                <a href="http://doi.ieeecomputersociety.org/10.1109/CVPR.2015.7298801">"3D ShapeNets: A deep representation for volumetric shapes."</a>. 
+                CVPR, 2015. pp. 1912-1920.
             </div>
            <!-- ... Other citations ... -->
         </div>
