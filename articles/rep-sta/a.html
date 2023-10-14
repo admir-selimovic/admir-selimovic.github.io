@@ -106,19 +106,19 @@
         }
         
         .article-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px 20px 50px 20px;
+            max-width: 1000px; /* Make this consistent with the article-title max-width */
+            margin: 0 auto; /* This will center the container */
+            padding: 20px 20px 50px 0; /* Add some right padding to avoid touching the screen's right edge */
         }
 
         .article-title {
-            max-width: 2000px; /* Adjust this to be wider than your article-container's max-width. */
-            margin: 100px auto; /* This will center the title. */
-            font-size: 48px;
-            text-align: left; /* Center the title text. */
-            padding: 0 20px; /* Add some side padding to ensure the title doesn't touch the edges of the screen on smaller devices. */
+            max-width: 1200px; /* Adjust this value if you want the title to break into more or fewer lines */
+            margin: 20px 0px 20px 0; /* Top and bottom margin set to 20px, left and right set to 0 */
+            font-size: 32px;
+            text-align: left; /* Align the title to the left */
+            padding: 0 20px 0 0; /* Add padding only to the right to avoid touching the screen's right edge */
         }
-        
+
         .article-content {
             font-size: 22px; 
             counter-reset: figure-counter; /* Initializes the counter */
