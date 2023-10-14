@@ -7,9 +7,9 @@
     <title>Representation Stability under 3D Rotation in Message Passing Neural Networks - Admir Selimovic</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Computer+Modern+Serif:wght@400;700&display=swap" rel="stylesheet">
-
     <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
+    <!-- Mathjax Configuration -->
     <script>
         window.MathJax = {
             tex: {
@@ -26,76 +26,6 @@
                 }
             }
         };
-    </script>
-
-    
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Auto-numbering for figures
-        const figures = document.querySelectorAll('.auto-number-figure');
-        figures.forEach((fig, index) => {
-            const number = index + 1;
-            fig.setAttribute('data-number', number);
-        });
-    
-        // Auto-numbering for tables
-        const tables = document.querySelectorAll('table');
-        tables.forEach((table, index) => {
-            const number = index + 1;
-            table.setAttribute('data-number', number);
-        });
-    
-        const links = document.querySelectorAll('a[href^="#fig-"], a[href^="#tab-"]');
-        links.forEach(link => {
-            const targetId = link.getAttribute('href');
-            const targetItem = document.querySelector(targetId);
-            if (targetItem) {
-                const itemNumber = targetItem.getAttribute('data-number');
-                if (targetId.startsWith('#fig-')) {
-                    link.innerHTML = `Figure ${itemNumber}`;
-                    link.style.color = 'blue';
-                } else if (targetId.startsWith('#tab-')) {
-                    link.innerHTML = `Table ${itemNumber}`;
-                    link.style.color = 'blue';
-                }
-            }
-        });
-    
-        // Update citations in the text
-        const citationPlaceholders = document.querySelectorAll('.autocite');
-        citationPlaceholders.forEach(placeholder => {
-            const refId = placeholder.getAttribute('data-ref');
-            const targetCitation = document.querySelector(`#${refId}`);
-            if (targetCitation) {
-                const authors = targetCitation.getAttribute('data-authors').split(',');
-                const year = targetCitation.getAttribute('data-year');
-                let citationText = `<a href="#${refId}" class="citation-link">(`;
-                if (authors.length === 1) {
-                    citationText += `${authors[0]} ${year}`;
-                } else {
-                    citationText += `${authors[0]} et al. ${year}`;
-                }
-                citationText += `)</a>`;
-                placeholder.innerHTML = citationText;
-            }
-        });
-    });
-
-    // Assign numbers to equations
-    let equations = document.querySelectorAll(".equation");
-    equations.forEach((equation, index) => {
-        equation.querySelector(".eq-number").innerText = `( ${index + 1} )`;
-    });
-    </script>
-    
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const content = document.querySelector('.content');
-        if (content) {
-            const paragraphs = content.innerHTML.split(/\n\s*\n/); // Split content at empty lines
-            content.innerHTML = paragraphs.map(p => `<p>${p.trim()}</p>`).join(''); // Wrap each split content in <p> tags
-        }
-    });
     </script>
 
     <style>
@@ -324,6 +254,76 @@
 </head>
 
 <body>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Auto-numbering for figures
+        const figures = document.querySelectorAll('.auto-number-figure');
+        figures.forEach((fig, index) => {
+            const number = index + 1;
+            fig.setAttribute('data-number', number);
+        });
+    
+        // Auto-numbering for tables
+        const tables = document.querySelectorAll('table');
+        tables.forEach((table, index) => {
+            const number = index + 1;
+            table.setAttribute('data-number', number);
+        });
+    
+        const links = document.querySelectorAll('a[href^="#fig-"], a[href^="#tab-"]');
+        links.forEach(link => {
+            const targetId = link.getAttribute('href');
+            const targetItem = document.querySelector(targetId);
+            if (targetItem) {
+                const itemNumber = targetItem.getAttribute('data-number');
+                if (targetId.startsWith('#fig-')) {
+                    link.innerHTML = `Figure ${itemNumber}`;
+                    link.style.color = 'blue';
+                } else if (targetId.startsWith('#tab-')) {
+                    link.innerHTML = `Table ${itemNumber}`;
+                    link.style.color = 'blue';
+                }
+            }
+        });
+    
+        // Update citations in the text
+        const citationPlaceholders = document.querySelectorAll('.autocite');
+        citationPlaceholders.forEach(placeholder => {
+            const refId = placeholder.getAttribute('data-ref');
+            const targetCitation = document.querySelector(`#${refId}`);
+            if (targetCitation) {
+                const authors = targetCitation.getAttribute('data-authors').split(',');
+                const year = targetCitation.getAttribute('data-year');
+                let citationText = `<a href="#${refId}" class="citation-link">(`;
+                if (authors.length === 1) {
+                    citationText += `${authors[0]} ${year}`;
+                } else {
+                    citationText += `${authors[0]} et al. ${year}`;
+                }
+                citationText += `)</a>`;
+                placeholder.innerHTML = citationText;
+            }
+        });
+    });
+
+    // Assign numbers to equations
+    let equations = document.querySelectorAll(".equation");
+    equations.forEach((equation, index) => {
+        equation.querySelector(".eq-number").innerText = `( ${index + 1} )`;
+    });
+    </script>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const content = document.querySelector('.content');
+        if (content) {
+            const paragraphs = content.innerHTML.split(/\n\s*\n/); // Split content at empty lines
+            content.innerHTML = paragraphs.map(p => `<p>${p.trim()}</p>`).join(''); // Wrap each split content in <p> tags
+        }
+    });
+    </script>
+
     <h1><a href="/">&nbsp;&nbsp;Admir Selimovic Research Repository</a></h1>
 
     <div class="content">
