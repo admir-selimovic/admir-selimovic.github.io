@@ -61,6 +61,15 @@
             text-decoration: none;
             color: #333;
         }
+
+        @media (max-width: 768px) {
+            .article {
+                flex: 0 0 100%; /* Make articles take up full width on mobile */
+                max-width: 100%;
+                margin-right: 0; /* Remove right margin on mobile */
+            }
+        }
+
     </style>
 </head>
 
