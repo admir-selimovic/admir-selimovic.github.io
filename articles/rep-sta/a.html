@@ -112,6 +112,12 @@
             margin: 0.67em 0; /* Default browser styles for h1 */
             font-weight: normal;
         }
+
+        @media screen and (max-width: 768px) {  /* adjust 768px if needed */
+            h1 {
+                font-size: 0.8em;  /* adjust this to the desired size for mobile */
+            }
+        }
         
         h1 a {
             text-decoration: none;
@@ -143,6 +149,12 @@
         .article-content {
             font-size: 22px; 
             counter-reset: figure-counter; /* Initializes the counter */
+        }
+
+        @media screen and (max-width: 768px) {  /* adjust 768px if needed */
+            .article-content {
+                font-size: 14px;  /* adjust this to the desired size for mobile */
+            }
         }
         
         .article-content p {
