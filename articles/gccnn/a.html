@@ -14,6 +14,8 @@
       href="https://fonts.googleapis.com/css2?family=Computer+Modern+Serif:wght@400;700&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" type="text/css" href="https://tikzjax.com/v1/fonts.css">
+    <script src="https://tikzjax.com/v1/tikzjax.js"></script>
     <script
       type="text/javascript"
       id="MathJax-script"
@@ -343,6 +345,12 @@
           </div>
 
           <h3>Summary</h3>
+          
+          <script type="text/tikz">
+            \begin{tikzpicture}
+              \draw (0,0) circle (1in);
+            \end{tikzpicture}
+          </script>
 
           This experiment examines the representation stability of graph neural
           networks when subjected to 3D rotation of input data. Focusing on two
