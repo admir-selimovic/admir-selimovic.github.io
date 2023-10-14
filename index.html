@@ -16,7 +16,8 @@
         }
         
         .article {
-            flex: 1 0 calc(33.33% - 10px); /* The 1 in flex: 1 0 ... means that each item will try to take equal space */
+            flex-basis: calc(33.33% - 10px);  /* This defines the default width */
+            max-width: calc(33.33% - 10px);   /* This ensures it doesn't grow bigger than intended */
             margin-bottom: 20px;
             transition: transform 0.3s ease;
         }
