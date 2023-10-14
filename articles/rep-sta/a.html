@@ -71,17 +71,16 @@
         });
     });
     </script>
-
+    
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         const content = document.querySelector('.content');
         if (content) {
             const paragraphs = content.innerHTML.split(/\n\s*\n/); // Split content at empty lines
-            content.innerHTML = paragraphs.map(p => `<p>${p.trim()}</p>`).join(''); // Wrap each split content in <p> tags
+            content.innerHTML = paragraphs.map(p => `<p class="indent-first-line">${p.trim()}</p>`).join(''); // Wrap each split content in <p> tags with the class
         }
     });
     </script>
-
 
     <style>
         body {
@@ -222,6 +221,10 @@
 
         .content p {
             margin-bottom: 1em; // or any other styling you want for paragraphs
+        }
+
+        .indent-first-line {
+            text-indent: 2em; /* Adjust as desired */
         }
 
     </style>
