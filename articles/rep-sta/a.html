@@ -205,7 +205,7 @@
             color: #000000;       /* makes the caption a bit lighter than regular text */
             padding-top: 10px; /* adds some padding between image and caption */
             margin: 0 10%;
-            text-align: left;
+            text-align: justify;
         }
         
         figcaption::before {
@@ -255,6 +255,7 @@
 
         table + figcaption::before {
             content: "Table " counter(table-counter) ": ";
+            text-align: justify;
         }
         
         .article-content img {
