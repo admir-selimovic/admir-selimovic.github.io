@@ -376,7 +376,9 @@
 
 
           
-          A message function designed to capture directional attributes can be articulated as \(\mathbf{m}_{ij} = \phi_m (\mathbf{f}_i, \mathbf{f}_j, Y(\mathbf{x}_j, \mathbf{x}_i))\), wherein \(Y(\mathbf{x}_j, \mathbf{x}_i)\) is the harmonic embedding of the inter-nodal directional information between positions \(\mathbf{x}_j\) and \(\mathbf{x}_i\). By integrating this directional information, the message passing mechanism gains the ability to account for orientation and directional relationships between nodes.
+          A message function designed to capture directional attributes can be expressed as: 
+          \[\mathbf{m}_{ij} = \phi_m (\mathbf{f}_i, \mathbf{f}_j, Y(\mathbf{x}_j, \mathbf{x}_i)),\] 
+          where \(Y(\mathbf{x}_j, \mathbf{x}_i)\) is the harmonic embedding of the inter-nodal directional information between positions \(\mathbf{x}_j\) and \(\mathbf{x}_i\). By integrating this directional information, the message passing mechanism gains the ability to account for orientation and directional relationships between nodes.
           
           Expanding upon this framework, our subsequent focus centres on generalising the message passing formulation to encompass cell complexes. We aim to delineate how this paradigm can be adapted to ingest and propagate directional information across various dimensional cells within these complexes.
           
