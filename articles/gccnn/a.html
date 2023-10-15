@@ -644,7 +644,7 @@
           Once the cell complex structured data inputs have been transformed into latent representations, a wide range of learning tasks can be performed on the transformed data. Two principal learning tasks that can be undertaken are cell-level prediction and complex-level prediction. 
           After the final message passing layer $L$, we can apply a readout function $\hat{\mathbf{y}}$, which can take different forms depending on the task of interest. 
           
-          One option is that $\hat{\mathbf{y}}$ aggregates in a permutation invariant way the features of cells of the same dimension $k$, after which it applies a non-linearity $\phi$: 
+          One option is that $\hat{\mathbf{y}}$ aggregates in a permutation invariant way the features of cells of the same dimension $k$, after which it applies a non-linearity $\phi:$ 
           
           $$
           {\hat{\mathbf{y}}_{\sigma} = \phi \left( \bigoplus_{\sigma_{k=0} \in \Delta} \mathbf{h}^L_{\sigma}, \bigoplus_{\sigma_{k=1} \in \Delta} \mathbf{h}^L_{\sigma}, \dots , \bigoplus_{\sigma_{k=n} \in \Delta} \mathbf{h}^L_{\sigma}\right)}
