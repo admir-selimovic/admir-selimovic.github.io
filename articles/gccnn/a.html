@@ -658,46 +658,33 @@
           </figure>
 
 
+          <h3>$\sigma$- and $\Delta$-level readout</h3>
 
-
-
-
-
-
-
-
-
-\subsection{$\sigma$- and $\Delta$-level readout}
-%\subsection{Generic learning tasks and readout functions}
-
-\begin{figure}[h!]
-\centering
-%\makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{img/cell-complex-architecture.png}}
-\includegraphics[scale=0.85]{img/cell-complex-architecture-2.png}
-\caption{Architecture outline for cell-level predictions $\hat{\mathbf{y}}_n$ and complex-level predictions $\hat{\mathbf{y}}_{\Delta}$. Example with cell complex $\Delta$ of dimension $2$ embedded in ambient space $\mathbb{R}^3$. 
+         <figure id="gccnn-arch" class="auto-number-figure">
+            <img src="assets/gccnn-arch.png" width="600px" />
+            <figcaption>
+              Architecture outline for cell-level predictions $\hat{\mathbf{y}}_n$ and complex-level predictions $\hat{\mathbf{y}}_{\Delta}$. Example with cell complex $\Delta$ of dimension $2$ embedded in ambient space $\mathbb{R}^3$. 
 \textbf{(a)} Geometric cell complex $\Delta$ with cell features $\mathbf{f}_i \in \mathbb{R}^{C_c}$, cell attributes $\mathbf{a}_i \in$ $\mathbb{R}^{C_a}$, and 0 -cell positions $p_i \in \mathbb{R}^3$. \textbf{(b)} Spherical harmonic transform of features, ${\mathbf{f}_i \rightarrow \tilde{\mathbf{h}}_i}$ and attributes, $\mathbf{a}_i \rightarrow \tilde{\mathbf{a}}_i$. \textbf{(c)} Message passing mechanism; updated cell features $\tilde{\mathbf{h}}_i$. \textbf{(d)} Local (cell-level) readout MLPs with cell features, $\tilde{\mathbf{h}}_i$, as input. \textbf{(e)} Reduction to multi-sets of features wrt to cell dimension; global (complex-level) embedding, $\tilde{\mathbf{h}}_{\Delta} = \left(\left\{\tilde{\mathbf{h}}_\sigma\right\}_{k_\sigma=0},\left\{\tilde{\mathbf{h}}_\sigma\right\}_{k_\sigma=1},\left\{\tilde{\mathbf{h}}_\sigma\right\}_{k_\sigma=2}\right)$, and readout MLP. \textbf{(f)} Local predictions, $\hat{\mathbf{y}}_i$. \textbf{(g)} Global prediction, $\hat{\mathbf{y}}_{\Delta}$.
-}
-\end{figure}
-
-Once the cell complex structured data inputs have been transformed into latent representations, a wide range of learning tasks can be performed on the transformed data. Two principal learning tasks that can be undertaken are cell-level prediction and complex-level prediction. 
-After the final message passing layer $L$, we can apply a readout function $\hat{\mathbf{y}}$, which can take different forms depending on the task of interest. 
-
-One option is that $\hat{\mathbf{y}}$ aggregates in a permutation invariant way the features of cells of the same dimension $k$, after which it applies a non-linearity $\phi$: 
-
-$$
-{\hat{\mathbf{y}}_{\sigma} = \phi \left( \bigoplus_{\sigma_{k=0} \in \Delta} \mathbf{h}^L_{\sigma}, \bigoplus_{\sigma_{k=1} \in \Delta} \mathbf{h}^L_{\sigma}, \dots , \bigoplus_{\sigma_{k=n} \in \Delta} \mathbf{h}^L_{\sigma}\right)}
-$$
-
-Another task may not need the distinguishing of cells by the their dimension and the readout function can aggregate the features of all cells (of different dimensions) in order to obtain an complex-level output: 
-$$
-{\hat{\mathbf{y}}_{\Delta} = \phi \left( \bigoplus_{\sigma \in \Delta} \mathbf{h}^L_{\sigma}\right)} 
-$$
-
-In both cases, the latent representations of the cells are combined using suitable aggregation methods, such as direct sum operations or other fusion techniques. 
-It is important to note that cell-level and complex-level prediction tasks are not mutually exclusive, and a learning model can be designed to address both simultaneously. By jointly learning from the individual cells and the complex as a whole, the model can leverage the local and global information encoded in the latent representations to gain a comprehensive understanding of the cell complex. This combination of tasks allows for a more comprehensive analysis, enabling the extraction of both fine-grained and global insights from the transformed cell complex data.
+            </figcaption>
+          </figure>
 
 
-
+          Once the cell complex structured data inputs have been transformed into latent representations, a wide range of learning tasks can be performed on the transformed data. Two principal learning tasks that can be undertaken are cell-level prediction and complex-level prediction. 
+          After the final message passing layer $L$, we can apply a readout function $\hat{\mathbf{y}}$, which can take different forms depending on the task of interest. 
+          
+          One option is that $\hat{\mathbf{y}}$ aggregates in a permutation invariant way the features of cells of the same dimension $k$, after which it applies a non-linearity $\phi$: 
+          
+          $$
+          {\hat{\mathbf{y}}_{\sigma} = \phi \left( \bigoplus_{\sigma_{k=0} \in \Delta} \mathbf{h}^L_{\sigma}, \bigoplus_{\sigma_{k=1} \in \Delta} \mathbf{h}^L_{\sigma}, \dots , \bigoplus_{\sigma_{k=n} \in \Delta} \mathbf{h}^L_{\sigma}\right)}
+          $$
+          
+          Another task may not need the distinguishing of cells by the their dimension and the readout function can aggregate the features of all cells (of different dimensions) in order to obtain an complex-level output: 
+          $$
+          {\hat{\mathbf{y}}_{\Delta} = \phi \left( \bigoplus_{\sigma \in \Delta} \mathbf{h}^L_{\sigma}\right)} 
+          $$
+          
+          In both cases, the latent representations of the cells are combined using suitable aggregation methods, such as direct sum operations or other fusion techniques. 
+          It is important to note that cell-level and complex-level prediction tasks are not mutually exclusive, and a learning model can be designed to address both simultaneously. By jointly learning from the individual cells and the complex as a whole, the model can leverage the local and global information encoded in the latent representations to gain a comprehensive understanding of the cell complex. This combination of tasks allows for a more comprehensive analysis, enabling the extraction of both fine-grained and global insights from the transformed cell complex data.
 
           
         </div>
