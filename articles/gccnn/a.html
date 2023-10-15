@@ -463,7 +463,7 @@
           
           Here, the message travels from $\tau$ to $\sigma$, where $\tau$ is on the boundary of $\sigma$. For example, $\sigma$ can be an edge and $\tau$ can be a node on its boundary, or $\sigma$ can be a face and $\tau$ can be an edge on its boundary. The boundary message function $\phi_{\mathcal{B}}$ takes the features of the receiver simplex, $\tilde{\mathbf{f}}_\sigma$, and the features of the sender simplex, $\tilde{\mathbf{f}}_\tau$ as input. If $\sigma$ is a $0$-cell, the message $\tilde{\mathbf{m}}_{\mathcal{B}, \sigma \tau}$ is an empty set since a $0$-cell has no interior or boundary.
 
-          <figure id="fig-bound-adj" class="tikz-figure auto-number-figure">
+          <figure id="fig-cobound-adj" class="tikz-figure auto-number-figure">
             <script type="text/tikz">
             \begin{tikzpicture}[scale=3, >=latex]
             \def \n {4}
@@ -503,24 +503,58 @@
               Co-boundary adjacency message passing on a cell 2-complex.
             </figcaption>
           </figure>
+
+          We define the co-boundary adjacency message function $\tilde{\mathbf{m}}_{\mathcal{C}, \sigma \tau}$ as:
           
+          \begin{equation} \label{message-eq2}
+          \tilde{\mathbf{m}}_{\mathcal{C}, \sigma \tau}^{t+1}
+          = 
+          \bigoplus_{\tau \in \mathcal{C}(\sigma)}\biggl(\phi_{\mathcal{C}} (\underbrace{\tilde{\mathbf{f}}_\sigma^{t}, \tilde{\mathbf{f}}_\tau^{t}}_{\tilde{\mathbf{h}}_{\mathcal{C}, \sigma \tau}}) \biggl), 
+          \quad {\scriptstyle k_{\sigma} = k_{\tau} - 1, \ \tilde{\mathbf{m}}_{\mathcal{C}, \sigma \tau}^{t+1} = \emptyset \ \forall \sigma_{k=3} } 
+          \end{equation}
+          
+          
+          While the boundary adjacency message travels from a lower-dimensional simplex to a higher-dimensional one, the co-boundary adjacency message travels down the dimensional hierarchy. This means that a cell, denoted as $\tau$, sends a message to another cell, $\sigma$, located on its boundary (for instance, $\sigma$ could be a 1-cell or edge on the boundary of the 2-cell $\tau$). Given that the maximum dimension of our embedding space, $\mathbb{R}^{d}$, is $d=3$, if $\sigma$ is a $3$-cell, then the message $\tilde{\mathbf{m}}_{\mathcal{C}, \sigma \tau}$ becomes an empty set, as there isn't a $4$-cell present as a co-boundary of $\sigma$.
 
 
 
-We define the co-boundary adjacency message function $\tilde{\mathbf{m}}_{\mathcal{C}, \sigma \tau}$ as:
+          <figure id="fig-low-adj" class="tikz-figure auto-number-figure">
+            <script type="text/tikz">
+            \begin{tikzpicture}[scale=3, >=latex]
+            \def \n {4}
+            \def \radius {1}
+            \def \circradius {0.02}
+            \def \opacity {0.05}
+            \def \bend {30}
+            
+            \foreach \i in {1,...,4} {
+              \coordinate (\i) at (90*\i:\radius);
+              \fill (\i) circle (\circradius);
+            }
+            \path[fill=black,opacity=0.05] (1) -- (2)  -- (3) -- (4) -- cycle;
+            \draw (1) -- (2) -- (3) -- (4) -- cycle;
+        
+            % edges-to-edges messages
+            \draw[-{Stealth[scale=1.5]},bend right=20] (-0.5,0.5) to node[pos=0.5,right] {} (0.5,0.5);
+            \draw[-{Stealth[scale=1.5]},bend left=20] (-0.5,0.5) to node[pos=0.5,right] {} (-0.5,-0.5);
+            
+            \draw[-{Stealth[scale=1.5]},bend left=20] (-0.5,-0.5) to node[pos=0.5,right] {} (-0.5,0.5);
+            \draw[-{Stealth[scale=1.5]},bend right=20] (-0.5,-0.5) to node[pos=0.5,right] {} (0.5,-0.5);
+        
+            \draw[-{Stealth[scale=1.5]},bend right=20] (0.5,-0.5) to node[pos=0.5,right] {} (-0.5,-0.5);
+            \draw[-{Stealth[scale=1.5]},bend left=20] (0.5,-0.5) to node[pos=0.5,right] {} (0.5,0.5);
+        
+            \draw[-{Stealth[scale=1.5]},bend left=20] (0.5,0.5) to node[pos=0.5,right] {} (0.5,-0.5);
+            \draw[-{Stealth[scale=1.5]},bend right=20] (0.5,0.5) to node[pos=0.5,right] {} (-0.5,0.5);
+            \end{tikzpicture}
+            </script>
+            <figcaption>
+              Co-boundary adjacency message passing on a cell 2-complex.
+            </figcaption>
+          </figure>
 
-\begin{equation} \label{message-eq2}
-\tilde{\mathbf{m}}_{\mathcal{C}, \sigma \tau}^{t+1}
-= 
-\bigoplus_{\tau \in \mathcal{C}(\sigma)}\biggl(\phi_{\mathcal{C}} (\underbrace{\tilde{\mathbf{f}}_\sigma^{t}, \tilde{\mathbf{f}}_\tau^{t}}_{\tilde{\mathbf{h}}_{\mathcal{C}, \sigma \tau}}) \biggl), 
-\quad {\scriptstyle k_{\sigma} = k_{\tau} - 1, \ \tilde{\mathbf{m}}_{\mathcal{C}, \sigma \tau}^{t+1} = \emptyset \ \forall \sigma_{k=3} } 
-\end{equation}
 
-
-While the boundary adjacency message travels from a lower-dimensional simplex to a higher-dimensional one, the co-boundary adjacency message travels down the dimensional hierarchy. This means that a cell, denoted as $\tau$, sends a message to another cell, $\sigma$, located on its boundary (for instance, $\sigma$ could be a 1-cell or edge on the boundary of the 2-cell $\tau$). Given that the maximum dimension of our embedding space, $\mathbb{R}^{d}$, is $d=3$, if $\sigma$ is a $3$-cell, then the message $\tilde{\mathbf{m}}_{\mathcal{C}, \sigma \tau}$ becomes an empty set, as there isn't a $4$-cell present as a co-boundary of $\sigma$.
-
-
-
+          
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[scale=1.50]
