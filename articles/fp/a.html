@@ -424,6 +424,37 @@
           
           <h3>Results</h3>
           
+          <figure>
+              <table id="fp-res">
+                  <thead>
+                      <tr>
+                          <th>G-morphic</th>
+                          <th>Nonscal.</th>
+                          <th>MAE</th>
+                          <th>Time [s]</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td>+</td>
+                          <td>-</td>
+                          <td>.0204±.00019</td>
+                          <td>.0159</td>
+                      </tr>
+                      <tr>
+                          <td>+</td>
+                          <td>+</td>
+                          <td><strong>.0186±.00015</strong></td>
+                          <td>.0165</td>
+                      </tr>
+                  </tbody>
+              </table>
+              <figcaption>
+                  Comparative performance metrics for three methods: (a) non-G-map and scalar features, (b) G-map but scalar features, and (c) G-map and nonscalar features methods. Forward times for a batch size of 64 samples; executed on a GeForce RTX 3090 Ti GPU.
+              </figcaption>
+          </figure>
+
+          As shown in the table above, the $G$-morphic and nonscalar features method significantly outperforms the non-$`G`$-morphic and scalar method as well as the $G$-morphic and scalar alternative. The forward time for the $G$-morphic and nonscalar method is comparable to the times for the other methods, suggesting that the increase in prediction accuracy does not come at the cost of computational efficiency.
           
         </div>
 
