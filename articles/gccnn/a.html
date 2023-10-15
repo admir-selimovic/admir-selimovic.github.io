@@ -457,13 +457,11 @@
           We define the boundary adjacency message function $\tilde{\mathbf{m}}_{\mathcal{B}, \sigma \tau}$ on a geometric cell complex $\Delta$ as follows:
           
           \begin{equation} \label{message-eq1}
-          \tilde{\mathbf{m}}_{\mathcal{B}, \sigma \tau}^{t+1} &= \bigoplus_{\tau \in \mathcal{B}(\sigma)}\left\biggl(\phi_{\mathcal{B}} (\underbrace{\tilde{\mathbf{f}}_\sigma^{t}, \tilde{\mathbf{f}}_\tau^{t}}_{\tilde{\mathbf{h}}_{\mathcal{B}, \sigma \tau}}) \right\biggl), 
-          \quad {\scriptstyle k_{\sigma} = k_{\tau} + 1, \ \tilde{\mathbf{m}}_{\mathcal{B}}^{t+1}(\sigma)  = \emptyset \ \forall \sigma_{k=0} } \label{message-eq1}
+          \tilde{\mathbf{m}}_{\mathcal{B}, \sigma \tau}^{t+1} = \bigoplus_{\tau \in \mathcal{B}(\sigma)}\left\biggl(\phi_{\mathcal{B}} (\underbrace{\tilde{\mathbf{f}}_\sigma^{t}, \tilde{\mathbf{f}}_\tau^{t}}_{\tilde{\mathbf{h}}_{\mathcal{B}, \sigma \tau}}) \right\biggl), 
+          \quad {\scriptstyle k_{\sigma} = k_{\tau} + 1, \ \tilde{\mathbf{m}}_{\mathcal{B}}^{t+1}(\sigma)  = \emptyset \ \forall \sigma_{k=0} }
           \end{equation}
           
           Here, the message travels from $\tau$ to $\sigma$, where $\tau$ is on the boundary of $\sigma$. For example, $\sigma$ can be an edge and $\tau$ can be a node on its boundary, or $\sigma$ can be a face and $\tau$ can be an edge on its boundary. The boundary message function $\phi_{\mathcal{B}}$ takes the features of the receiver simplex, $\tilde{\mathbf{f}}_\sigma$, and the features of the sender simplex, $\tilde{\mathbf{f}}_\tau$ as input. If $\sigma$ is a $0$-cell, the message $\tilde{\mathbf{m}}_{\mathcal{B}, \sigma \tau}$ is an empty set since a $0$-cell has no interior or boundary.
-
-
 
           <figure id="fig-bound-adj" class="tikz-figure auto-number-figure">
             <script type="text/tikz">
@@ -509,14 +507,13 @@
 
 
 
-
 We define the co-boundary adjacency message function $\tilde{\mathbf{m}}_{\mathcal{C}, \sigma \tau}$ as:
 
 \begin{equation} \label{message-eq2}
 \tilde{\mathbf{m}}_{\mathcal{C}, \sigma \tau}^{t+1}
 = 
-\bigoplus_{\tau \in \mathcal{C}(\sigma)}\left\biggl(\phi_{\mathcal{C}} (\underbrace{\tilde{\mathbf{f}}_\sigma^{t}, \tilde{\mathbf{f}}_\tau^{t}}_{\tilde{\mathbf{h}}_{\mathcal{C}, \sigma \tau}}) \right\biggl), 
-\quad {\scriptstyle k_{\sigma} = k_{\tau} - 1, \ \tilde{\mathbf{m}}_{\mathcal{C}, \sigma \tau}^{t+1} = \emptyset \ \forall \sigma_{k=3} } \label{message-eq2}
+\bigoplus_{\tau \in \mathcal{C}(\sigma)}\biggl(\phi_{\mathcal{C}} (\underbrace{\tilde{\mathbf{f}}_\sigma^{t}, \tilde{\mathbf{f}}_\tau^{t}}_{\tilde{\mathbf{h}}_{\mathcal{C}, \sigma \tau}}) \biggl), 
+\quad {\scriptstyle k_{\sigma} = k_{\tau} - 1, \ \tilde{\mathbf{m}}_{\mathcal{C}, \sigma \tau}^{t+1} = \emptyset \ \forall \sigma_{k=3} } 
 \end{equation}
 
 
