@@ -353,43 +353,6 @@
           </script>
 
           
-<script type="text/tikz">
-\begin{tikzpicture}[scale=3]
-\def \n {4}
-\def \radius {1}
-\def \circradius {0.04}
-\def \opacity {0.05}
-\def \stealthscale {2.5}
-\def \bend {30}
-
-\foreach \i in {1,...,\n} {
-  \coordinate (\i) at (90*\i:\radius);
-  \fill (\i) circle (\circradius);
-}
-\path[fill=black,opacity=\opacity] (1) -- (2)  -- (3) -- (4) -- cycle;
-\draw (1) -- (2) -- (3) -- (4) -- cycle;
-
-% nodes-to-edges messages
-\draw[-{>},line width=0.5mm,bend right=\bend] (1) to node[pos=0.5,right] {} (-0.5,0.5);
-\draw[-{>},line width=0.5mm,bend left=\bend] (1) to node[pos=0.5,right] {} (0.5,0.5);
-
-\draw[-{>},line width=0.5mm,bend left=\bend] (2) to node[pos=0.5,right] {} (-0.5,0.5);
-\draw[-{>},line width=0.5mm,bend right=\bend] (2) to node[pos=0.5,right] {} (-0.5,-0.5);
-
-\draw[-{>},line width=0.5mm,bend left=\bend] (3) to node[pos=0.5,right] {} (-0.5,-0.5);
-\draw[-{>},line width=0.5mm,bend right=\bend] (3) to node[pos=0.5,right] {} (0.5,-0.5);
-
-\draw[-{>},line width=0.5mm,bend left=\bend] (4) to node[pos=0.5,right] {} (0.5,-0.5);
-\draw[-{>},line width=0.5mm,bend right=\bend] (4) to node[pos=0.5,right] {} (0.5,0.5);
-
-% edges-to-faces messages
-\draw[-{>},line width=0.5mm,bend right=\bend] (-0.5,0.5) to node[pos=0.5,right] {} (-0.1,0.1);
-\draw[-{>},line width=0.5mm,bend right=\bend] (0.5,0.5) to node[pos=0.5,right] {} (0.1,0.1);
-\draw[-{>},line width=0.5mm,bend right=\bend] (0.5,-0.5) to node[pos=0.5,right] {} (0.1,-0.1);
-\draw[-{>},line width=0.5mm,bend right=\bend] (-0.5,-0.5) to node[pos=0.5,right] {} (-0.1,-0.1);
-\end{tikzpicture}
-</script>
-
 
           This experiment examines the representation stability of graph neural
           networks when subjected to 3D rotation of input data. Focusing on two
@@ -443,7 +406,52 @@
           Expanding upon this framework, our subsequent focus centres on generalising the message passing formulation to encompass cell complexes. We aim to delineate how this paradigm can be adapted to ingest and propagate directional information across various dimensional cells within these complexes.
           
 
+<figure id="fig-bound-adj" class="auto-number-figure">
+  <script type="text/tikz">
+  \begin{tikzpicture}[scale=3]
+  \def \n {4}
+  \def \radius {1}
+  \def \circradius {0.04}
+  \def \opacity {0.05}
+  \def \stealthscale {2.5}
+  \def \bend {30}
+  
+  \foreach \i in {1,...,\n} {
+    \coordinate (\i) at (90*\i:\radius);
+    \fill (\i) circle (\circradius);
+  }
+  \path[fill=black,opacity=\opacity] (1) -- (2)  -- (3) -- (4) -- cycle;
+  \draw (1) -- (2) -- (3) -- (4) -- cycle;
+  
+  % nodes-to-edges messages
+  \draw[-{>},line width=0.5mm,bend right=\bend] (1) to node[pos=0.5,right] {} (-0.5,0.5);
+  \draw[-{>},line width=0.5mm,bend left=\bend] (1) to node[pos=0.5,right] {} (0.5,0.5);
+  
+  \draw[-{>},line width=0.5mm,bend left=\bend] (2) to node[pos=0.5,right] {} (-0.5,0.5);
+  \draw[-{>},line width=0.5mm,bend right=\bend] (2) to node[pos=0.5,right] {} (-0.5,-0.5);
+  
+  \draw[-{>},line width=0.5mm,bend left=\bend] (3) to node[pos=0.5,right] {} (-0.5,-0.5);
+  \draw[-{>},line width=0.5mm,bend right=\bend] (3) to node[pos=0.5,right] {} (0.5,-0.5);
+  
+  \draw[-{>},line width=0.5mm,bend left=\bend] (4) to node[pos=0.5,right] {} (0.5,-0.5);
+  \draw[-{>},line width=0.5mm,bend right=\bend] (4) to node[pos=0.5,right] {} (0.5,0.5);
+  
+  % edges-to-faces messages
+  \draw[-{>},line width=0.5mm,bend right=\bend] (-0.5,0.5) to node[pos=0.5,right] {} (-0.1,0.1);
+  \draw[-{>},line width=0.5mm,bend right=\bend] (0.5,0.5) to node[pos=0.5,right] {} (0.1,0.1);
+  \draw[-{>},line width=0.5mm,bend right=\bend] (0.5,-0.5) to node[pos=0.5,right] {} (0.1,-0.1);
+  \draw[-{>},line width=0.5mm,bend right=\bend] (-0.5,-0.5) to node[pos=0.5,right] {} (-0.1,-0.1);
+  \end{tikzpicture}
+  </script>
+  <figcaption>
+    Boundary adjacency message passing on a cell 2-complex.
+  </figcaption>
+</figure>
 
+
+
+
+          
 
 \begin{figure}[H]
 \centering
