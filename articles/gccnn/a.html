@@ -630,7 +630,7 @@
           <h3>$\sigma$- and $\Delta$-level readout</h3>
 
          <figure id="gccnn-arch" class="auto-number-figure">
-            <img src="assets/gccnn-arch.png" width="450px" />
+            <img src="assets/gccnn-arch.png" style="width: 600px;"/>
             <figcaption>
               Architecture outline for cell-level predictions $\hat{\mathbf{y}}_n$ and complex-level predictions $\hat{\mathbf{y}}_{\Delta}$. Example with cell complex $\Delta$ of dimension $2$ embedded in ambient space $\mathbb{R}^3$. 
 (a) Geometric cell complex $\Delta$ with cell features $\mathbf{f}_i \in \mathbb{R}^{C_c}$, cell attributes $\mathbf{a}_i \in$ $\mathbb{R}^{C_a}$, and 0 -cell positions $p_i \in \mathbb{R}^3$. (b) Spherical harmonic transform of features, ${\mathbf{f}_i \rightarrow \tilde{\mathbf{h}}_i}$ and attributes, $\mathbf{a}_i \rightarrow \tilde{\mathbf{a}}_i$. (c) Message passing mechanism; updated cell features $\tilde{\mathbf{h}}_i$. (d) Local (cell-level) readout MLPs with cell features, $\tilde{\mathbf{h}}_i$, as input. (e) Reduction to multi-sets of features wrt to cell dimension; global (complex-level) embedding, $\tilde{\mathbf{h}}_{\Delta} = \left(\left\{\tilde{\mathbf{h}}_\sigma\right\}_{k_\sigma=0},\left\{\tilde{\mathbf{h}}_\sigma\right\}_{k_\sigma=1},\left\{\tilde{\mathbf{h}}_\sigma\right\}_{k_\sigma=2}\right)$, and readout MLP. (f) Local predictions, $\hat{\mathbf{y}}_i$. (g) Global prediction, $\hat{\mathbf{y}}_{\Delta}$.
