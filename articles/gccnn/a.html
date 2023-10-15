@@ -412,135 +412,104 @@
           
           Expanding upon this framework, our subsequent focus centres on generalising the message passing formulation to encompass cell complexes. We aim to delineate how this paradigm can be adapted to ingest and propagate directional information across various dimensional cells within these complexes.
           
-
-<figure id="fig-bound-adj" class="tikz-figure auto-number-figure">
-  <script type="text/tikz">
-  \begin{tikzpicture}[scale=3]
-  \def \n {4}
-  \def \radius {1}
-  \def \circradius {0.04}
-  \def \opacity {0.05}
-  \def \stealthscale {2.5}
-  \def \bend {30}
-  
-  \foreach \i in {1,...,\n} {
-    \coordinate (\i) at (90*\i:\radius);
-    \fill (\i) circle (\circradius);
-  }
-  \path[fill=black,opacity=\opacity] (1) -- (2)  -- (3) -- (4) -- cycle;
-  \draw (1) -- (2) -- (3) -- (4) -- cycle;
-  
-  % nodes-to-edges messages
-  \draw[-{>},line width=0.5mm,bend right=\bend] (1) to node[pos=0.5,right] {} (-0.5,0.5);
-  \draw[-{>},line width=0.5mm,bend left=\bend] (1) to node[pos=0.5,right] {} (0.5,0.5);
-  
-  \draw[-{>},line width=0.5mm,bend left=\bend] (2) to node[pos=0.5,right] {} (-0.5,0.5);
-  \draw[-{>},line width=0.5mm,bend right=\bend] (2) to node[pos=0.5,right] {} (-0.5,-0.5);
-  
-  \draw[-{>},line width=0.5mm,bend left=\bend] (3) to node[pos=0.5,right] {} (-0.5,-0.5);
-  \draw[-{>},line width=0.5mm,bend right=\bend] (3) to node[pos=0.5,right] {} (0.5,-0.5);
-  
-  \draw[-{>},line width=0.5mm,bend left=\bend] (4) to node[pos=0.5,right] {} (0.5,-0.5);
-  \draw[-{>},line width=0.5mm,bend right=\bend] (4) to node[pos=0.5,right] {} (0.5,0.5);
-  
-  % edges-to-faces messages
-  \draw[-{>},line width=0.5mm,bend right=\bend] (-0.5,0.5) to node[pos=0.5,right] {} (-0.1,0.1);
-  \draw[-{>},line width=0.5mm,bend right=\bend] (0.5,0.5) to node[pos=0.5,right] {} (0.1,0.1);
-  \draw[-{>},line width=0.5mm,bend right=\bend] (0.5,-0.5) to node[pos=0.5,right] {} (0.1,-0.1);
-  \draw[-{>},line width=0.5mm,bend right=\bend] (-0.5,-0.5) to node[pos=0.5,right] {} (-0.1,-0.1);
-  \end{tikzpicture}
-  </script>
-  <figcaption>
-    Boundary adjacency message passing on a cell 2-complex.
-  </figcaption>
-</figure>
-
+          <figure id="fig-bound-adj" class="tikz-figure auto-number-figure">
+            <script type="text/tikz">
+            \begin{tikzpicture}[scale=3]
+            \def \n {4}
+            \def \radius {1}
+            \def \circradius {0.04}
+            \def \opacity {0.05}
+            \def \stealthscale {2.5}
+            \def \bend {30}
+            
+            \foreach \i in {1,...,\n} {
+              \coordinate (\i) at (90*\i:\radius);
+              \fill (\i) circle (\circradius);
+            }
+            \path[fill=black,opacity=\opacity] (1) -- (2)  -- (3) -- (4) -- cycle;
+            \draw (1) -- (2) -- (3) -- (4) -- cycle;
+            
+            % nodes-to-edges messages
+            \draw[-{>},line width=0.5mm,bend right=\bend] (1) to node[pos=0.5,right] {} (-0.5,0.5);
+            \draw[-{>},line width=0.5mm,bend left=\bend] (1) to node[pos=0.5,right] {} (0.5,0.5);
+            
+            \draw[-{>},line width=0.5mm,bend left=\bend] (2) to node[pos=0.5,right] {} (-0.5,0.5);
+            \draw[-{>},line width=0.5mm,bend right=\bend] (2) to node[pos=0.5,right] {} (-0.5,-0.5);
+            
+            \draw[-{>},line width=0.5mm,bend left=\bend] (3) to node[pos=0.5,right] {} (-0.5,-0.5);
+            \draw[-{>},line width=0.5mm,bend right=\bend] (3) to node[pos=0.5,right] {} (0.5,-0.5);
+            
+            \draw[-{>},line width=0.5mm,bend left=\bend] (4) to node[pos=0.5,right] {} (0.5,-0.5);
+            \draw[-{>},line width=0.5mm,bend right=\bend] (4) to node[pos=0.5,right] {} (0.5,0.5);
+            
+            % edges-to-faces messages
+            \draw[-{>},line width=0.5mm,bend right=\bend] (-0.5,0.5) to node[pos=0.5,right] {} (-0.1,0.1);
+            \draw[-{>},line width=0.5mm,bend right=\bend] (0.5,0.5) to node[pos=0.5,right] {} (0.1,0.1);
+            \draw[-{>},line width=0.5mm,bend right=\bend] (0.5,-0.5) to node[pos=0.5,right] {} (0.1,-0.1);
+            \draw[-{>},line width=0.5mm,bend right=\bend] (-0.5,-0.5) to node[pos=0.5,right] {} (-0.1,-0.1);
+            \end{tikzpicture}
+            </script>
+            <figcaption>
+              Boundary adjacency message passing on a cell 2-complex.
+            </figcaption>
+          </figure>
 
 
+          We define the boundary adjacency message function $\tilde{\mathbf{m}}_{\mathcal{B}, \sigma \tau}$ on a geometric cell complex $\Delta$ as follows:
+          
+          \begin{equation} \label{message-eq1}
+          \tilde{\mathbf{m}}_{\mathcal{B}, \sigma \tau}^{t+1} &= \bigoplus_{\tau \in \mathcal{B}(\sigma)}\left\biggl(\phi_{\mathcal{B}} (\underbrace{\tilde{\mathbf{f}}_\sigma^{t}, \tilde{\mathbf{f}}_\tau^{t}}_{\tilde{\mathbf{h}}_{\mathcal{B}, \sigma \tau}}) \right\biggl), 
+          \quad {\scriptstyle k_{\sigma} = k_{\tau} + 1, \ \tilde{\mathbf{m}}_{\mathcal{B}}^{t+1}(\sigma)  = \emptyset \ \forall \sigma_{k=0} } \label{message-eq1}
+          \end{equation}
+          
+          Here, the message travels from $\tau$ to $\sigma$, where $\tau$ is on the boundary of $\sigma$. For example, $\sigma$ can be an edge and $\tau$ can be a node on its boundary, or $\sigma$ can be a face and $\tau$ can be an edge on its boundary. The boundary message function $\phi_{\mathcal{B}}$ takes the features of the receiver simplex, $\tilde{\mathbf{f}}_\sigma$, and the features of the sender simplex, $\tilde{\mathbf{f}}_\tau$ as input. If $\sigma$ is a $0$-cell, the message $\tilde{\mathbf{m}}_{\mathcal{B}, \sigma \tau}$ is an empty set since a $0$-cell has no interior or boundary.
 
+
+
+          <figure id="fig-bound-adj" class="tikz-figure auto-number-figure">
+            <script type="text/tikz">
+            \begin{tikzpicture}[scale=3]
+            \def \n {4}
+            \def \radius {1}
+            \def \circradius {0.04}
+            \def \opacity {0.05}
+            \def \stealthscale {2.5}
+            \def \bend {30}
+            
+            \foreach \i in {1,...,4} {
+              \coordinate (\i) at (90*\i:1);
+              \fill (\i) circle (0.02);
+            }
+            \path[fill=black,opacity=0.05] (1) -- (2)  -- (3) -- (4) -- cycle;
+            \draw (1) -- (2) -- (3) -- (4) -- cycle;
+        
+            % edges-to-nodes messages
+            \draw[-{>},bend left=30] (-0.5,0.5) to node[pos=0.5,right] {} (1);
+            \draw[-{>},bend right=30] (0.5,0.5) to node[pos=0.5,right] {} (1);
+        
+            \draw[-{>},bend right=30] (-0.5,0.5) to node[pos=0.5,right] {} (2);
+            \draw[-{>},bend left=30] (-0.5,-0.5) to node[pos=0.5,right] {} (2);
+        
+            \draw[-{>},bend right=30] (-0.5,-0.5) to node[pos=0.5,right] {} (3);
+            \draw[-{>},bend left=30] (0.5,-0.5) to node[pos=0.5,right] {} (3);
+        
+            \draw[-{>},bend right=30] (0.5,-0.5) to node[pos=0.5,right] {} (4);
+            \draw[-{>},bend left=30] (0.5,0.5) to node[pos=0.5,right] {} (4);
+        
+            % faces-to-edges messages
+            \draw[-{>},bend right=30] (-0.1,0.1) to node[pos=0.5,right] {} (-0.5,0.5);
+            \draw[-{>},bend right=30] (0.1,0.1) to node[pos=0.5,right] {} (0.5,0.5);
+            \draw[-{>},bend right=30] (0.1,-0.1) to node[pos=0.5,right] {} (0.5,-0.5);
+            \draw[-{>},bend right=30] (-0.1,-0.1) to node[pos=0.5,right] {} (-0.5,-0.5);
+            \end{tikzpicture}
+            </script>
+            <figcaption>
+              Co-boundary adjacency message passing on a cell 2-complex.
+            </figcaption>
+          </figure>
           
 
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}[scale=1.50]
 
-    \foreach \i in {1,...,4} {
-      \coordinate (\i) at (90*\i:1);
-      \fill (\i) circle (0.02);
-    }
-    \path[fill=black,opacity=0.05] (1) -- (2)  -- (3) -- (4) -- cycle;
-    \draw (1) -- (2) -- (3) -- (4) -- cycle;
-
-    % nodes-to-edges messages
-    \draw[-{Stealth[scale=1.5]},bend right=30] (1) to node[pos=0.5,right] {} (-0.5,0.5);
-    \draw[-{Stealth[scale=1.5]},bend left=30] (1) to node[pos=0.5,right] {} (0.5,0.5);
-
-    \draw[-{Stealth[scale=1.5]},bend left=30] (2) to node[pos=0.5,right] {} (-0.5,0.5);
-    \draw[-{Stealth[scale=1.5]},bend right=30] (2) to node[pos=0.5,right] {} (-0.5,-0.5);
-
-    \draw[-{Stealth[scale=1.5]},bend left=30] (3) to node[pos=0.5,right] {} (-0.5,-0.5);
-    \draw[-{Stealth[scale=1.5]},bend right=30] (3) to node[pos=0.5,right] {} (0.5,-0.5);
-
-    \draw[-{Stealth[scale=1.5]},bend left=30] (4) to node[pos=0.5,right] {} (0.5,-0.5);
-    \draw[-{Stealth[scale=1.5]},bend right=30] (4) to node[pos=0.5,right] {} (0.5,0.5);
-
-    % edges-to-faces messages
-    \draw[-{Stealth[scale=1.5]},bend right=30] (-0.5,0.5) to node[pos=0.5,right] {} (-0.1,0.1);
-
-    \draw[-{Stealth[scale=1.5]},bend right=30] (0.5,0.5) to node[pos=0.5,right] {} (0.1,0.1);
-
-    \draw[-{Stealth[scale=1.5]},bend right=30] (0.5,-0.5) to node[pos=0.5,right] {} (0.1,-0.1);
-
-    \draw[-{Stealth[scale=1.5]},bend right=30] (-0.5,-0.5) to node[pos=0.5,right] {} (-0.1,-0.1);
-    
-\end{tikzpicture}
-\caption{Boundary adjacency message passing on a cell 2-complex.}
-\end{figure}
-
-
-
-We define the boundary adjacency message function $\tilde{\mathbf{m}}_{\mathcal{B}, \sigma \tau}$ on a geometric cell complex $\Delta$ as follows:
-
-\begin{equation} \label{message-eq1}
-\tilde{\mathbf{m}}_{\mathcal{B}, \sigma \tau}^{t+1} &= \bigoplus_{\tau \in \mathcal{B}(\sigma)}\left\biggl(\phi_{\mathcal{B}} (\underbrace{\tilde{\mathbf{f}}_\sigma^{t}, \tilde{\mathbf{f}}_\tau^{t}}_{\tilde{\mathbf{h}}_{\mathcal{B}, \sigma \tau}}) \right\biggl), 
-\quad {\scriptstyle k_{\sigma} = k_{\tau} + 1, \ \tilde{\mathbf{m}}_{\mathcal{B}}^{t+1}(\sigma)  = \emptyset \ \forall \sigma_{k=0} } \label{message-eq1}
-\end{equation}
-
-Here, the message travels from $\tau$ to $\sigma$, where $\tau$ is on the boundary of $\sigma$. For example, $\sigma$ can be an edge and $\tau$ can be a node on its boundary, or $\sigma$ can be a face and $\tau$ can be an edge on its boundary. The boundary message function $\phi_{\mathcal{B}}$ takes the features of the receiver simplex, $\tilde{\mathbf{f}}_\sigma$, and the features of the sender simplex, $\tilde{\mathbf{f}}_\tau$ as input. If $\sigma$ is a $0$-cell, the message $\tilde{\mathbf{m}}_{\mathcal{B}, \sigma \tau}$ is an empty set since a $0$-cell has no interior or boundary.
-
-
-
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}[scale=1.50]
-    \foreach \i in {1,...,4} {
-      \coordinate (\i) at (90*\i:1);
-      \fill (\i) circle (0.02);
-    }
-    \path[fill=black,opacity=0.05] (1) -- (2)  -- (3) -- (4) -- cycle;
-    \draw (1) -- (2) -- (3) -- (4) -- cycle;
-
-    % edges-to-nodes messages
-    \draw[-{Stealth[scale=1.5]},bend left=30] (-0.5,0.5) to node[pos=0.5,right] {} (1);
-    \draw[-{Stealth[scale=1.5]},bend right=30] (0.5,0.5) to node[pos=0.5,right] {} (1);
-
-    \draw[-{Stealth[scale=1.5]},bend right=30] (-0.5,0.5) to node[pos=0.5,right] {} (2);
-    \draw[-{Stealth[scale=1.5]},bend left=30] (-0.5,-0.5) to node[pos=0.5,right] {} (2);
-
-    \draw[-{Stealth[scale=1.5]},bend right=30] (-0.5,-0.5) to node[pos=0.5,right] {} (3);
-    \draw[-{Stealth[scale=1.5]},bend left=30] (0.5,-0.5) to node[pos=0.5,right] {} (3);
-
-    \draw[-{Stealth[scale=1.5]},bend right=30] (0.5,-0.5) to node[pos=0.5,right] {} (4);
-    \draw[-{Stealth[scale=1.5]},bend left=30] (0.5,0.5) to node[pos=0.5,right] {} (4);
-
-    % faces-to-edges messages
-    \draw[-{Stealth[scale=1.5]},bend right=30] (-0.1,0.1) to node[pos=0.5,right] {} (-0.5,0.5);
-    \draw[-{Stealth[scale=1.5]},bend right=30] (0.1,0.1) to node[pos=0.5,right] {} (0.5,0.5);
-    \draw[-{Stealth[scale=1.5]},bend right=30] (0.1,-0.1) to node[pos=0.5,right] {} (0.5,-0.5);
-    \draw[-{Stealth[scale=1.5]},bend right=30] (-0.1,-0.1) to node[pos=0.5,right] {} (-0.5,-0.5);
-\end{tikzpicture}
-\caption{Co-boundary adjacency message passing on a cell 2-complex.}
-\end{figure}
 
 
 We define the co-boundary adjacency message function $\tilde{\mathbf{m}}_{\mathcal{C}, \sigma \tau}$ as:
