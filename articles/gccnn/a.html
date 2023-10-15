@@ -483,14 +483,6 @@
           \end{aligned}
           \end{equation}
 
-          
-  \begin{equation} \label{message-eq2}
-  \tilde{\mathbf{m}}_{\mathcal{C}, \sigma \tau}^{t+1}
-  = 
-  \bigoplus_{\tau \in \mathcal{C}(\sigma)}\biggl(\phi_{\mathcal{C}} (\underbrace{\tilde{\mathbf{f}}_\sigma^{t}, \tilde{\mathbf{f}}_\tau^{t}}_{\tilde{\mathbf{h}}_{\mathcal{C}, \sigma \tau}}) \biggl), 
-  \quad {\scriptstyle k_{\sigma} = k_{\tau} - 1, \ \tilde{\mathbf{m}}_{\mathcal{C}, \sigma \tau}^{t+1} = \emptyset \ \forall \sigma_{k=3} } 
-  \end{equation}
-          
           While the boundary adjacency message travels from a lower-dimensional simplex to a higher-dimensional one, the co-boundary adjacency message travels down the dimensional hierarchy. This means that a cell, denoted as $\tau$, sends a message to another cell, $\sigma$, located on its boundary (for instance, $\sigma$ could be a 1-cell or edge on the boundary of the 2-cell $\tau$). Given that the maximum dimension of our embedding space, $\mathbb{R}^{d}$, is $d=3$, if $\sigma$ is a $3$-cell, then the message $\tilde{\mathbf{m}}_{\mathcal{C}, \sigma \tau}$ becomes an empty set, as there isn't a $4$-cell present as a co-boundary of $\sigma$.
 
           <figure id="fig-low-adj" class="tikz-figure auto-number-figure">
@@ -536,14 +528,6 @@
           & \quad {\scriptstyle k_{\sigma} = k_{\tau}, \ k_{\delta} = k_{\sigma}+1, \ \tilde{\mathbf{m}}_{\mathcal{L}, \sigma \tau}^{t+1} = \emptyset \ \forall \sigma_{k=0},\tau_{k=0} }
           \end{aligned}
           \end{equation}
-
-          
-\begin{equation} \label{message-eq3}
-\tilde{\mathbf{m}}_{\mathcal{L}, \sigma \tau}^{t+1}
-=
-\bigoplus_{\tau \in \mathcal{L} (\sigma)}\biggl(\phi_{\mathcal{L}} (\underbrace{\tilde{\mathbf{f}}_\sigma^{t}, \tilde{\mathbf{f}}_\tau^{t}, \tilde{\mathbf{f}}_{\delta}^{t}}_{\tilde{\mathbf{h}}_{\mathcal{L}, \sigma \tau}}, \tilde{\mathbf{a}}_\delta)\biggl), 
-\quad {\scriptstyle k_{\sigma} = k_{\tau}, \ k_{\delta} = k_{\sigma}+1 \ \tilde{\mathbf{m}}_{\mathcal{L}, \sigma \tau}^{t+1} = \emptyset \ \forall \sigma_{k=0},\tau_{k=0} } 
-\end{equation}
 
           The lower adjacency message is transmitted between two cells of the same dimension $k$ that share a common cell of dimension $k-1$ as their face. For example, two $1$-cells or edges are considered lower adjacent because they both have the same $0$-cell (vertex) as their face. 
           Since $0$-cells do not have a face, the message $\tilde{\mathbf{m}}_{\mathcal{L}}$ is an empty set if $\sigma$ and $\tau$ are $0$-cells. Note that the input to the message function $\phi_{\mathcal{L}}$ includes the features of the lower-adjacent cell, $\tilde{\mathbf{f}}_{\delta}$, and its attributes $\tilde{\mathbf{a}}_\delta$.
@@ -611,13 +595,6 @@
           \end{equation}
 
           
-  \begin{equation} \label{message-eq4}
-  \tilde{\mathbf{m}}_{\mathcal{U}, \sigma \tau}^{t+1} 
-  = 
-  \bigoplus_{\tau \in \mathcal{U} (\sigma)}\biggl(\phi_{\mathcal{U}} (\underbrace{\tilde{\mathbf{f}}_\sigma^{t}, \tilde{\mathbf{f}}_\tau^{t}, \tilde{\mathbf{f}}_{\delta}^{t}, \mathbf{r}_{\sigma \tau}}_{\tilde{\mathbf{h}}_{\mathcal{U}, \sigma \tau}}, \tilde{\mathbf{a}}_{\delta})\biggl), 
-  \quad {\scriptstyle k_{\sigma} = k_{\tau}, \ k_{\delta} = k_{\sigma} + 1, \ \mathbf{r}_{\sigma \tau} \neq \emptyset \text{ iff } k_{\sigma} = k_{\tau} = 0}
-  \end{equation}
-
           The upper adjacency message is transmitted between two cells of the same dimension $k$, namely $\sigma$ and $\tau$, which share a common upper-adjacent cell of dimension $k+1$, referred to as $\delta$. For example, $\sigma$ and $\tau$ can be $1$-cells or edges with a common upper-adjacent $2$-cell or face $\delta$. 
           The quantity $\mathbf{r}_{\sigma \tau}$ represents the relative distance between two $0$-cells $\sigma$ and $\tau$, $| \mathbf{p}_{\tau} - \mathbf{p}_{\sigma} |$ or squared relative distance $| \mathbf{p}_{\tau} - \mathbf{p}_{\sigma} |^2$. If $\sigma$ and $\tau$ are cells of any other order, then $\mathbf{r}_{\sigma \tau}$ is an empty set.
           
