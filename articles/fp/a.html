@@ -465,31 +465,23 @@
           
           Despite the promising outcomes, the $G$-morphic and nonscalar method is not devoid of limitations. For example, the validation of the method has thus far been constrained to synthetic datasets, without empirical substantiation through real-world structures. Future endeavours should aim to corroborate the efficacy of the model utilising datasets derived from actual physical configurations.
 
-<div align="center">
-  <img src="img/mae-sh.png" width="400">
-</div>
-
-<div align="center">
-  <img src="img/3dgs20-complex-level-mae-density.png" width="250">
-</div>
+          <figure id="mae-sh" class="auto-number-figure">
+            <img src="assets/mae-sh.png" style="width: 600px" />
+            <figcaption> 
+              MAE on the validation dataset. Glyph plot of the MAE in spherical harmonic form for a random data sample, evaluated across the dimensionality of the tensor in the codomain $`\mathbb{R}^C`$. Scalar values denote the average cell-level MAE.
+            </figcaption>
+          </figure>
+          
+          <figure id="3dgs20-complex-level-mae-density" class="auto-number-figure">
+            <img src="assets/3dgs20-complex-level-mae-density.png" style="width: 600px" />
+            <figcaption> 
+              MAE density at complex-level across the validation dataset.
+            </figcaption>
+          </figure>
+          
+          In sum, the $G$-morphic and nonscalar method constitutes a robust and computationally efficient framework for the accurate prediction of physical properties in structural design. It outperforms alternative methods in terms of accuracy without compromising on computational efficiency.
           
         </div>
-
-        <div class="references-section">
-          <h2>References</h2>
-          <div
-            class="citation"
-            id="brandstetter2021"
-            data-authors="Brandstetter et al."
-            data-year="2021"
-          >
-            Johannes Brandstetter, Rob Hesselink, Elise van der Pol, Erik J.
-            Bekkers, Max Welling.
-            <a href="https://arxiv.org/abs/2110.02905">
-              "Geometric and Physical Quantities improve E(3) Equivariant
-              Message Passing" </a
-            >. CoRR, abs/2110.02905, 2021.
-          </div>
         </div>
       </div>
     </div>
