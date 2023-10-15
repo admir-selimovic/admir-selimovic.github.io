@@ -370,362 +370,61 @@
           <figure id="fp-data" class="auto-number-figure">
             <img src="assets/fp-dat.png" style="width: 600px" />
             <figcaption>
-              Left: original data. Right: spherical harmonic expansion of node features.
+              *Processed data sample. Left: compression force vectors $\mathbf{f}_{\tau_{ij}} \subset \mathbf{y}_{\sigma_i}$. Right: glyph plot of the spherical harmonic embeddings $\tilde{\mathbf{y}}_{\sigma\_{i}}$.
             </figcaption>
           </figure>
           
-<div align="center">
-  <img src="img/3d_graphic_statics_data_example_prepro-annot-v3.png" width="600">
-</div>
+          The dataset comprises 30,000 $1$-complexes. Within each complex, there are 20 $0$-cells, $\sigma\_i$, characterised by a positional vector $\mathbf{p}\_i \in \mathbb{R}^3$. Each complex contains 34 $1$-cells, $\tau\_{ij} = \{\sigma\_i,\sigma\_j\}$.
+          
+          For each 1-cell, denoted as $\tau\_i$, a magnitude $f\_{\tau\_i} [\text{N}]$ is assigned. This scalar value quantifies the magnitude of the compression force exerted on the 1-cell. To construct a force vector $\mathbf{f}\_{\tau\_{ij}}$ in $\mathbb{R}^3$, this magnitude is combined with a direction. The direction is determined by the positional vectors $\mathbf{p}\_j$ and $\mathbf{p}\_i$, which are the spatial coordinates of the neighboring 0-cell $\sigma\_j$ and the 0-cell $\sigma\_i$, respectively.
+          
+          The force vector $\mathbf{f}\_{\tau\_{ij}}$ thus encapsulates both the magnitude and direction of the force exerted on $\sigma\_i$ due to its interaction with $\sigma\_j$. For a given 0-cell $\sigma\_i$, there exist $n$ such force vectors, where $n$ corresponds to the number of neighboring 0-cells. The aggregation of these force vectors yields a resultant force vector, which serves as the ground truth vector, $\mathbf{y}\_{\sigma\_i} \in \mathbb{R}^3$, for the $i$-th 0-cell:
+          
+          $$\mathbf{y}\_{\sigma\_i} = \sum\_{j=1}^{n} \mathbf{f}\_{\tau\_{ij}}$$
+          
+          Each $0$-cell $\sigma\_i$ is associated with a feature vector $\mathbf{x}\_{\sigma\_i} \in \mathbb{R}^3$, defined as:
+          $$\mathbf{x}\_{\sigma\_i} = \sum\_{j=1}^{n} \mathbf{d}\_{ji}$$
+          where $\mathbf{d}\_{ji} = \mathbf{p}\_i - \mathbf{p}\_j$.
+          
+          Lastly, each $1$-cell $\tau\_{i}$ is associated with an attribute $\mathbf{a}\_{\tau\_i}$, which is calculated as the Euclidean distance between the position vectors of its constituent $0$-cells:
+          $$\mathbf{a}\_{\tau\_i} = \lVert \mathbf{p}\_j - \mathbf{p}\_i \rVert$$
+
+
+          <h3>Implementation of composite harmonic expansions and CG TP</h3>
+
+          Converting feature vectors $\mathbf{x}\_{\sigma\_i}$, attribute vectors $\mathbf{a}\_{\tau\_i}$, and ground truth vectors $\mathbf{y}\_{\sigma\_i}$ into composite steerable vectors necessitates the specification of the types $l$ of basis functions involved, as well as the multiplicities of each type. 
+          A type-$l$ vector, characterised by its dimension $2l+1$, pertains to scalar quantities if $l=0$, to vectors if $l=1$, and to rank-2 tensors if $l=2$. Higher orders ($l > 2$) are generally less prevalent in practice. Importantly, multiple basis functions of an identical type $l$ may co-exist within the same representation. 
+          
+          For the effective implementation of composite steerable vectors and irreducible representations, we utilise the [e33nn](https://github.com/e3nn) library which provides a comprehensive framework that enables the formulation of composable $G$-morphic operations for learning tasks involving three-dimensional data.
+          
+          We set the number of hidden features to 32 and restrict the $\text{max}(l)$ to 2 for features and to 1 for attributes. Following this setting, the basis functions that form the hidden representations, $\mathbf{f}\_i$, are distributed so: `13x0e+3x1o+2x2e`, which is a symbolic notation within the e3nn framework. This nomenclature indicates that there are 13 or irreducible representations of type $l=0$, 3 of type $l=1$, and 2 of type $l=2$. Given that type $l=0$ has a single mode, type $l=1$ has 3 modes, and type $l=2$ has 5 modes, the total amounts to $13\times1 + 3\times3 + 2\times5 = 32$ basis functions. 
+          The suffixes `e` and `o` serve as parity indicators, representing even and odd parities respectively among the basis functions. It is noteworthy that the parity properties of spherical harmonics are intrinsically linked to their type $l$.
+          
+          Parity transformation or parity inversion is the flip in the sign of spatial coordinates. For three-space, we can express this as:
+          $`\mathbf{P}:\left(\begin{smallmatrix} x \, y \, z \end{smallmatrix}\right)^T \mapsto \left(\begin{smallmatrix} -x \, -y \, -z \end{smallmatrix}\right)^T`$. 
+          Upon execution of this transformation, the spatial coordinates are inverted relative to the origin of the coordinate system. 
+          Two irreducible representations of parity are possible. An object possessing even parity ($P=1$) remains invariant upon undergoing a parity transformation. Conversely, an object with odd parity ($P=-1$) becomes the negation of its original state following the transformation. 
+          For instance, vectors are odd; they will change their sign under parity transformation. 
+          On the other hand, the cross product of two vectors yields an even quantity, termed a pseudovector, which remains invariant under inversion of the coordinate frame.
+          
+          The Clebsch-Gordan tensor product, allowing for the combination of tensors of different types into a new, composite tensor space, facilitates the interaction between spherical harmonics of various types. Otherwise, the model would be restricted to linear combinations involving only the harmonics of identical types. Such limitations would effectively preclude any interaction between, for instance, scalar spherical harmonics of type 0 and their vector-valued counterparts. 
+          
+          It is crucial to emphasise that not all combinations of tensor types are possible. When considering two input representations—or spherical harmonics—of types $l\_1$ and $l\_2$, the output representations must conform to type $l$, and are subject to the inequality $|l\_1 - l\_2| \leq l \leq l\_1 + l\_2$.
+          
+          Consider input representations specified as `5x0e+5x1e` and `6x0e+4x1e`, and an output defined as `15x0e+3x1e`. In this setting, there are 960 compatible paths, each output being a learned weighted sum over these paths. This flexibility permits outputs with any specified multiplicity. In the given example, there exist $5 \times 4 + 5 \times 6 + 5 \times 4 = 70$ paths conducive to creating a representation of type $l=1$ (`1e`). Given that our output specification demands only three such representations, each of these would constitute a weighted sum of the 70 possible paths, or representations of type $l=1$.
+                  
+
+          <h3>Training</h3>
+          
+          The task at hand involves regressing the forces tensor, $\hat{\mathbf{y}}$, which has a dimensionality of $|\sigma| \times \mathbb{R}^C = 20 \times 3$. The optimisation criterion is the Mean Absolute Error (MAE) between the predicted and ground-truth force vectors. 
+          The harmonic expansions are restricted to a maximum degree, $l$, of 1. To this end, the input features and attributes are specified in the form `1x0e+1x1o`. A total of 32 hidden features are allocated, adopting the form `130x0e+42x1o`. 
+          24,000 complexes are designated for the training set, while an additional 6,000 are reserved for validation. The model consists of three message-passing layers, has a total parameter count of 692,000, and is trained using a batch size of 64 and. 
+          The training is configured with an initial learning rate of $3e^{-4}$ and uses a cosine annealing learning rate scheduler. 
 
           
-          <figure id="fig-bound-adj" class="tikz-figure auto-number-figure">
-            <script type="text/tikz">
-              \begin{tikzpicture}[scale=3, >=latex]
-              \def \n {4}
-              \def \radius {1}
-              \def \circradius {0.02}
-              \def \opacity {0.05}
-              \def \bend {30}
-
-              \foreach \i in {1,...,\n} {
-                \coordinate (\i) at (90*\i:\radius);
-                \fill (\i) circle (\circradius);
-              }
-              \path[fill=black,opacity=\opacity] (1) -- (2)  -- (3) -- (4) -- cycle;
-              \draw (1) -- (2) -- (3) -- (4) -- cycle;
-
-              % nodes-to-edges messages
-              \draw[-{>},line width=0.5mm,bend right=\bend] (1) to node[pos=0.5,right] {} (-0.5,0.5);
-              \draw[-{>},line width=0.5mm,bend left=\bend] (1) to node[pos=0.5,right] {} (0.5,0.5);
-
-              \draw[-{>},line width=0.5mm,bend left=\bend] (2) to node[pos=0.5,right] {} (-0.5,0.5);
-              \draw[-{>},line width=0.5mm,bend right=\bend] (2) to node[pos=0.5,right] {} (-0.5,-0.5);
-
-              \draw[-{>},line width=0.5mm,bend left=\bend] (3) to node[pos=0.5,right] {} (-0.5,-0.5);
-              \draw[-{>},line width=0.5mm,bend right=\bend] (3) to node[pos=0.5,right] {} (0.5,-0.5);
-
-              \draw[-{>},line width=0.5mm,bend left=\bend] (4) to node[pos=0.5,right] {} (0.5,-0.5);
-              \draw[-{>},line width=0.5mm,bend right=\bend] (4) to node[pos=0.5,right] {} (0.5,0.5);
-
-              % edges-to-faces messages
-              \draw[-{>},line width=0.5mm,bend right=\bend] (-0.5,0.5) to node[pos=0.5,right] {} (-0.1,0.1);
-              \draw[-{>},line width=0.5mm,bend right=\bend] (0.5,0.5) to node[pos=0.5,right] {} (0.1,0.1);
-              \draw[-{>},line width=0.5mm,bend right=\bend] (0.5,-0.5) to node[pos=0.5,right] {} (0.1,-0.1);
-              \draw[-{>},line width=0.5mm,bend right=\bend] (-0.5,-0.5) to node[pos=0.5,right] {} (-0.1,-0.1);
-              \end{tikzpicture}
-            </script>
-            <figcaption>
-              Boundary adjacency message passing on a cell 2-complex.
-            </figcaption>
-          </figure>
-
-          We define the boundary adjacency message function
-          $\tilde{\mathbf{m}}_{\mathcal{B}, \sigma \tau}$ on a geometric cell
-          complex $\Delta$ as follows: \begin{equation} \label{message-eq1}
-          \begin{aligned} \tilde{\mathbf{m}}_{\mathcal{B}, \sigma \tau}^{t+1} &=
-          \bigoplus_{\tau \in \mathcal{B}(\sigma)}\biggl(\phi_{\mathcal{B}}
-          (\underbrace{\tilde{\mathbf{f}}_\sigma^{t},
-          \tilde{\mathbf{f}}_\tau^{t}}_{\tilde{\mathbf{h}}_{\mathcal{B}, \sigma
-          \tau}}) \biggl), \\ & \quad {\scriptstyle k_{\sigma} = k_{\tau} + 1, \
-          \tilde{\mathbf{m}}_{\mathcal{B}}^{t+1}(\sigma) = \emptyset \ \forall
-          \sigma_{k=0} } \end{aligned} \end{equation} Here, the message travels
-          from $\tau$ to $\sigma$, where $\tau$ is on the boundary of $\sigma$.
-          For example, $\sigma$ can be an edge and $\tau$ can be a node on its
-          boundary, or $\sigma$ can be a face and $\tau$ can be an edge on its
-          boundary. The boundary message function $\phi_{\mathcal{B}}$ takes the
-          features of the receiver simplex, $\tilde{\mathbf{f}}_\sigma$, and the
-          features of the sender simplex, $\tilde{\mathbf{f}}_\tau$ as input. If
-          $\sigma$ is a $0$-cell, the message $\tilde{\mathbf{m}}_{\mathcal{B},
-          \sigma \tau}$ is an empty set since a $0$-cell has no interior or
-          boundary.
-
-          <figure id="fig-cobound-adj" class="tikz-figure auto-number-figure">
-            <script type="text/tikz">
-              \begin{tikzpicture}[scale=3, >=latex]
-              \def \n {4}
-              \def \radius {1}
-              \def \circradius {0.02}
-              \def \opacity {0.05}
-              \def \bend {30}
-
-              \foreach \i in {1,...,4} {
-                \coordinate (\i) at (90*\i:\radius);
-                \fill (\i) circle (\circradius);
-              }
-              \path[fill=black,opacity=0.05] (1) -- (2)  -- (3) -- (4) -- cycle;
-              \draw (1) -- (2) -- (3) -- (4) -- cycle;
-
-              % edges-to-nodes messages
-              \draw[-{>},line width=0.5mm,bend left=30] (-0.5,0.5) to node[pos=0.5,right] {} (1);
-              \draw[-{>},line width=0.5mm,bend right=30] (0.5,0.5) to node[pos=0.5,right] {} (1);
-
-              \draw[-{>},line width=0.5mm,bend right=30] (-0.5,0.5) to node[pos=0.5,right] {} (2);
-              \draw[-{>},line width=0.5mm,bend left=30] (-0.5,-0.5) to node[pos=0.5,right] {} (2);
-
-              \draw[-{>},line width=0.5mm,bend right=30] (-0.5,-0.5) to node[pos=0.5,right] {} (3);
-              \draw[-{>},line width=0.5mm,bend left=30] (0.5,-0.5) to node[pos=0.5,right] {} (3);
-
-              \draw[-{>},line width=0.5mm,bend right=30] (0.5,-0.5) to node[pos=0.5,right] {} (4);
-              \draw[-{>},line width=0.5mm,bend left=30] (0.5,0.5) to node[pos=0.5,right] {} (4);
-
-              % faces-to-edges messages
-              \draw[-{>},line width=0.5mm,bend right=30] (-0.1,0.1) to node[pos=0.5,right] {} (-0.5,0.5);
-              \draw[-{>},line width=0.5mm,bend right=30] (0.1,0.1) to node[pos=0.5,right] {} (0.5,0.5);
-              \draw[-{>},line width=0.5mm,bend right=30] (0.1,-0.1) to node[pos=0.5,right] {} (0.5,-0.5);
-              \draw[-{>},line width=0.5mm,bend right=30] (-0.1,-0.1) to node[pos=0.5,right] {} (-0.5,-0.5);
-              \end{tikzpicture}
-            </script>
-            <figcaption>
-              Co-boundary adjacency message passing on a cell 2-complex.
-            </figcaption>
-          </figure>
-
-          We define the co-boundary adjacency message function
-          $\tilde{\mathbf{m}}_{\mathcal{C}, \sigma \tau}$ as: \begin{equation}
-          \label{message-eq2} \begin{aligned} \tilde{\mathbf{m}}_{\mathcal{C},
-          \sigma \tau}^{t+1} &= \bigoplus_{\tau \in
-          \mathcal{C}(\sigma)}\biggl(\phi_{\mathcal{C}}
-          (\underbrace{\tilde{\mathbf{f}}_\sigma^{t},
-          \tilde{\mathbf{f}}_\tau^{t}}_{\tilde{\mathbf{h}}_{\mathcal{C}, \sigma
-          \tau}}) \biggl), \\ & \quad {\scriptstyle k_{\sigma} = k_{\tau} - 1, \
-          \tilde{\mathbf{m}}_{\mathcal{C}, \sigma \tau}^{t+1} = \emptyset \
-          \forall \sigma_{k=3} } \end{aligned} \end{equation} While the boundary
-          adjacency message travels from a lower-dimensional simplex to a
-          higher-dimensional one, the co-boundary adjacency message travels down
-          the dimensional hierarchy. This means that a cell, denoted as $\tau$,
-          sends a message to another cell, $\sigma$, located on its boundary
-          (for instance, $\sigma$ could be a 1-cell or edge on the boundary of
-          the 2-cell $\tau$). Given that the maximum dimension of our embedding
-          space, $\mathbb{R}^{d}$, is $d=3$, if $\sigma$ is a $3$-cell, then the
-          message $\tilde{\mathbf{m}}_{\mathcal{C}, \sigma \tau}$ becomes an
-          empty set, as there isn't a $4$-cell present as a co-boundary of
-          $\sigma$.
-
-          <figure id="fig-low-adj" class="tikz-figure auto-number-figure">
-            <script type="text/tikz">
-              \begin{tikzpicture}[scale=3, >=latex]
-              \def \n {4}
-              \def \radius {1}
-              \def \circradius {0.02}
-              \def \opacity {0.05}
-              \def \bend {30}
-
-              \foreach \i in {1,...,4} {
-                \coordinate (\i) at (90*\i:\radius);
-                \fill (\i) circle (\circradius);
-              }
-              \path[fill=black,opacity=0.05] (1) -- (2)  -- (3) -- (4) -- cycle;
-              \draw (1) -- (2) -- (3) -- (4) -- cycle;
-
-              % edges-to-edges messages
-              \draw[-{>},line width=0.5mm,bend right=20] (-0.5,0.5) to node[pos=0.5,right] {} (0.5,0.5);
-              \draw[-{>},line width=0.5mm,bend left=20] (-0.5,0.5) to node[pos=0.5,right] {} (-0.5,-0.5);
-
-              \draw[-{>},line width=0.5mm,bend left=20] (-0.5,-0.5) to node[pos=0.5,right] {} (-0.5,0.5);
-              \draw[-{>},line width=0.5mm,bend right=20] (-0.5,-0.5) to node[pos=0.5,right] {} (0.5,-0.5);
-
-              \draw[-{>},line width=0.5mm,bend right=20] (0.5,-0.5) to node[pos=0.5,right] {} (-0.5,-0.5);
-              \draw[-{>},line width=0.5mm,bend left=20] (0.5,-0.5) to node[pos=0.5,right] {} (0.5,0.5);
-
-              \draw[-{>},line width=0.5mm,bend left=20] (0.5,0.5) to node[pos=0.5,right] {} (0.5,-0.5);
-              \draw[-{>},line width=0.5mm,bend right=20] (0.5,0.5) to node[pos=0.5,right] {} (-0.5,0.5);
-              \end{tikzpicture}
-            </script>
-            <figcaption>
-              Lower adjacency message passing on a cell 2-complex.
-            </figcaption>
-          </figure>
-
-          We define the lower adjacency message function
-          $\tilde{\mathbf{m}}_{\mathcal{L}, \sigma \tau}$ as: \begin{equation}
-          \label{message-eq3} \begin{aligned} \tilde{\mathbf{m}}_{\mathcal{L},
-          \sigma \tau}^{t+1} &= \bigoplus_{\tau \in \mathcal{L}
-          (\sigma)}\biggl(\phi_{\mathcal{L}}
-          (\underbrace{\tilde{\mathbf{f}}_\sigma^{t},
-          \tilde{\mathbf{f}}_\tau^{t},
-          \tilde{\mathbf{f}}_{\delta}^{t}}_{\tilde{\mathbf{h}}_{\mathcal{L},
-          \sigma \tau}}, \tilde{\mathbf{a}}_\delta)\biggl), \\ & \quad
-          {\scriptstyle k_{\sigma} = k_{\tau}, \ k_{\delta} = k_{\sigma}+1, \
-          \tilde{\mathbf{m}}_{\mathcal{L}, \sigma \tau}^{t+1} = \emptyset \
-          \forall \sigma_{k=0},\tau_{k=0} } \end{aligned} \end{equation} The
-          lower adjacency message is transmitted between two cells of the same
-          dimension $k$ that share a common cell of dimension $k-1$ as their
-          face. For example, two $1$-cells or edges are considered lower
-          adjacent because they both have the same $0$-cell (vertex) as their
-          face. Since $0$-cells do not have a face, the message
-          $\tilde{\mathbf{m}}_{\mathcal{L}}$ is an empty set if $\sigma$ and
-          $\tau$ are $0$-cells. Note that the input to the message function
-          $\phi_{\mathcal{L}}$ includes the features of the lower-adjacent cell,
-          $\tilde{\mathbf{f}}_{\delta}$, and its attributes
-          $\tilde{\mathbf{a}}_\delta$. Note that attributes and features refer
-          to different types of information associated with the cells in a
-          complex. While features refer to learned representations of the cells,
-          attributes typically refer to domain-specific information that is
-          associated with the cells.
-
-          <figure id="fig-upp-adj" class="tikz-figure auto-number-figure">
-            <script type="text/tikz">
-              \begin{tikzpicture}[scale=3, >=latex]
-              \def \n {4}
-              \def \radius {1}
-              \def \circradius {0.02}
-              \def \opacity {0.05}
-              \def \bend {30}
-
-              \foreach \i in {1,...,4} {
-                \coordinate (\i) at (90*\i:\radius);
-                \fill (\i) circle (\circradius);
-              }
-              \path[fill=black,opacity=0.05] (1) -- (2)  -- (3) -- (4) -- cycle;
-              \draw (1) -- (2) -- (3) -- (4) -- cycle;
-
-              % nodes-to-nodes messages
-              \draw[-{>},line width=0.5mm,bend right=30] (1) to node[pos=0.5,right] {} (2);
-              \draw[-{>},line width=0.5mm,bend right=30] (1) to node[pos=0.5,right] {} (4);
-              \draw[-{>},line width=0.5mm,bend right=30] (2) to node[pos=0.5,right] {} (1);
-              \draw[-{>},line width=0.5mm,bend right=30] (2) to node[pos=0.5,right] {} (3);
-              \draw[-{>},line width=0.5mm,bend right=30] (3) to node[pos=0.5,right] {} (2);
-              \draw[-{>},line width=0.5mm,bend right=30] (3) to node[pos=0.5,right] {} (4);
-              \draw[-{>},line width=0.5mm,bend right=30] (4) to node[pos=0.5,right] {} (1);
-              \draw[-{>},line width=0.5mm,bend right=30] (4) to node[pos=0.5,right] {} (3);
-
-              % edges-to-edges messages
-              \draw[-{>},line width=0.5mm,bend right=20] (-0.5,0.5) to node[pos=0.5,right] {} (0.5,0.5);
-              \draw[-{>},line width=0.5mm,bend left=20] (-0.5,0.5) to node[pos=0.5,right] {} (-0.5,-0.5);
-
-              \draw[-{>},line width=0.5mm,bend left=20] (-0.5,-0.5) to node[pos=0.5,right] {} (-0.5,0.5);
-              \draw[-{>},line width=0.5mm,bend right=20] (-0.5,-0.5) to node[pos=0.5,right] {} (0.5,-0.5);
-
-              \draw[-{>},line width=0.5mm,bend right=20] (0.5,-0.5) to node[pos=0.5,right] {} (-0.5,-0.5);
-              \draw[-{>},line width=0.5mm,bend left=20] (0.5,-0.5) to node[pos=0.5,right] {} (0.5,0.5);
-
-              \draw[-{>},line width=0.5mm,bend left=20] (0.5,0.5) to node[pos=0.5,right] {} (0.5,-0.5);
-              \draw[-{>},line width=0.5mm,bend right=20] (0.5,0.5) to node[pos=0.5,right] {} (-0.5,0.5);
-              %
-              \draw[-{>},line width=0.5mm,bend right=20] (-0.5,0.5) to node[pos=0.5,right] {} (0.5,-0.5);
-              \draw[-{>},line width=0.5mm,bend right=20] (0.5,-0.5) to node[pos=0.5,right] {} (-0.5,0.5);
-
-              \draw[-{>},line width=0.5mm,bend right=20] (-0.5,-0.5) to node[pos=0.5,right] {} (0.5,0.5);
-              \draw[-{>},line width=0.5mm,bend right=20] (0.5,0.5) to node[pos=0.5,right] {} (-0.5,-0.5);
-              \end{tikzpicture}
-            </script>
-            <figcaption>
-              Upper adjacency message passing on a cell 2-complex.
-            </figcaption>
-          </figure>
-
-          We define the upper adjacency message function
-          $\tilde{\mathbf{m}}_{\mathcal{U}, \sigma \tau}$ as: \begin{equation}
-          \label{message-eq4} \begin{aligned} \tilde{\mathbf{m}}_{\mathcal{U},
-          \sigma \tau}^{t+1} &= \bigoplus_{\tau \in \mathcal{U}
-          (\sigma)}\biggl(\phi_{\mathcal{U}}
-          (\underbrace{\tilde{\mathbf{f}}_\sigma^{t},
-          \tilde{\mathbf{f}}_\tau^{t}, \tilde{\mathbf{f}}_{\delta}^{t},
-          \mathbf{r}_{\sigma \tau}}_{\tilde{\mathbf{h}}_{\mathcal{U}, \sigma
-          \tau}}, \tilde{\mathbf{a}}_{\delta})\biggl), \\ & \quad {\scriptstyle
-          k_{\sigma} = k_{\tau}, \ k_{\delta} = k_{\sigma} + 1, \
-          \mathbf{r}_{\sigma \tau} \neq \emptyset \text{ iff } k_{\sigma} =
-          k_{\tau} = 0} \end{aligned} \end{equation} The upper adjacency message
-          is transmitted between two cells of the same dimension $k$, namely
-          $\sigma$ and $\tau$, which share a common upper-adjacent cell of
-          dimension $k+1$, referred to as $\delta$. For example, $\sigma$ and
-          $\tau$ can be $1$-cells or edges with a common upper-adjacent $2$-cell
-          or face $\delta$. The quantity $\mathbf{r}_{\sigma \tau}$ represents
-          the relative distance between two $0$-cells $\sigma$ and $\tau$, $|
-          \mathbf{p}_{\tau} - \mathbf{p}_{\sigma} |$ or squared relative
-          distance $| \mathbf{p}_{\tau} - \mathbf{p}_{\sigma} |^2$. If $\sigma$
-          and $\tau$ are cells of any other order, then $\mathbf{r}_{\sigma
-          \tau}$ is an empty set. We define the cell update function as:
-          \begin{equation} \notag \tilde{\mathbf{f}}^{t+1}_{\sigma} = \phi_f
-          (\underbrace{ \tilde{\mathbf{f}}^{t}_{\sigma},
-          \tilde{\mathbf{m}}_{\mathcal{B}, \sigma \tau}^{t},
-          \tilde{\mathbf{m}}_{\mathcal{C}, \sigma \tau}^{t},
-          \tilde{\mathbf{m}}_{\mathcal{L}, \sigma \tau}^{t+1},
-          \tilde{\mathbf{m}}_{\mathcal{U}, \sigma \tau}^{t+1}
-          }_{\tilde{\mathbf{h}}_{\sigma}}, \tilde{\mathbf{a}}_{\sigma})
-          \end{equation}
-
-          <figure id="gccnn-mp-diagram" class="auto-number-figure">
-            <img src="assets/gccnn-mp-diag.svg" width="600px" />
-            <figcaption>
-              Message passing on a cell complex $\Delta^2$, geometrically
-              realised in $\mathbb{R}^3$. $k(\sigma)=0$, $k(\tau)=1$,
-              $k(\delta)=2$. $\tilde{\mathbf{f}}$ and $\tilde{\mathbf{a}}$: cell
-              features and attributes, respectively, in spherical harmonics
-              basis. All $\sigma$ associated with a position $\mathbf{p}$.
-              Boundary adjacency message functions $\phi_{\mathcal{B}}$ (solid).
-              Co-boundary adjacency message functions $\phi_{\mathcal{C}}$
-              (dashed). Lower adjacency message functions $\phi_{\mathcal{L}}$
-              (sinusoidal). Upper adjacency message functions
-              $\phi_{\mathcal{U}}$ (dotted).
-            </figcaption>
-          </figure>
-
-          <figure id="alg-cap" class="auto-number-figure">
-            <img src="assets/gccnn-mp-algo.svg" style="width: 600px" />
-            <figcaption>
-              Message passing layer. Updates steerable cell features
-              $\tilde{\mathbf{f}}^{\prime \prime \prime}_{\sigma} \gets
-              \tilde{\mathbf{f}}_{\sigma}$.
-            </figcaption>
-          </figure>
-
-          <h3>$\sigma$- and $\Delta$-level readout</h3>
-
-          <figure id="gccnn-arch" class="auto-number-figure">
-            <img src="assets/gccnn-arch.png" style="width: 600px" />
-            <figcaption>
-              Architecture outline for cell-level predictions
-              $\hat{\mathbf{y}}_n$ and complex-level predictions
-              $\hat{\mathbf{y}}_{\Delta}$. Example with cell complex $\Delta$ of
-              dimension $2$ embedded in ambient space $\mathbb{R}^3$. (a)
-              Geometric cell complex $\Delta$ with cell features $\mathbf{f}_i
-              \in \mathbb{R}^{C_c}$, cell attributes $\mathbf{a}_i \in$
-              $\mathbb{R}^{C_a}$, and 0 -cell positions $p_i \in \mathbb{R}^3$.
-              (b) Spherical harmonic transform of features, ${\mathbf{f}_i
-              \rightarrow \tilde{\mathbf{h}}_i}$ and attributes, $\mathbf{a}_i
-              \rightarrow \tilde{\mathbf{a}}_i$. (c) Message passing mechanism;
-              updated cell features $\tilde{\mathbf{h}}_i$. (d) Local
-              (cell-level) readout MLPs with cell features,
-              $\tilde{\mathbf{h}}_i$, as input. (e) Reduction to multi-sets of
-              features wrt to cell dimension; global (complex-level) embedding,
-              $\tilde{\mathbf{h}}_{\Delta} =
-              \left(\left\{\tilde{\mathbf{h}}_\sigma\right\}_{k_\sigma=0},\left\{\tilde{\mathbf{h}}_\sigma\right\}_{k_\sigma=1},\left\{\tilde{\mathbf{h}}_\sigma\right\}_{k_\sigma=2}\right)$,
-              and readout MLP. (f) Local predictions, $\hat{\mathbf{y}}_i$. (g)
-              Global prediction, $\hat{\mathbf{y}}_{\Delta}$.
-            </figcaption>
-          </figure>
-
-          Once the cell complex structured data inputs have been transformed
-          into latent representations, a wide range of learning tasks can be
-          performed on the transformed data. Two principal learning tasks that
-          can be undertaken are cell-level prediction and complex-level
-          prediction. After the final message passing layer $L$, we can apply a
-          readout function $\hat{\mathbf{y}}$, which can take different forms
-          depending on the task of interest. One option is that
-          $\hat{\mathbf{y}}$ aggregates in a permutation invariant way the
-          features of cells of the same dimension $k$, after which it applies a
-          non-linearity $\phi:$ $$ {\hat{\mathbf{y}}_{\sigma} = \phi \left(
-          \bigoplus_{\sigma_{k=0} \in \Delta} \mathbf{h}^L_{\sigma},
-          \bigoplus_{\sigma_{k=1} \in \Delta} \mathbf{h}^L_{\sigma}, \dots ,
-          \bigoplus_{\sigma_{k=n} \in \Delta} \mathbf{h}^L_{\sigma}\right)} $$
-          Another task may not need the distinguishing of cells by the their
-          dimension and the readout function can aggregate the features of all
-          cells (of different dimensions) in order to obtain an complex-level
-          output: $$ {\hat{\mathbf{y}}_{\Delta} = \phi \left( \bigoplus_{\sigma
-          \in \Delta} \mathbf{h}^L_{\sigma}\right)} $$ In both cases, the latent
-          representations of the cells are combined using suitable aggregation
-          methods, such as direct sum operations or other fusion techniques. It
-          is important to note that cell-level and complex-level prediction
-          tasks are not mutually exclusive, and a learning model can be designed
-          to address both simultaneously. By jointly learning from the
-          individual cells and the complex as a whole, the model can leverage
-          the local and global information encoded in the latent representations
-          to gain a comprehensive understanding of the cell complex. This
-          combination of tasks allows for a more comprehensive analysis,
-          enabling the extraction of both fine-grained and global insights from
-          the transformed cell complex data.
+          <h3>Results</h3>
+          
+          
         </div>
 
         <div class="references-section">
