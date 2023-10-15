@@ -352,41 +352,10 @@
           </div>
 
           <h3>Summary</h3>
-          
-          <script type="text/tikz">
-            \begin{tikzpicture}
-              \draw (0,0) circle (1in);
-            \end{tikzpicture}
-          </script>
 
           
-
-          This experiment examines the representation stability of graph neural
-          networks when subjected to 3D rotation of input data. Focusing on two
-          leading methods, E(n) Equivariant Graph Neural Networks and Message
-          Passing Neural Networks, we aim to discern their mechanisms in
-          updating node features of graphs embedded in 3D space. Using
-          undirected graphs from the ModelNet10 dataset, the study offers a
-          comprehensive analysis of each method's resilience and efficiency in
-          retaining essential information amid 3D rotational perturbations. The
-          conclusions underscore the importance of integrating geometric
-          relationships into edge attributes for improved representation
-          stability.
-
+          
           <h3>Introduction</h3>
-
-          We are processing undirected graphs $G = (V,E)$, consisting of nodes
-          $v_i \in V$ and edges $e_{ij} \in E$. Nodes are assigned features
-          $\mathbf{f}_i \in \mathbb{R}^{C_v}$ and edges are assigned attributes
-          $\mathbf{a}_{ij} \in \mathbb{R}^{C_e}$, where $C_v$ and $C_e$ stand
-          for the cardinality of features and attributes channel, respectively.
-          The nodes possess position vectors $\mathbf{x}_i \in \mathbb{R}^3$. We
-          follow the methods from
-          <span class="autocite" data-ref="gilmer2017"></span> (A) and
-          <span class="autocite" data-ref="satorras2021"></span> (B). The
-          forward pass comprises two phases: the message passing phase and the
-          readout phase.
-
 
 
 
