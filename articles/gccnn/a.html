@@ -134,6 +134,15 @@
         content: "Figure " counter(figure-counter) ": ";
       }
 
+      figure:has(script[type="text/tikz"]) {
+          text-align: center;
+      }
+  
+      figure:has(script[type="text/tikz"]) > * {
+          margin: auto;
+          display: block;
+      }
+
       table {
         counter-increment: table-counter;
         font-size: 0.8em;
