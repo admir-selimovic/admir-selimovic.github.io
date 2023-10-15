@@ -513,10 +513,7 @@
           \quad {\scriptstyle k_{\sigma} = k_{\tau} - 1, \ \tilde{\mathbf{m}}_{\mathcal{C}, \sigma \tau}^{t+1} = \emptyset \ \forall \sigma_{k=3} } 
           \end{equation}
           
-          
           While the boundary adjacency message travels from a lower-dimensional simplex to a higher-dimensional one, the co-boundary adjacency message travels down the dimensional hierarchy. This means that a cell, denoted as $\tau$, sends a message to another cell, $\sigma$, located on its boundary (for instance, $\sigma$ could be a 1-cell or edge on the boundary of the 2-cell $\tau$). Given that the maximum dimension of our embedding space, $\mathbb{R}^{d}$, is $d=3$, if $\sigma$ is a $3$-cell, then the message $\tilde{\mathbf{m}}_{\mathcal{C}, \sigma \tau}$ becomes an empty set, as there isn't a $4$-cell present as a co-boundary of $\sigma$.
-
-
 
           <figure id="fig-low-adj" class="tikz-figure auto-number-figure">
             <script type="text/tikz">
@@ -535,144 +532,112 @@
             \draw (1) -- (2) -- (3) -- (4) -- cycle;
         
             % edges-to-edges messages
-            \draw[-{>},bend right=20] (-0.5,0.5) to node[pos=0.5,right] {} (0.5,0.5);
-            \draw[-{>},bend left=20] (-0.5,0.5) to node[pos=0.5,right] {} (-0.5,-0.5);
+            \draw[-{>},line width=0.5mm,bend right=20] (-0.5,0.5) to node[pos=0.5,right] {} (0.5,0.5);
+            \draw[-{>},line width=0.5mm,bend left=20] (-0.5,0.5) to node[pos=0.5,right] {} (-0.5,-0.5);
             
-            \draw[-{>},bend left=20] (-0.5,-0.5) to node[pos=0.5,right] {} (-0.5,0.5);
-            \draw[-{>},bend right=20] (-0.5,-0.5) to node[pos=0.5,right] {} (0.5,-0.5);
+            \draw[-{>},line width=0.5mm,bend left=20] (-0.5,-0.5) to node[pos=0.5,right] {} (-0.5,0.5);
+            \draw[-{>},line width=0.5mm,bend right=20] (-0.5,-0.5) to node[pos=0.5,right] {} (0.5,-0.5);
         
-            \draw[-{>},bend right=20] (0.5,-0.5) to node[pos=0.5,right] {} (-0.5,-0.5);
-            \draw[-{>},bend left=20] (0.5,-0.5) to node[pos=0.5,right] {} (0.5,0.5);
+            \draw[-{>},line width=0.5mm,bend right=20] (0.5,-0.5) to node[pos=0.5,right] {} (-0.5,-0.5);
+            \draw[-{>},line width=0.5mm,bend left=20] (0.5,-0.5) to node[pos=0.5,right] {} (0.5,0.5);
         
-            \draw[-{>},bend left=20] (0.5,0.5) to node[pos=0.5,right] {} (0.5,-0.5);
-            \draw[-{>},bend right=20] (0.5,0.5) to node[pos=0.5,right] {} (-0.5,0.5);
+            \draw[-{>},line width=0.5mm,bend left=20] (0.5,0.5) to node[pos=0.5,right] {} (0.5,-0.5);
+            \draw[-{>},line width=0.5mm,bend right=20] (0.5,0.5) to node[pos=0.5,right] {} (-0.5,0.5);
             \end{tikzpicture}
             </script>
             <figcaption>
-              Co-boundary adjacency message passing on a cell 2-complex.
+              Lower adjacency message passing on a cell 2-complex.
             </figcaption>
           </figure>
 
-
+          We define the lower adjacency message function $\tilde{\mathbf{m}}_{\mathcal{L}, \sigma \tau}$ as:
           
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}[scale=1.50]
+          \begin{equation} \label{message-eq3}
+          \tilde{\mathbf{m}}_{\mathcal{L}, \sigma \tau}^{t+1}
+          =
+          \bigoplus_{\tau \in \mathcal{L} (\sigma)}\biggl(\phi_{\mathcal{L}} (\underbrace{\tilde{\mathbf{f}}_\sigma^{t}, \tilde{\mathbf{f}}_\tau^{t}, \tilde{\mathbf{f}}_{\delta}^{t}}_{\tilde{\mathbf{h}}_{\mathcal{L}, \sigma \tau}}, \tilde{\mathbf{a}}_\delta)\biggl), 
+          \quad {\scriptstyle k_{\sigma} = k_{\tau}, \ k_{\delta} = k_{\sigma}+1 \ \tilde{\mathbf{m}}_{\mathcal{L}, \sigma \tau}^{t+1} = \emptyset \ \forall \sigma_{k=0},\tau_{k=0} } 
+          \end{equation}
 
-    \foreach \i in {1,...,4} {
-      \coordinate (\i) at (90*\i:1);
-      \fill (\i) circle (0.02);
-    }
-    \path[fill=black,opacity=0.05] (1) -- (2)  -- (3) -- (4) -- cycle;
-    \draw (1) -- (2) -- (3) -- (4) -- cycle;
+          The lower adjacency message is transmitted between two cells of the same dimension $k$ that share a common cell of dimension $k-1$ as their face. For example, two $1$-cells or edges are considered lower adjacent because they both have the same $0$-cell (vertex) as their face. 
+          Since $0$-cells do not have a face, the message $\tilde{\mathbf{m}}_{\mathcal{L}}$ is an empty set if $\sigma$ and $\tau$ are $0$-cells. Note that the input to the message function $\phi_{\mathcal{L}}$ includes the features of the lower-adjacent cell, $\tilde{\mathbf{f}}_{\delta}$, and its attributes $\tilde{\mathbf{a}}_\delta$.
+          
+          Note that attributes and features refer to different types of information associated with the cells in a complex. While features refer to learned representations of the cells, attributes typically refer to domain-specific information that is associated with the cells. 
+          
+          <figure id="fig-low-adj" class="tikz-figure auto-number-figure">
+            <script type="text/tikz">
+            \begin{tikzpicture}[scale=3, >=latex]
+            \def \n {4}
+            \def \radius {1}
+            \def \circradius {0.02}
+            \def \opacity {0.05}
+            \def \bend {30}
+            
+            \foreach \i in {1,...,4} {
+              \coordinate (\i) at (90*\i:\radius);
+              \fill (\i) circle (\circradius);
+            }
+            \path[fill=black,opacity=0.05] (1) -- (2)  -- (3) -- (4) -- cycle;
+            \draw (1) -- (2) -- (3) -- (4) -- cycle;
+        
+            % nodes-to-nodes messages
+            \draw[-{>},line width=0.5mm,bend right=30] (1) to node[pos=0.5,right] {} (2);
+            \draw[-{>},line width=0.5mm,bend right=30] (1) to node[pos=0.5,right] {} (4);
+            \draw[-{>},line width=0.5mm,bend right=30] (2) to node[pos=0.5,right] {} (1);
+            \draw[-{>},line width=0.5mm,bend right=30] (2) to node[pos=0.5,right] {} (3);    
+            \draw[-{>},line width=0.5mm,bend right=30] (3) to node[pos=0.5,right] {} (2);
+            \draw[-{>},line width=0.5mm,bend right=30] (3) to node[pos=0.5,right] {} (4);
+            \draw[-{>},line width=0.5mm,bend right=30] (4) to node[pos=0.5,right] {} (1);
+            \draw[-{>},line width=0.5mm,bend right=30] (4) to node[pos=0.5,right] {} (3);
+        
+            % edges-to-edges messages
+            \draw[-{>},line width=0.5mm,bend right=20] (-0.5,0.5) to node[pos=0.5,right] {} (0.5,0.5);
+            \draw[-{>},line width=0.5mm,bend left=20] (-0.5,0.5) to node[pos=0.5,right] {} (-0.5,-0.5);
+            
+            \draw[-{>},line width=0.5mm,bend left=20] (-0.5,-0.5) to node[pos=0.5,right] {} (-0.5,0.5);
+            \draw[-{>},line width=0.5mm,bend right=20] (-0.5,-0.5) to node[pos=0.5,right] {} (0.5,-0.5);
+        
+            \draw[-{>},line width=0.5mm,bend right=20] (0.5,-0.5) to node[pos=0.5,right] {} (-0.5,-0.5);
+            \draw[-{>},line width=0.5mm,bend left=20] (0.5,-0.5) to node[pos=0.5,right] {} (0.5,0.5);
+        
+            \draw[-{>},line width=0.5mm,bend left=20] (0.5,0.5) to node[pos=0.5,right] {} (0.5,-0.5);
+            \draw[-{>},line width=0.5mm,bend right=20] (0.5,0.5) to node[pos=0.5,right] {} (-0.5,0.5);
+            %
+            \draw[-{>},line width=0.5mm,bend right=20] (-0.5,0.5) to node[pos=0.5,right] {} (0.5,-0.5);
+            \draw[-{>},line width=0.5mm,bend right=20] (0.5,-0.5) to node[pos=0.5,right] {} (-0.5,0.5);
+        
+            \draw[-{>},line width=0.5mm,bend right=20] (-0.5,-0.5) to node[pos=0.5,right] {} (0.5,0.5);
+            \draw[-{>},line width=0.5mm,bend right=20] (0.5,0.5) to node[pos=0.5,right] {} (-0.5,-0.5);
+            \end{tikzpicture}
+            </script>
+            <figcaption>
+              Upper adjacency message passing on a cell 2-complex.
+            </figcaption>
+          </figure>
 
-    % edges-to-edges messages
-    \draw[-{Stealth[scale=1.5]},bend right=20] (-0.5,0.5) to node[pos=0.5,right] {} (0.5,0.5);
-    \draw[-{Stealth[scale=1.5]},bend left=20] (-0.5,0.5) to node[pos=0.5,right] {} (-0.5,-0.5);
-    
-    \draw[-{Stealth[scale=1.5]},bend left=20] (-0.5,-0.5) to node[pos=0.5,right] {} (-0.5,0.5);
-    \draw[-{Stealth[scale=1.5]},bend right=20] (-0.5,-0.5) to node[pos=0.5,right] {} (0.5,-0.5);
+          We define the upper adjacency message function $\tilde{\mathbf{m}}_{\mathcal{U}, \sigma \tau}$ as:
+          
+          \begin{equation} \label{message-eq4}
+          \tilde{\mathbf{m}}_{\mathcal{U}, \sigma \tau}^{t+1} 
+          = 
+          \bigoplus_{\tau \in \mathcal{U} (\sigma)}\biggl(\phi_{\mathcal{U}} (\underbrace{\tilde{\mathbf{f}}_\sigma^{t}, \tilde{\mathbf{f}}_\tau^{t}, \tilde{\mathbf{f}}_{\delta}^{t}, \mathbf{r}_{\sigma \tau}}_{\tilde{\mathbf{h}}_{\mathcal{U}, \sigma \tau}}, \tilde{\mathbf{a}}_{\delta})\biggl), 
+          \quad {\scriptstyle k_{\sigma} = k_{\tau}, \ k_{\delta} = k_{\sigma} + 1, \ \mathbf{r}_{\sigma \tau} \neq \emptyset \text{ iff } k_{\sigma} = k_{\tau} = 0}
+          \end{equation}
 
-    \draw[-{Stealth[scale=1.5]},bend right=20] (0.5,-0.5) to node[pos=0.5,right] {} (-0.5,-0.5);
-    \draw[-{Stealth[scale=1.5]},bend left=20] (0.5,-0.5) to node[pos=0.5,right] {} (0.5,0.5);
+          The upper adjacency message is transmitted between two cells of the same dimension $k$, namely $\sigma$ and $\tau$, which share a common upper-adjacent cell of dimension $k+1$, referred to as $\delta$. For example, $\sigma$ and $\tau$ can be $1$-cells or edges with a common upper-adjacent $2$-cell or face $\delta$. 
+          The quantity $\mathbf{r}_{\sigma \tau}$ represents the relative distance between two $0$-cells $\sigma$ and $\tau$, $| \mathbf{p}_{\tau} - \mathbf{p}_{\sigma} |$ or squared relative distance $| \mathbf{p}_{\tau} - \mathbf{p}_{\sigma} |^2$. If $\sigma$ and $\tau$ are cells of any other order, then $\mathbf{r}_{\sigma \tau}$ is an empty set.
+          
+          We define the cell update function as:
 
-    \draw[-{Stealth[scale=1.5]},bend left=20] (0.5,0.5) to node[pos=0.5,right] {} (0.5,-0.5);
-    \draw[-{Stealth[scale=1.5]},bend right=20] (0.5,0.5) to node[pos=0.5,right] {} (-0.5,0.5);
-
-\end{tikzpicture}
-\caption{Lower adjacency message passing on a cell 2-complex.}
-\end{figure}
-
-
-We define the lower adjacency message function $\tilde{\mathbf{m}}_{\mathcal{L}, \sigma \tau}$ as:
-
-\begin{equation} \label{message-eq3}
-\tilde{\mathbf{m}}_{\mathcal{L}, \sigma \tau}^{t+1}
-=
-\bigoplus_{\tau \in \mathcal{L} (\sigma)}\left\biggl(\phi_{\mathcal{L}} (\underbrace{\tilde{\mathbf{f}}_\sigma^{t}, \tilde{\mathbf{f}}_\tau^{t}, \tilde{\mathbf{f}}_{\delta}^{t}}_{\tilde{\mathbf{h}}_{\mathcal{L}, \sigma \tau}}, \tilde{\mathbf{a}}_\delta)\right\biggl), 
-\quad {\scriptstyle k_{\sigma} = k_{\tau}, \ k_{\delta} = k_{\sigma}+1 \ \tilde{\mathbf{m}}_{\mathcal{L}, \sigma \tau}^{t+1} = \emptyset \ \forall \sigma_{k=0},\tau_{k=0} } 
-\end{equation}
-
-
-The lower adjacency message is transmitted between two cells of the same dimension $k$ that share a common cell of dimension $k-1$ as their face. For example, two $1$-cells or edges are considered lower adjacent because they both have the same $0$-cell (vertex) as their face. 
-Since $0$-cells do not have a face, the message $\tilde{\mathbf{m}}_{\mathcal{L}}$ is an empty set if $\sigma$ and $\tau$ are $0$-cells. Note that the input to the message function $\phi_{\mathcal{L}}$ includes the features of the lower-adjacent cell, $\tilde{\mathbf{f}}_{\delta}$, and its attributes $\tilde{\mathbf{a}}_\delta$.
-
-Note that attributes and features refer to different types of information associated with the cells in a complex. While features refer to learned representations of the cells, attributes typically refer to domain-specific information that is associated with the cells. 
-%For example, in a social network, attributes could include demographic information about users, such as age, gender, and location. In a molecule, attributes could include information about the chemical properties of atoms or bonds.
-
-
-
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}[scale=1.50]
-    \foreach \i in {1,...,4} {
-      \coordinate (\i) at (90*\i:1);
-      \fill (\i) circle (0.02);
-    }
-    \path[fill=black,opacity=0.05] (1) -- (2)  -- (3) -- (4) -- cycle;
-    \draw (1) -- (2) -- (3) -- (4) -- cycle;
-
-    % nodes-to-nodes messages
-    \draw[-{Stealth[scale=1.5]},bend right=30] (1) to node[pos=0.5,right] {} (2);
-    %\draw[-{Stealth[scale=1.0]},bend right=20,densely dashed] (1) to node[pos=0.5,right] {} (3);
-    \draw[-{Stealth[scale=1.5]},bend right=30] (1) to node[pos=0.5,right] {} (4);
-    \draw[-{Stealth[scale=1.5]},bend right=30] (2) to node[pos=0.5,right] {} (1);
-    \draw[-{Stealth[scale=1.5]},bend right=30] (2) to node[pos=0.5,right] {} (3);    
-    %\draw[-{Stealth[scale=1.0]},bend right=20,densely dashed] (2) to node[pos=0.5,right] {} (4);    
-    %\draw[-{Stealth[scale=1.0]},bend right=20,densely dashed] (3) to node[pos=0.5,right] {} (1);
-    \draw[-{Stealth[scale=1.5]},bend right=30] (3) to node[pos=0.5,right] {} (2);
-    \draw[-{Stealth[scale=1.5]},bend right=30] (3) to node[pos=0.5,right] {} (4);
-    \draw[-{Stealth[scale=1.5]},bend right=30] (4) to node[pos=0.5,right] {} (1);
-    %\draw[-{Stealth[scale=1.0]},bend right=20,densely dashed] (4) to node[pos=0.5,right] {} (2);
-    \draw[-{Stealth[scale=1.5]},bend right=30] (4) to node[pos=0.5,right] {} (3);
-
-    % edges-to-edges messages
-    \draw[-{Stealth[scale=1.5]},bend right=20] (-0.5,0.5) to node[pos=0.5,right] {} (0.5,0.5);
-    \draw[-{Stealth[scale=1.5]},bend left=20] (-0.5,0.5) to node[pos=0.5,right] {} (-0.5,-0.5);
-    
-    \draw[-{Stealth[scale=1.5]},bend left=20] (-0.5,-0.5) to node[pos=0.5,right] {} (-0.5,0.5);
-    \draw[-{Stealth[scale=1.5]},bend right=20] (-0.5,-0.5) to node[pos=0.5,right] {} (0.5,-0.5);
-
-    \draw[-{Stealth[scale=1.5]},bend right=20] (0.5,-0.5) to node[pos=0.5,right] {} (-0.5,-0.5);
-    \draw[-{Stealth[scale=1.5]},bend left=20] (0.5,-0.5) to node[pos=0.5,right] {} (0.5,0.5);
-
-    \draw[-{Stealth[scale=1.5]},bend left=20] (0.5,0.5) to node[pos=0.5,right] {} (0.5,-0.5);
-    \draw[-{Stealth[scale=1.5]},bend right=20] (0.5,0.5) to node[pos=0.5,right] {} (-0.5,0.5);
-    %
-    \draw[-{Stealth[scale=1.5]},bend right=20] (-0.5,0.5) to node[pos=0.5,right] {} (0.5,-0.5);
-    \draw[-{Stealth[scale=1.5]},bend right=20] (0.5,-0.5) to node[pos=0.5,right] {} (-0.5,0.5);
-
-    \draw[-{Stealth[scale=1.5]},bend right=20] (-0.5,-0.5) to node[pos=0.5,right] {} (0.5,0.5);
-    \draw[-{Stealth[scale=1.5]},bend right=20] (0.5,0.5) to node[pos=0.5,right] {} (-0.5,-0.5);
-
-\end{tikzpicture}
-\caption{Upper adjacency message passing on a cell 2-complex.}
-\end{figure}
-
-
-We define the upper adjacency message function $\tilde{\mathbf{m}}_{\mathcal{U}, \sigma \tau}$ as:
-
-\begin{equation} \label{message-eq4}
-\tilde{\mathbf{m}}_{\mathcal{U}, \sigma \tau}^{t+1} 
-= 
-\bigoplus_{\tau \in \mathcal{U} (\sigma)}\left\biggl(\phi_{\mathcal{U}} (\underbrace{\tilde{\mathbf{f}}_\sigma^{t}, \tilde{\mathbf{f}}_\tau^{t}, \tilde{\mathbf{f}}_{\delta}^{t}, \mathbf{r}_{\sigma \tau}}_{\tilde{\mathbf{h}}_{\mathcal{U}, \sigma \tau}}, \tilde{\mathbf{a}}_{\delta})\right\biggl), 
-\quad {\scriptstyle k_{\sigma} = k_{\tau}, \ k_{\delta} = k_{\sigma} + 1, \ \mathbf{r}_{\sigma \tau} \neq \emptyset \text{ iff } k_{\sigma} = k_{\tau} = 0}
-\end{equation}
-
-The upper adjacency message is transmitted between two cells of the same dimension $k$, namely $\sigma$ and $\tau$, which share a common upper-adjacent cell of dimension $k+1$, referred to as $\delta$. For example, $\sigma$ and $\tau$ can be $1$-cells or edges with a common upper-adjacent $2$-cell or face $\delta$. 
-The quantity $\mathbf{r}_{\sigma \tau}$ represents the relative distance between two $0$-cells $\sigma$ and $\tau$, $| \mathbf{p}_{\tau} - \mathbf{p}_{\sigma} |$ or squared relative distance $| \mathbf{p}_{\tau} - \mathbf{p}_{\sigma} |^2$. If $\sigma$ and $\tau$ are cells of any other order, then $\mathbf{r}_{\sigma \tau}$ is an empty set.
-
-We define the cell update function as:
-
-\begin{equation} \label{update-eq1}
-\tilde{\mathbf{f}}^{t+1}_{\sigma} &= 
-\phi_f \left(\underbrace{
-\tilde{\mathbf{f}}^{t}_{\sigma}, 
-\tilde{\mathbf{m}}_{\mathcal{B}, \sigma \tau}^{t}, 
-\tilde{\mathbf{m}}_{\mathcal{C}, \sigma \tau}^{t},
-\tilde{\mathbf{m}}_{\mathcal{L}, \sigma \tau}^{t+1},
-\tilde{\mathbf{m}}_{\mathcal{U}, \sigma \tau}^{t+1} }_{\tilde{\mathbf{h}}_{\sigma}}, \tilde{\mathbf{a}}_{\sigma} \right)
-\end{equation}
+          \begin{equation} \label{update-eq1}
+          \tilde{\mathbf{f}}^{t+1}_{\sigma} = 
+          \phi_f (\underbrace{
+          \tilde{\mathbf{f}}^{t}_{\sigma}, 
+          \tilde{\mathbf{m}}_{\mathcal{B}, \sigma \tau}^{t}, 
+          \tilde{\mathbf{m}}_{\mathcal{C}, \sigma \tau}^{t},
+          \tilde{\mathbf{m}}_{\mathcal{L}, \sigma \tau}^{t+1},
+          \tilde{\mathbf{m}}_{\mathcal{U}, \sigma \tau}^{t+1} }_{\tilde{\mathbf{h}}_{\sigma}}, \tilde{\mathbf{a}}_{\sigma})
+          \end{equation}
 
 
 
