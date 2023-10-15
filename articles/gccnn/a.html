@@ -419,7 +419,6 @@
             \def \radius {1}
             \def \circradius {0.02}
             \def \opacity {0.05}
-            \def \stealthscale {2.5}
             \def \bend {30}
             
             \foreach \i in {1,...,\n} {
@@ -430,23 +429,23 @@
             \draw (1) -- (2) -- (3) -- (4) -- cycle;
             
             % nodes-to-edges messages
-            \draw[-{>},line width=0.35mm,bend right=\bend] (1) to node[pos=0.5,right] {} (-0.5,0.5);
-            \draw[-{>},line width=0.35mm,bend left=\bend] (1) to node[pos=0.5,right] {} (0.5,0.5);
+            \draw[-{>},line width=0.5mm,bend right=\bend] (1) to node[pos=0.5,right] {} (-0.5,0.5);
+            \draw[-{>},line width=0.5mm,bend left=\bend] (1) to node[pos=0.5,right] {} (0.5,0.5);
             
-            \draw[-{>},line width=0.35mm,bend left=\bend] (2) to node[pos=0.5,right] {} (-0.5,0.5);
-            \draw[-{>},line width=0.35mm,bend right=\bend] (2) to node[pos=0.5,right] {} (-0.5,-0.5);
+            \draw[-{>},line width=0.5mm,bend left=\bend] (2) to node[pos=0.5,right] {} (-0.5,0.5);
+            \draw[-{>},line width=0.5mm,bend right=\bend] (2) to node[pos=0.5,right] {} (-0.5,-0.5);
             
-            \draw[-{>},line width=0.35mm,bend left=\bend] (3) to node[pos=0.5,right] {} (-0.5,-0.5);
-            \draw[-{>},line width=0.35mm,bend right=\bend] (3) to node[pos=0.5,right] {} (0.5,-0.5);
+            \draw[-{>},line width=0.5mm,bend left=\bend] (3) to node[pos=0.5,right] {} (-0.5,-0.5);
+            \draw[-{>},line width=0.5mm,bend right=\bend] (3) to node[pos=0.5,right] {} (0.5,-0.5);
             
-            \draw[-{>},line width=0.35mm,bend left=\bend] (4) to node[pos=0.5,right] {} (0.5,-0.5);
-            \draw[-{>},line width=0.35mm,bend right=\bend] (4) to node[pos=0.5,right] {} (0.5,0.5);
+            \draw[-{>},line width=0.5mm,bend left=\bend] (4) to node[pos=0.5,right] {} (0.5,-0.5);
+            \draw[-{>},line width=0.5mm,bend right=\bend] (4) to node[pos=0.5,right] {} (0.5,0.5);
             
             % edges-to-faces messages
-            \draw[-{>},line width=0.35mm,bend right=\bend] (-0.5,0.5) to node[pos=0.5,right] {} (-0.1,0.1);
-            \draw[-{>},line width=0.35mm,bend right=\bend] (0.5,0.5) to node[pos=0.5,right] {} (0.1,0.1);
-            \draw[-{>},line width=0.35mm,bend right=\bend] (0.5,-0.5) to node[pos=0.5,right] {} (0.1,-0.1);
-            \draw[-{>},line width=0.35mm,bend right=\bend] (-0.5,-0.5) to node[pos=0.5,right] {} (-0.1,-0.1);
+            \draw[-{>},line width=0.5mm,bend right=\bend] (-0.5,0.5) to node[pos=0.5,right] {} (-0.1,0.1);
+            \draw[-{>},line width=0.5mm,bend right=\bend] (0.5,0.5) to node[pos=0.5,right] {} (0.1,0.1);
+            \draw[-{>},line width=0.5mm,bend right=\bend] (0.5,-0.5) to node[pos=0.5,right] {} (0.1,-0.1);
+            \draw[-{>},line width=0.5mm,bend right=\bend] (-0.5,-0.5) to node[pos=0.5,right] {} (-0.1,-0.1);
             \end{tikzpicture}
             </script>
             <figcaption>
@@ -473,7 +472,6 @@
             \def \radius {1}
             \def \circradius {0.02}
             \def \opacity {0.05}
-            \def \stealthscale {2.5}
             \def \bend {30}
             
             \foreach \i in {1,...,4} {
