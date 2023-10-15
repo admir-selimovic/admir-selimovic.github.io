@@ -477,30 +477,30 @@
             \def \bend {30}
             
             \foreach \i in {1,...,4} {
-              \coordinate (\i) at (90*\i:1);
-              \fill (\i) circle (0.02);
+              \coordinate (\i) at (90*\i:\radius);
+              \fill (\i) circle (\circradius);
             }
             \path[fill=black,opacity=0.05] (1) -- (2)  -- (3) -- (4) -- cycle;
             \draw (1) -- (2) -- (3) -- (4) -- cycle;
         
             % edges-to-nodes messages
-            \draw[-{>},bend left=30] (-0.5,0.5) to node[pos=0.5,right] {} (1);
-            \draw[-{>},bend right=30] (0.5,0.5) to node[pos=0.5,right] {} (1);
+            \draw[-{>},line width=0.5mm,bend left=30] (-0.5,0.5) to node[pos=0.5,right] {} (1);
+            \draw[-{>},line width=0.5mm,bend right=30] (0.5,0.5) to node[pos=0.5,right] {} (1);
         
-            \draw[-{>},bend right=30] (-0.5,0.5) to node[pos=0.5,right] {} (2);
-            \draw[-{>},bend left=30] (-0.5,-0.5) to node[pos=0.5,right] {} (2);
+            \draw[-{>},line width=0.5mm,bend right=30] (-0.5,0.5) to node[pos=0.5,right] {} (2);
+            \draw[-{>},line width=0.5mm,bend left=30] (-0.5,-0.5) to node[pos=0.5,right] {} (2);
         
-            \draw[-{>},bend right=30] (-0.5,-0.5) to node[pos=0.5,right] {} (3);
-            \draw[-{>},bend left=30] (0.5,-0.5) to node[pos=0.5,right] {} (3);
+            \draw[-{>},line width=0.5mm,bend right=30] (-0.5,-0.5) to node[pos=0.5,right] {} (3);
+            \draw[-{>},line width=0.5mm,bend left=30] (0.5,-0.5) to node[pos=0.5,right] {} (3);
         
-            \draw[-{>},bend right=30] (0.5,-0.5) to node[pos=0.5,right] {} (4);
-            \draw[-{>},bend left=30] (0.5,0.5) to node[pos=0.5,right] {} (4);
+            \draw[-{>},line width=0.5mm,bend right=30] (0.5,-0.5) to node[pos=0.5,right] {} (4);
+            \draw[-{>},line width=0.5mm,bend left=30] (0.5,0.5) to node[pos=0.5,right] {} (4);
         
             % faces-to-edges messages
-            \draw[-{>},bend right=30] (-0.1,0.1) to node[pos=0.5,right] {} (-0.5,0.5);
-            \draw[-{>},bend right=30] (0.1,0.1) to node[pos=0.5,right] {} (0.5,0.5);
-            \draw[-{>},bend right=30] (0.1,-0.1) to node[pos=0.5,right] {} (0.5,-0.5);
-            \draw[-{>},bend right=30] (-0.1,-0.1) to node[pos=0.5,right] {} (-0.5,-0.5);
+            \draw[-{>},line width=0.5mm,bend right=30] (-0.1,0.1) to node[pos=0.5,right] {} (-0.5,0.5);
+            \draw[-{>},line width=0.5mm,bend right=30] (0.1,0.1) to node[pos=0.5,right] {} (0.5,0.5);
+            \draw[-{>},line width=0.5mm,bend right=30] (0.1,-0.1) to node[pos=0.5,right] {} (0.5,-0.5);
+            \draw[-{>},line width=0.5mm,bend right=30] (-0.1,-0.1) to node[pos=0.5,right] {} (-0.5,-0.5);
             \end{tikzpicture}
             </script>
             <figcaption>
