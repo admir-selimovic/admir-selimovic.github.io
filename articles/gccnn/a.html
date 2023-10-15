@@ -228,6 +228,13 @@
         transform: translateY(-50%);
       }
 
+      .tikz-figure {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+      }
+
       @media screen and (max-width: 768px) {
         /* adjust 768px if needed */
         h1 {
@@ -406,7 +413,7 @@
           Expanding upon this framework, our subsequent focus centres on generalising the message passing formulation to encompass cell complexes. We aim to delineate how this paradigm can be adapted to ingest and propagate directional information across various dimensional cells within these complexes.
           
 
-<figure id="fig-bound-adj" class="auto-number-figure">
+<figure id="fig-bound-adj" class="tikz-figure auto-number-figure">
   <script type="text/tikz">
   \begin{tikzpicture}[scale=3]
   \def \n {4}
