@@ -369,18 +369,15 @@
           
           Models reliant on scalar feature fields are fundamentally limited in their capability to incorporate directional information due to the invariance properties of scalars. Spectral feature fields present an effective solution, integrating seamlessly with existing steerable neural network architectures and alleviating computational inefficiencies associated with rotational $G$-equivariance. 
 
-
-
-
-          <h3>Geometric message passing on cell complexes with spectral feature fields</h3>
-
-          
           A message function designed to capture directional attributes can be expressed as: 
           \[\mathbf{m}_{ij} = \phi_m (\mathbf{f}_i, \mathbf{f}_j, Y(\mathbf{x}_j, \mathbf{x}_i)),\] 
           where \(Y(\mathbf{x}_j, \mathbf{x}_i)\) is the harmonic embedding of the inter-nodal directional information between positions \(\mathbf{x}_j\) and \(\mathbf{x}_i\). By integrating this directional information, the message passing mechanism gains the ability to account for orientation and directional relationships between nodes.
           
           Expanding upon this framework, our subsequent focus centres on generalising the message passing formulation to encompass cell complexes. We aim to delineate how this paradigm can be adapted to ingest and propagate directional information across various dimensional cells within these complexes.
           
+
+          <h3>Geometric message passing on cell complexes with spectral feature fields</h3>
+
           <figure id="fig-bound-adj" class="tikz-figure auto-number-figure">
             <script type="text/tikz">
             \begin{tikzpicture}[scale=3, >=latex]
