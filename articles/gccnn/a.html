@@ -467,7 +467,7 @@
 
           <figure id="fig-bound-adj" class="tikz-figure auto-number-figure">
             <script type="text/tikz">
-            \begin{tikzpicture}[scale=3]
+            \begin{tikzpicture}[scale=3, >=latex]
             \def \n {4}
             \def \radius {1}
             \def \circradius {0.02}
@@ -482,23 +482,23 @@
             \draw (1) -- (2) -- (3) -- (4) -- cycle;
         
             % edges-to-nodes messages
-            \draw[-{>},line width=0.35mm,bend left=30] (-0.5,0.5) to node[pos=0.5,right] {} (1);
-            \draw[-{>},line width=0.35mm,bend right=30] (0.5,0.5) to node[pos=0.5,right] {} (1);
+            \draw[-{>},line width=0.5mm,bend left=30] (-0.5,0.5) to node[pos=0.5,right] {} (1);
+            \draw[-{>},line width=0.5mm,bend right=30] (0.5,0.5) to node[pos=0.5,right] {} (1);
         
-            \draw[-{>},line width=0.35mm,bend right=30] (-0.5,0.5) to node[pos=0.5,right] {} (2);
-            \draw[-{>},line width=0.35mm,bend left=30] (-0.5,-0.5) to node[pos=0.5,right] {} (2);
+            \draw[-{>},line width=0.5mm,bend right=30] (-0.5,0.5) to node[pos=0.5,right] {} (2);
+            \draw[-{>},line width=0.5mm,bend left=30] (-0.5,-0.5) to node[pos=0.5,right] {} (2);
         
-            \draw[-{>},line width=0.35mm,bend right=30] (-0.5,-0.5) to node[pos=0.5,right] {} (3);
-            \draw[-{>},line width=0.35mm,bend left=30] (0.5,-0.5) to node[pos=0.5,right] {} (3);
+            \draw[-{>},line width=0.5mm,bend right=30] (-0.5,-0.5) to node[pos=0.5,right] {} (3);
+            \draw[-{>},line width=0.5mm,bend left=30] (0.5,-0.5) to node[pos=0.5,right] {} (3);
         
-            \draw[-{>},line width=0.35mm,bend right=30] (0.5,-0.5) to node[pos=0.5,right] {} (4);
-            \draw[-{>},line width=0.35mm,bend left=30] (0.5,0.5) to node[pos=0.5,right] {} (4);
+            \draw[-{>},line width=0.5mm,bend right=30] (0.5,-0.5) to node[pos=0.5,right] {} (4);
+            \draw[-{>},line width=0.5mm,bend left=30] (0.5,0.5) to node[pos=0.5,right] {} (4);
         
             % faces-to-edges messages
-            \draw[-{>},line width=0.35mm,bend right=30] (-0.1,0.1) to node[pos=0.5,right] {} (-0.5,0.5);
-            \draw[-{>},line width=0.35mm,bend right=30] (0.1,0.1) to node[pos=0.5,right] {} (0.5,0.5);
-            \draw[-{>},line width=0.35mm,bend right=30] (0.1,-0.1) to node[pos=0.5,right] {} (0.5,-0.5);
-            \draw[-{>},line width=0.35mm,bend right=30] (-0.1,-0.1) to node[pos=0.5,right] {} (-0.5,-0.5);
+            \draw[-{>},line width=0.5mm,bend right=30] (-0.1,0.1) to node[pos=0.5,right] {} (-0.5,0.5);
+            \draw[-{>},line width=0.5mm,bend right=30] (0.1,0.1) to node[pos=0.5,right] {} (0.5,0.5);
+            \draw[-{>},line width=0.5mm,bend right=30] (0.1,-0.1) to node[pos=0.5,right] {} (0.5,-0.5);
+            \draw[-{>},line width=0.5mm,bend right=30] (-0.1,-0.1) to node[pos=0.5,right] {} (-0.5,-0.5);
             \end{tikzpicture}
             </script>
             <figcaption>
