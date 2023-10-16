@@ -112,20 +112,20 @@
             left: 0;
             z-index: 2; /* Ensure badges appear above the image */
             display: none; /* By default, badges are hidden */
-            flex-wrap: wrap;
-            gap: 5px;
-            padding: 5px;
+            padding: 10px;
+            display: inline-block; /* Added from your other pages */
         }
         
         .badge {
-            width: auto; 
             height: 20px;
             border-radius: 3px;
-            margin-right: 3px; /* Reduced space between badges */
+            margin-right: 5px; /* Space between badges */
+            display: inline-block; /* Added from your other pages */
+            vertical-align: middle; /* Added from your other pages */
         }
 
         .article:hover .badge-container {
-            display: flex; /* Show the badges when article is hovered */
+            display: inline-flex; /* Show the badges when article is hovered */
         }
                 
 
