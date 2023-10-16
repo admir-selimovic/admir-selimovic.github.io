@@ -63,16 +63,19 @@
         }
 
 .article-title {
-    position: absolute;   /* Absolute positioning */
-    top: 10px;            /* Slightly below the image's top */
-    left: 50%;            /* Center the title horizontally */
-    transform: translateX(-50%);  /* Adjust for perfect centering */
-    background: rgba(0, 0, 0, 1.0);   /* Semi-transparent black background */
-    color: #fff;          /* White text */
-    padding: 5px;         /* Padding around text for breathing space */
-    border-radius: 5px;   /* Rounded corners like the tagline */
-    max-width: 95%;
+    position: absolute;
+    top: 10px;  /* Slightly below the image's top */
+    left: 10px;  /* Adjust this to position the title slightly to the right */
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    max-width: 90%;  /* This value ensures the title takes up to 90% of the width of the article */
+    white-space: normal; /* This ensures the title wraps to the next line if it's too long */
+    overflow: hidden; /* Hide overflowed content */
+    text-overflow: ellipsis; /* Add ellipsis if the content overflows */
 }
+
 
 
         
