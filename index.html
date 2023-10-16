@@ -17,7 +17,7 @@
         }
 
         .article {
-            position: relative; /* Set the .article to relative so the badges (absolute positioned) will be positioned relative to it */
+            position: relative; 
             flex: 0 0 calc(33.33% - (2 * 20px) / 3);
             max-width: calc(33.33% - (2 * 20px) / 3);
             margin-bottom: 20px;
@@ -105,24 +105,6 @@
                 margin-right: 0; /* Remove right margin on mobile */
             }
         }
-
-        .badge {
-            max-width: 150px; /* Set a max-width */
-            border-radius: 3px;
-            margin-right: 5px; 
-            margin-bottom: 5px; /* Space between badges when they wrap to the next line */
-            display: inline-block; 
-            vertical-align: middle; 
-            overflow: hidden; /* In case the badge content exceeds its container, it will be hidden */
-        }
-
-
-        .article a:hover ~ .badge-container {
-            display: flex; /* Show the badges when the anchor tag is hovered */
-            flex-wrap: wrap;
-            gap: 5px;
-            flex-direction: row; /* Ensure badges line up horizontally */   
-        }
         
         .info-container.show {
             display: flex;
@@ -144,8 +126,7 @@
     left: 10px; 
     z-index: 3; 
     display: flex;
-    flex-direction: column; /* Column layout to ensure tagline appears above badges */
-    gap: 10px; /* Space between tagline and badges */
+    flex-direction: column; 
 }
 
         
@@ -154,15 +135,6 @@
             margin: 0; /* Remove any default margin */
         }
 
-.badge-container img {
-    width: 120px;  /* Adjust this to your desired width */
-    height: 20px;  /* Adjust this to your desired height */
-    border-radius: 3px;
-    margin-right: 5px; 
-    margin-bottom: 5px; /* Space between badges when they wrap to the next line */
-    vertical-align: middle; 
-    overflow: hidden; /* In case the badge content exceeds its container, it will be hidden */
-}
 
         
         .article:hover .info-container {
@@ -187,14 +159,6 @@
             <div class="info-container">
                 <div class="tagline">
 Mathematical and computational definition of the message passing mechanism in Geometric Complex Neural Networks.</div>
-                <div class="badge-container">
-                    <img src="https://img.shields.io/badge/3D%20Computer%20Graphics-007ACC" alt="3D Computer Graphics" class="badge">
-                    <img src="https://img.shields.io/badge/Computational%20Geometry-FF6347" alt="Computational Geometry" class="badge">
-                    <img src="https://img.shields.io/badge/Geometry%20Processing-007ACC" alt="Geometry Processing" class="badge">
-                    <img src="https://img.shields.io/badge/3D%20Computer%20Graphics-007ACC" alt="3D Computer Graphics" class="badge">
-                    <img src="https://img.shields.io/badge/Computational%20Geometry-FF6347" alt="Computational Geometry" class="badge">
-                    <img src="https://img.shields.io/badge/Geometry%20Processing-007ACC" alt="Geometry Processing" class="badge">
-                </div>
             </div>
         </div>
         
