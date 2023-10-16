@@ -63,16 +63,17 @@
         }
 
 .article-title {
-    position: absolute;  /* Absolute positioning */
-    top: 10px;           /* Slightly below the image's top */
-    left: 0;             /* Aligned to the left of the article */
-    width: 100%;         /* Full width of the article */
-    padding: 5px;        /* Some padding around the text */
-    background: rgba(0, 0, 0, 1.0);  /* Semi-transparent black background */
-    color: #fff;         /* White text */
-    box-sizing: border-box;  /* To include padding in width */
-    /* ... other styles ... */
+    position: absolute;   /* Absolute positioning */
+    top: 10px;            /* Slightly below the image's top */
+    left: 50%;            /* Center the title horizontally */
+    transform: translateX(-50%);  /* Adjust for perfect centering */
+    background: rgba(0, 0, 0, 0.6);   /* Semi-transparent black background */
+    color: #fff;          /* White text */
+    padding: 5px;         /* Padding around text for breathing space */
+    border-radius: 3px;   /* Rounded corners like the tagline */
+    white-space: nowrap;  /* Prevents the title from wrapping to the next line */
 }
+
         
 
         
