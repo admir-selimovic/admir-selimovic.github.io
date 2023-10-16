@@ -125,11 +125,11 @@
     bottom: 0; 
     left: 10px; 
     z-index: 3; 
-    display: flex;
+    display: none; /* Set to none by default */
     flex-direction: column; 
 }
 
-        
+
         .tagline {
             color: #fff; /* White color for text */
             margin: 0; /* Remove any default margin */
@@ -137,9 +137,10 @@
 
 
         
-        .article:hover .info-container {
-            display: flex; /* Show the info container on hover */
-        }
+.article:hover .info-container {
+    display: flex; /* Show the info container on hover */
+}
+
 
 
 
@@ -232,6 +233,7 @@ Mathematical and computational definition of the message passing mechanism in Ge
         });
     });
 </script>
+
 
 
     
