@@ -107,7 +107,6 @@
         }
 
         .badge {
-            height: 10px;  /* Adjust this to your desired height */
             max-width: 150px; /* Set a max-width */
             border-radius: 3px;
             margin-right: 5px; 
@@ -147,11 +146,16 @@
             margin: 0; /* Remove any default margin */
         }
 
-        .badge-container {
-            display: inline-flex; /* Badges will be side by side */
-            gap: 5px; /* Space between badges */
-            flex-wrap: wrap; /* Wrap badges to next line if they don't fit */
-        }
+.badge-container img {
+    width: 120px;  /* Adjust this to your desired width */
+    height: 20px;  /* Adjust this to your desired height */
+    border-radius: 3px;
+    margin-right: 5px; 
+    margin-bottom: 5px; /* Space between badges when they wrap to the next line */
+    vertical-align: middle; 
+    overflow: hidden; /* In case the badge content exceeds its container, it will be hidden */
+}
+
         
         .article:hover .info-container {
             display: flex; /* Show the info container on hover */
@@ -163,7 +167,7 @@
 </head>
 
 <body>
-    <h1><a href="/"> &nbsp;&nbsp;Admir Selimovic Research<sup style="color: red;">+</sup> Repository</a></h1>
+    <h1><a href="/"> &nbsp;&nbsp;Admir Selimovic Research<sup style="color: pink;">+</sup> Repository</a></h1>
 
     <div class="container" id="articleContainer">
 
