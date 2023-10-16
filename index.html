@@ -106,15 +106,6 @@
             }
         }
 
-        .badge-container {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            z-index: 2; /* Ensure badges appear above the image */
-            display: none; /* Hide the badges by default */
-            padding: 10px;
-        }
-
         .badge {
             height: 12px;
             border-radius: 3px;
@@ -139,6 +130,34 @@
             border-radius: 3px;
         }
 
+        .info-container {
+            position: absolute;
+            bottom: 30px; /* adjust this value to position both tagline and badges */
+            left: 10px; /* adjust if needed */
+            z-index: 2;
+            display: none; 
+        }
+        
+        .tagline {
+            display: block;
+            color: white; /* or any desired color */
+            font-weight: bold;
+            background-color: rgba(0, 0, 0, 0.6); /* semi-transparent background for better readability */
+            padding: 5px;
+            border-radius: 5px;
+            margin-bottom: 10px; /* space between tagline and badges */
+        }
+        
+        .badge-container {
+            display: flex;
+            gap: 5px; /* space between badges */
+        }
+        
+        .article:hover .info-container {
+            display: block;
+        }
+
+
     </style>
 </head>
 
@@ -147,6 +166,21 @@
 
     <div class="container" id="articleContainer">
 
+        <div class="article">
+            <a href="articles/gccnn/a.html">
+                <img src="articles/gccnn/assets/gccnn-1.svg" alt="">
+                <h2 class="article-title">Geometric Cell Complex Neural Networks</h2>
+            </a>
+            <div class="info-container">
+                <div class="tagline">This is a brief tagline or description.</div>
+                <div class="badge-container">
+                    <img src="https://img.shields.io/badge/3D%20Computer%20Graphics-007ACC" alt="3D Computer Graphics" class="badge">
+                    <img src="https://img.shields.io/badge/Computational%20Geometry-FF6347" alt="Computational Geometry" class="badge">
+                    <img src="https://img.shields.io/badge/Geometry%20Processing-007ACC" alt="Geometry Processing" class="badge">
+                </div>
+            </div>
+        </div>
+        
         <div class="article">
             <a href="articles/gccnn/a.html">
                 <img src="articles/gccnn/assets/gccnn-1.svg" alt="">
