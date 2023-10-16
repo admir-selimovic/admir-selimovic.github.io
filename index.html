@@ -113,9 +113,8 @@
             z-index: 2; /* Ensure badges appear above the image */
             display: none; /* This ensures the badges are hidden by default */
             padding: 10px;
-            display: inline-block; /* Display badges inline */
         }
-        
+
         .badge {
             height: 20px;
             border-radius: 3px;
@@ -205,16 +204,16 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const articles = document.querySelectorAll('.article');
-
+    
         articles.forEach(function(article) {
             article.addEventListener('mouseenter', function() {
                 const badgeContainer = article.querySelector('.badge-container');
-                if (badgeContainer) badgeContainer.style.display = 'inline-flex';
+                badgeContainer.style.display = 'inline-flex';
             });
-
+    
             article.addEventListener('mouseleave', function() {
                 const badgeContainer = article.querySelector('.badge-container');
-                if (badgeContainer) badgeContainer.style.display = 'none';
+                badgeContainer.style.display = 'none';
             });
         });
     });
