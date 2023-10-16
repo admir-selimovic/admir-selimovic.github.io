@@ -163,22 +163,27 @@
 
 .shields {
     position: absolute;
-    bottom: 10px; /* adjust the position from the bottom of the image */
-    left: 50%;
-    transform: translateX(-50%);
+    bottom: 0; /* position at the bottom of the article */
+    left: 0;
+    right: 0;
+    padding: 5px 0; /* Some padding to ensure shields don't touch the image edge */
+    background-color: rgba(0,0,0,0.5); /* Optional: Semi-transparent background for better readability */
     display: flex;
     flex-wrap: wrap;
     justify-content: center; /* Center the shields horizontally */
 }
 
+
 .shield {
-    background-color: rgba(0,0,0,0.7); /* Dark background for the shield for readability */
-    color: #fff; /* White text */
-    padding: 5px 10px; /* Spacing inside the shield */
+    background-color: rgba(255,255,255,0.7); /* Light background for the shield for readability */
+    color: #000; /* Black text */
+    padding: 3px 6px; /* Spacing inside the shield */
     margin: 2px; /* Spacing between shields */
     border-radius: 5px; /* Rounded corners for the shield */
     white-space: nowrap; /* Prevents the text inside the shield from breaking into multiple lines */
+    font-size: 0.8em; /* Adjust size if needed */
 }
+
     
 
 
