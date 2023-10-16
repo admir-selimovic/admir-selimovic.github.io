@@ -123,6 +123,11 @@
             gap: 5px;
             flex-direction: row; /* Ensure badges line up horizontally */   
         }
+        
+        .info-container.show {
+            display: flex;
+        }
+                
 
 .tagline {
     display: block;
@@ -253,12 +258,12 @@ Mathematical and computational definition of the message passing mechanism in Ge
         articles.forEach(function(article) {
             article.addEventListener('mouseenter', function() {
                 const infoContainer = article.querySelector('.info-container');
-                infoContainer.style.display = 'flex';
+                infoContainer.classList.add('show');
             });
     
             article.addEventListener('mouseleave', function() {
                 const infoContainer = article.querySelector('.info-container');
-                infoContainer.style.display = 'none';
+                infoContainer.classList.remove('show');
             });
         });
     });
