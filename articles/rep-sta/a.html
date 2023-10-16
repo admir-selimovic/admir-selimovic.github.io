@@ -226,6 +226,40 @@
         transform: translateY(-50%);
       }
 
+      a.external-link {
+          color: blue;
+      }
+
+      pre {
+          background-color: #f6f8fa;
+          border-radius: 3px;
+          padding: 10px;
+          font-family: "Courier New", monospace;
+          overflow-x: auto;
+      }
+      code {
+          color: #000000; 
+      }
+
+      .github-badge img {
+          width: 120px; /* Value to set the desired width for the badge */
+          transition: background-color 0.3s ease; /* Transition effect for hover */
+      }
+  
+      .github-badge:hover img {
+          filter: brightness(90%); /* Slightly darken the badge on hover to indicate it's clickable */
+      }
+
+     .badge-container {
+          display: inline-block;
+      }
+      
+      .badge {
+          height: 20px;
+          display: inline-block;
+          vertical-align: middle;
+      }
+      
       @media screen and (max-width: 768px) {
         /* adjust 768px if needed */
         h1 {
@@ -337,6 +371,22 @@
         Networks
       </h2>
 
+    <div class="badge-container">
+        <img src="https://img.shields.io/badge/Deep%20Learning-FF6F00" alt="Deep Learning" class="badge">
+    </div>
+    <div class="badge-container">
+        <img src="https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white" alt="Python" class="badge">
+    </div>
+    <div class="badge-container">
+        <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=flat&logo=pytorch&logoColor=white" alt="PyTorch" class="badge">
+    </div>
+    <div class="badge-container">
+        <img src="https://img.shields.io/badge/PyG-3C2179?style=flat&logo=pyg&logoColor=white" alt="PyG" class="badge">
+    </div>
+    <div class="badge-container">
+        <img src="https://img.shields.io/badge/PyTorch%20Lightning-792EE5?style=flat&logo=lightning&logoColor=white" alt="PyTorch Lightning" class="badge">
+    </div>
+      
       <div class="article-container">
         <div class="article-content">
           <div align="center">
