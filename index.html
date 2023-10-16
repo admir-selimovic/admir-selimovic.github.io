@@ -123,7 +123,7 @@
             position: absolute;
             bottom: -50px; /* adjust as needed */
             left: 10px;   /* adjust as needed */
-            z-index: 1;   /* ensure tagline appears below the badges */
+            z-index: 3;   /* ensure tagline appears below the badges */
             color: #fff;  /* adjust color as needed */
             background-color: rgba(0,0,0,1.0); /* adjust background as needed */
             padding: 5px;
@@ -152,6 +152,7 @@
         
         .badge-container {
             display: flex;
+            z-index: 2;   /* ensure badges appear below the tagline */
             gap: 5px; /* space between badges */
         }
         
