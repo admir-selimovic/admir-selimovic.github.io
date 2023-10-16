@@ -135,7 +135,7 @@
 <body>
     <h1><a href="/">&nbsp;&nbsp;Admir Selimovic Research<sup>+</sup> Repository</a></h1>
 
-    <div class="container">
+    <div class="container" id="articleContainer">
 
         <div class="article">
             <a href="articles/gccnn/a.html">
@@ -201,6 +201,27 @@
         
     </div>
 
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const articles = document.querySelectorAll('.article');
+
+        articles.forEach(function(article) {
+            article.addEventListener('mouseenter', function() {
+                const badgeContainer = article.querySelector('.badge-container');
+                if (badgeContainer) badgeContainer.style.display = 'inline-flex';
+            });
+
+            article.addEventListener('mouseleave', function() {
+                const badgeContainer = article.querySelector('.badge-container');
+                if (badgeContainer) badgeContainer.style.display = 'none';
+            });
+        });
+    });
+</script>
+
+
+    
 </body>
 
 </html>
