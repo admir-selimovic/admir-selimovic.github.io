@@ -135,29 +135,28 @@
             bottom: 0; 
             left: 10px; 
             z-index: 3; 
-            display: flex;
-            flex-direction: column; /* This will display tagline above badges */
-            gap: 10px;
+            display: none;
+            flex-direction: column; /* The tagline will be on top and badges below */
+            gap: 10px; /* Space between tagline and badges */
+            background-color: rgba(0,0,0,1.0); /* Set the background to black */
+            border-radius: 3px; /* Rounded corners */
+            padding: 5px 10px; /* Some padding */
         }
         
         .tagline {
-            /* remove position, bottom, and z-index properties, we don't need them now */
-            display: none;
-            color: #fff;
-            background-color: rgba(0,0,0,1.0);
-            padding: 5px;
-            border-radius: 3px;
+            color: #fff; /* White color for text */
+            margin: 0; /* Remove any default margin */
         }
         
         .badge-container {
-            display: none;
-            gap: 5px;
+            display: inline-flex; /* Badges will be side by side */
+            gap: 5px; /* Space between badges */
         }
         
-        .article:hover .info-container .badge-container,
-        .article:hover .info-container .tagline {
-            display: block;
+        .article:hover .info-container {
+            display: flex; /* Show the info container on hover */
         }
+
 
 
     </style>
