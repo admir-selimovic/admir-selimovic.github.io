@@ -105,6 +105,32 @@
             }
         }
 
+        .badge-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            z-index: 2; /* Ensure badges appear above the image */
+            display: none; /* By default, badges are hidden */
+            flex-wrap: wrap;
+            gap: 5px;
+            padding: 10px;
+        }
+        
+        .article {
+            position: relative; /* Set the .article to relative so the badges (absolute positioned) will be positioned relative to it */
+            ...
+        }
+        
+        .article:hover .badge-container {
+            display: flex; /* Show the badges when article is hovered */
+        }
+        
+        .badge {
+            border-radius: 3px;
+            margin-right: 5px; /* Space between badges */
+        }
+                
+
     </style>
 </head>
 
@@ -118,6 +144,11 @@
                 <img src="articles/gccnn/assets/gccnn-1.svg" alt="">
                 <h2 class="article-title">Geometric Cell Complex Neural Networks</h2>
             </a>
+            <div class="badge-container">
+                <img src="https://img.shields.io/badge/3D%20Computer%20Graphics-007ACC" alt="3D Computer Graphics" class="badge">
+                <img src="https://img.shields.io/badge/Computational%20Geometry-FF6347" alt="Computational Geometry" class="badge">
+                <img src="https://img.shields.io/badge/Geometry%20Processing-007ACC" alt="Geometry Processing" class="badge">
+            </div>
         </div>
         
         <div class="article">
