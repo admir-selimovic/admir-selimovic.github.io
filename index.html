@@ -126,7 +126,18 @@
         .article a:hover ~ .badge-container {
             display: inline-flex; /* Show the badges when the anchor tag is hovered */
         }
-                
+
+        .tagline {
+            display: none;
+            position: absolute;
+            bottom: 50px; /* adjust as needed */
+            left: 10px;   /* adjust as needed */
+            z-index: 1;   /* ensure tagline appears below the badges */
+            color: #fff;  /* adjust color as needed */
+            background-color: rgba(0,0,0,0.6); /* adjust background as needed */
+            padding: 5px;
+            border-radius: 3px;
+        }
 
     </style>
 </head>
@@ -140,6 +151,7 @@
             <a href="articles/gccnn/a.html">
                 <img src="articles/gccnn/assets/gccnn-1.svg" alt="">
                 <h2 class="article-title">Geometric Cell Complex Neural Networks</h2>
+                <p class="tagline">A short description about the article.</p>
             </a>
             <div class="badge-container">
                 <img src="https://img.shields.io/badge/3D%20Computer%20Graphics-007ACC" alt="3D Computer Graphics" class="badge">
@@ -213,12 +225,16 @@
         articles.forEach(function(article) {
             article.addEventListener('mouseenter', function() {
                 const badgeContainer = article.querySelector('.badge-container');
+                const tagline = article.querySelector('.tagline');
                 badgeContainer.style.display = 'inline-flex';
+                tagline.style.display = 'block'; // show tagline
             });
     
             article.addEventListener('mouseleave', function() {
                 const badgeContainer = article.querySelector('.badge-container');
+                const tagline = article.querySelector('.tagline');
                 badgeContainer.style.display = 'none';
+                tagline.style.display = 'none'; // hide tagline
             });
         });
     });
