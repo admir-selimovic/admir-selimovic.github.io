@@ -252,6 +252,12 @@
                 filter: brightness(90%); /* Slightly darken the badge on hover to indicate it's clickable */
             }
 
+            .badge {
+                width: auto; /* This will make the badge only as wide as it needs to be */
+                max-width: 150px; /* Adjust this value to set a maximum width for the badges if needed */
+                height: 20px; /* Adjust as needed */
+            }
+
             @media screen and (max-width: 768px) {
                 /* adjust 768px if needed */
                 h1 {
