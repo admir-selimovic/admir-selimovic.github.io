@@ -132,9 +132,9 @@
 
         .info-container {
             position: absolute;
-            bottom: 30px; /* adjust this value to position both tagline and badges */
+            bottom: 0; /* adjust this value to position the entire info container */
             left: 10px; /* adjust if needed */
-            z-index: 2;
+            z-index: 3;  /* highest z-index */
             display: none; 
         }
         
@@ -157,7 +157,6 @@
             display: block;
         }
 
-
     </style>
 </head>
 
@@ -175,8 +174,7 @@
                 <div class="tagline">This is a brief tagline or description.</div>
                 <div class="badge-container">
                     <img src="https://img.shields.io/badge/3D%20Computer%20Graphics-007ACC" alt="3D Computer Graphics" class="badge">
-                    <img src="https://img.shields.io/badge/Computational%20Geometry-FF6347" alt="Computational Geometry" class="badge">
-                    <img src="https://img.shields.io/badge/Geometry%20Processing-007ACC" alt="Geometry Processing" class="badge">
+                    <!-- other badges ... -->
                 </div>
             </div>
         </div>
