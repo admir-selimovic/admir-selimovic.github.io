@@ -61,12 +61,20 @@
             display: block;  /* Images are inline by default. Making them block will fill the width of their container */
             margin: 0 auto;  /* Center block elements horizontally */
         }
+
+.article-title {
+    position: absolute;  /* Absolute positioning */
+    top: 10px;           /* Slightly below the image's top */
+    left: 0;             /* Aligned to the left of the article */
+    width: 100%;         /* Full width of the article */
+    padding: 5px;        /* Some padding around the text */
+    background: rgba(0, 0, 0, 1.0);  /* Semi-transparent black background */
+    color: #fff;         /* White text */
+    box-sizing: border-box;  /* To include padding in width */
+    /* ... other styles ... */
+}
         
-        .article-title {
-            padding: 15px;
-            text-align: center;
-            margin: 10px 0;; 
-        }
+
         
         h1 {
             font-size: 1.3em; /* Change this according to your desired size if needed */
