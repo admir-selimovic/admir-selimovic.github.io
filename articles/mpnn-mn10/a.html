@@ -243,6 +243,15 @@
                 color: #000000; 
             }
 
+            .github-badge img {
+                width: 120px; /* Value to set the desired width for the badge */
+                transition: background-color 0.3s ease; /* Transition effect for hover */
+            }
+        
+            .github-badge:hover img {
+                filter: brightness(90%); /* Slightly darken the badge on hover to indicate it's clickable */
+            }
+
             @media screen and (max-width: 768px) {
                 /* adjust 768px if needed */
                 h1 {
@@ -352,7 +361,7 @@
                     </div>
 
 
-<a href="https://github.com/admir-selimovic/mpnn">
+<a href="https://github.com/admir-selimovic/mpnn" target="_blank" class="github-badge">
     <img src="https://img.shields.io/badge/GitHub-100000?style=flat&logo=github&logoColor=white" alt="View on GitHub">
 </a>
                     
