@@ -118,31 +118,25 @@
             display: inline-flex; /* Show the badges when the anchor tag is hovered */
         }
 
-        .tagline {
-            display: block;
-            margin: 0;
-            position: absolute;
-            bottom: -50px; /* adjust as needed */
-            left: 10px;   /* adjust as needed */
-            z-index: 3;   /* ensure tagline appears below the badges */
-            color: #fff;  /* adjust color as needed */
-            background-color: rgba(0,0,0,1.0); /* adjust background as needed */
-            padding: 5px;
-            border-radius: 3px;
-        }
+.tagline {
+    display: block;
+    color: #fff; /* White color for text */
+    margin: 0; /* Remove any default margin */
+    padding: 5px;
+    border-radius: 3px;
+    background-color: rgba(0,0,0,1.0); /* Black background */
+}
 
-        .info-container {
-            position: absolute;
-            bottom: 0; 
-            left: 10px; 
-            z-index: 3; 
-            display: none;
-            flex-direction: column; /* The tagline will be on top and badges below */
-            gap: 10px; /* Space between tagline and badges */
-            background-color: rgba(0,0,0,1.0); /* Set the background to black */
-            border-radius: 3px; /* Rounded corners */
-            padding: 5px 10px; /* Some padding */
-        }
+.info-container {
+    position: absolute;
+    bottom: 0; 
+    left: 10px; 
+    z-index: 3; 
+    display: flex;
+    flex-direction: column; /* Column layout to ensure tagline appears above badges */
+    gap: 10px; /* Space between tagline and badges */
+}
+
         
         .tagline {
             color: #fff; /* White color for text */
