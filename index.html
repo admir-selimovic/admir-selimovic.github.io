@@ -136,7 +136,7 @@
             left: 10px; 
             z-index: 3; 
             display: flex;
-            flex-direction: column-reverse; /* This will display tagline above badges */
+            flex-direction: column; /* This will display tagline above badges */
             gap: 10px;
         }
         
@@ -260,17 +260,13 @@
     
         articles.forEach(function(article) {
             article.addEventListener('mouseenter', function() {
-                const badgeContainer = article.querySelector('.badge-container');
-                const tagline = article.querySelector('.tagline');
-                badgeContainer.style.display = 'inline-flex';
-                tagline.style.display = 'block'; // show tagline
+                const infoContainer = article.querySelector('.info-container');
+                infoContainer.style.display = 'flex';
             });
     
             article.addEventListener('mouseleave', function() {
-                const badgeContainer = article.querySelector('.badge-container');
-                const tagline = article.querySelector('.tagline');
-                badgeContainer.style.display = 'none';
-                tagline.style.display = 'none'; // hide tagline
+                const infoContainer = article.querySelector('.info-container');
+                infoContainer.style.display = 'none';
             });
         });
     });
