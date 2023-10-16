@@ -232,6 +232,36 @@
                 color: blue;
             }
 
+            pre {
+                background-color: #f6f8fa;
+                border-radius: 3px;
+                padding: 10px;
+                font-family: "Courier New", monospace;
+                overflow-x: auto;
+            }
+            code {
+                color: #000000; 
+            }
+
+            .github-badge img {
+                width: 120px; /* Value to set the desired width for the badge */
+                transition: background-color 0.3s ease; /* Transition effect for hover */
+            }
+        
+            .github-badge:hover img {
+                filter: brightness(90%); /* Slightly darken the badge on hover to indicate it's clickable */
+            }
+
+           .badge-container {
+                display: inline-block;
+            }
+            
+            .badge {
+                height: 20px;
+                display: inline-block;
+                vertical-align: middle;
+            }
+
             @media screen and (max-width: 768px) {
                 /* adjust 768px if needed */
                 h1 {
