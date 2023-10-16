@@ -144,9 +144,14 @@
         }
         
         .badge-container {
-            display: inline-flex; /* Badges will be side by side */
+            display: flex;
+            flex-wrap: wrap; /* Wrap badges to next line if they don't fit */
             gap: 5px; /* Space between badges */
+            background-color: rgba(0,0,0,1.0); /* Black background to match with tagline */
+            border-radius: 3px; /* Add rounded corners */
+            padding: 5px; /* Padding for aesthetics */
         }
+
         
         .article:hover .info-container {
             display: flex; /* Show the info container on hover */
@@ -158,7 +163,7 @@
 </head>
 
 <body>
-    <h1><a href="/"> &nbsp;&nbsp;Admir Selimovic Research<sup style="color: red;">+</sup> Repository</a></h1>
+    <h1><a href="/"> &nbsp;&nbsp;Admir Selimovic Research<sup style="color: pink;">+</sup> Repository</a></h1>
 
     <div class="container" id="articleContainer">
 
