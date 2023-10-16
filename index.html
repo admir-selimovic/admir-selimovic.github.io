@@ -107,13 +107,16 @@
         }
 
         .badge {
-            height: 12px;
-            width: auto; /* Add this line */
+            height: 10px;  /* Adjust this to your desired height */
+            max-width: 150px; /* Set a max-width */
             border-radius: 3px;
-            margin-right: 5px; /* Space between badges */
-            display: inline-block; /* Added from your other pages */
-            vertical-align: middle; /* Added from your other pages */
+            margin-right: 5px; 
+            margin-bottom: 5px; /* Space between badges when they wrap to the next line */
+            display: inline-block; 
+            vertical-align: middle; 
+            overflow: hidden; /* In case the badge content exceeds its container, it will be hidden */
         }
+
 
         .article a:hover ~ .badge-container {
             display: inline-flex; /* Show the badges when the anchor tag is hovered */
