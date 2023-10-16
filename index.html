@@ -161,6 +161,26 @@
 }
 
 
+.shields {
+    position: absolute;
+    bottom: 10px; /* adjust the position from the bottom of the image */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Center the shields horizontally */
+}
+
+.shield {
+    background-color: rgba(0,0,0,0.7); /* Dark background for the shield for readability */
+    color: #fff; /* White text */
+    padding: 5px 10px; /* Spacing inside the shield */
+    margin: 2px; /* Spacing between shields */
+    border-radius: 5px; /* Rounded corners for the shield */
+    white-space: nowrap; /* Prevents the text inside the shield from breaking into multiple lines */
+}
+    
+
 
 
     </style>
@@ -206,6 +226,11 @@
             <div class="tagline">
                 Mathematical and computational definition of the message passing mechanism in Geometric Complex Neural Networks.
             </div>
+            <div class="shields">
+                <span class="shield">Shield 1</span>
+                <span class="shield">Shield 2</span>
+                <!-- Add more shields as needed -->
+            </div> 
         </div>
     </a>
 </div>
