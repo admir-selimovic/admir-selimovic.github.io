@@ -346,6 +346,7 @@
                       The MPNN model implemented in this project is based on <span class="autocite" data-ref="gilmer2017"></span>.
 
                     <h3>Features</h3>
+                
 
     <ul>
         <li>Utilizes Message Passing Neural Networks (MPNNs).</li>
@@ -359,7 +360,63 @@
         <li>Loads custom datasets from the ModelNet10 dataset that has been preprocessed.</li>
     </ul>
 
+
+
+<h3>Getting Started</h3>
+
+    <ul>
+        <li>Python 3.x</li>
+        <li>PyTorch and PyTorch Geometric</li>
+        <li>PyTorch Lightning</li>
+        <li>YAML for configuration management</li>
+    </ul>
+
                     
+
+<h3>Getting Started</h3>
+
+    <h4>Prerequisites</h4>
+    <ul>
+        <li>Python 3.x</li>
+        <li>PyTorch and PyTorch Geometric</li>
+        <li>PyTorch Lightning</li>
+        <li>YAML for configuration management</li>
+    </ul>
+
+    <h4>Setup</h4>
+    <ol>
+        <li>Clone this repository.</li>
+        <pre><code>git clone https://github.com/admir-selimovic/mpnn.git
+cd mpnn</code></pre>
+        <li>Install the necessary libraries.</li>
+        <pre><code>pip install torch torch_geometric pytorch_lightning yaml</code></pre>
+        <li>Modify the <code>configs/paths.yml</code> and <code>configs/hyperparameters.yml</code> to suit your dataset paths and desired hyperparameters respectively.</li>
+    </ol>
+
+    <h4>Usage</h4>
+    <p>Execute the preprocessing script:</p>
+    <pre><code>python data_preprocessing.py</code></pre>
+    <p>Execute the training script:</p>
+    <pre><code>python train_model.py</code></pre>
+    <p>When prompted, input the model type you want to train (<code>basic</code>, <code>dist</code>, or <code>relpos</code>).</p>
+
+<h3>Structure</h3>
+<p>The project contains the following key components:</p>
+<ul>
+    <li><code>models/</code>: Contains the MPNN and MNISTClassifier implementations.</li>
+    <li><code>datasets/</code>: Houses the custom dataset loader for the ModelNet10 dataset.</li>
+    <li><code>configs/</code>: Contains YAML configurations for hyperparameters and dataset paths.</li>
+</ul>
+
+<h3>Contributions</h3>
+<p>Contributions are welcome! Please fork the repository and create a pull request with your changes.</p>
+
+<h3>Acknowledgments</h3>
+<ul>
+    <li><a href="https://github.com/rusty1s/pytorch_geometric">PyTorch Geometric</a></li>
+    <li><a href="https://github.com/PyTorchLightning/pytorch-lightning">PyTorch Lightning</a></li>
+</ul>
+                
 
                 </div>
 
