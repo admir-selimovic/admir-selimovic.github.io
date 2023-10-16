@@ -345,8 +345,21 @@
                      This project is an implementation of the Message Passing Neural Networks (MPNN) for 3D model classification. The implementation utilises the PyTorch Geometric library and PyTorch Lightning for efficient neural network management and training.
                       The MPNN model implemented in this project is based on <span class="autocite" data-ref="gilmer2017"></span>.
 
-                    <h3>Dataset</h3>
+                    <h3>Features</h3>
 
+    <ul>
+        <li>Utilizes Message Passing Neural Networks (MPNNs).</li>
+        <li>Offers multiple configurations:</li>
+        <ul>
+            <li>Basic: Without any edge attributes.</li>
+            <li>Dist: Uses Euclidean distance as edge embeddings.</li>
+            <li>Relpos: Uses relative position vectors as edge embeddings.</li>
+        </ul>
+        <li>Integrates PyTorch Lightning for training management.</li>
+        <li>Loads custom datasets from the ModelNet10 dataset that has been preprocessed.</li>
+    </ul>
+
+                    
 
                 </div>
 
