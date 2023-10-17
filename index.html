@@ -37,6 +37,10 @@
             height: 300px; /* Adjust this value as needed */
             object-fit: cover; 
             border-radius: 10px;
+            max-width: 100%;
+            height: auto;
+            display: block;  /* Images are inline by default. Making them block will fill the width of their container */
+            margin: 0 auto;  /* Center block elements horizontally */
         }
 
         .article a {
@@ -56,12 +60,7 @@
         }
         
 
-        .article img {
-            max-width: 100%;
-            height: auto;
-            display: block;  /* Images are inline by default. Making them block will fill the width of their container */
-            margin: 0 auto;  /* Center block elements horizontally */
-        }
+
 
 .article-title {
     position: absolute;
@@ -87,11 +86,6 @@
             font-weight: normal;
         }
 
-        @media screen and (max-width: 768px) {  /* adjust 768px if needed */
-            h1 {
-                font-size: 1.2em;  /* adjust this to the desired size for mobile */
-            }
-        }
 
         h1 a {
             text-decoration: none;
@@ -190,13 +184,15 @@
 
         
 @media screen and (max-width: 768px) {
-    .article a .article-title {
-        font-size: 0.5em !important;
-        top: -40px !important;
+    .article {
+        flex: 0 0 100%; /* Make articles take up full width on mobile */
+        max-width: 100%;
+        margin-right: 0; /* Remove right margin on mobile */
     }
 
-    body .container .article a .article-title {
+    .article a .article-title {
         font-size: 0.5em;
+        top: -40px;
     }
 
     .shield {
@@ -206,8 +202,11 @@
     .shields {
         bottom: 10px; /* Adjust this value to move the shields further down */
     }
-}
 
+    h1 {
+        font-size: 1.2em;  /* adjust this to the desired size for mobile */
+    }
+}
 
 
 
