@@ -362,28 +362,23 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const articles = document.querySelectorAll('.article');
-    
+        
         articles.forEach(function(article) {
             article.addEventListener('mouseenter', function() {
                 const infoContainer = article.querySelector('.info-container');
                 infoContainer.classList.add('show');
             });
-    
+        
             article.addEventListener('mouseleave', function() {
                 const infoContainer = article.querySelector('.info-container');
                 infoContainer.classList.remove('show');
             });
         });
+    
         if (window.innerWidth <= 768) {
-            const titles = document.querySelectorAll('.article-title');
-            titles.forEach(title => title.classList.add('mobile-title'));
-        }
-        if (window.innerWidth <= 768) {
-            // For article titles
             const titles = document.querySelectorAll('.article-title');
             titles.forEach(title => title.classList.add('mobile-title'));
     
-            // For shields
             const shields = document.querySelectorAll('.shield');
             shields.forEach(shield => shield.classList.add('mobile-shield'));
         }
