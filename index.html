@@ -213,6 +213,11 @@
     top: -5px;
 }
 
+.mobile-shield {
+    font-size: 0.5em;  /* Adjust as needed for mobile devices */
+}
+        
+
     </style>
 </head>
 
@@ -372,6 +377,15 @@
         if (window.innerWidth <= 768) {
             const titles = document.querySelectorAll('.article-title');
             titles.forEach(title => title.classList.add('mobile-title'));
+        }
+        if (window.innerWidth <= 768) {
+            // For article titles
+            const titles = document.querySelectorAll('.article-title');
+            titles.forEach(title => title.classList.add('mobile-title'));
+    
+            // For shields
+            const shields = document.querySelectorAll('.shield');
+            shields.forEach(shield => shield.classList.add('mobile-shield'));
         }
     });
 </script>
