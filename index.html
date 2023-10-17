@@ -195,11 +195,6 @@
         top: -40px;
     }
 
-    body .container .article a .article-title {
-        font-size: 0.5em;
-        top: -40px;
-    }
-
     .shield {
         font-size: 0.5em; /* Increase this slightly for better readability on mobile */
     }
@@ -212,8 +207,11 @@
         font-size: 1.2em;  /* adjust this to the desired size for mobile */
     }
 }
-
-
+        
+.mobile-title {
+    font-size: 0.5em;
+    top: -40px;
+}
 
     </style>
 </head>
@@ -371,6 +369,10 @@
                 infoContainer.classList.remove('show');
             });
         });
+        if (window.innerWidth <= 768) {
+            const titles = document.querySelectorAll('.article-title');
+            titles.forEach(title => title.classList.add('mobile-title'));
+        }
     });
 </script>
 
