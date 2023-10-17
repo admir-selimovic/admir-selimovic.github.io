@@ -198,6 +198,10 @@
     h1 {
         font-size: 1.2em;  /* adjust this to the desired size for mobile */
     }
+
+    .article:hover .info-container {
+        display: none;
+    }
 }
         
 .mobile-title {
@@ -371,28 +375,33 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const articles = document.querySelectorAll('.article');
-        
-        articles.forEach(function(article) {
-            article.addEventListener('mouseenter', function() {
-                const infoContainer = article.querySelector('.info-container');
-                infoContainer.classList.add('show');
+        // Only attach hover listeners if screen width is more than 768px
+        if (window.innerWidth > 768) {
+            const articles = document.querySelectorAll('.article');
+            
+            articles.forEach(function(article) {
+                article.addEventListener('mouseenter', function() {
+                    const infoContainer = article.querySelector('.info-container');
+                    infoContainer.classList.add('show');
+                });
+            
+                article.addEventListener('mouseleave', function() {
+                    const infoContainer = article.querySelector('.info-container');
+                    infoContainer.classList.remove('show');
+                });
             });
-        
-            article.addEventListener('mouseleave', function() {
-                const infoContainer = article.querySelector('.info-container');
-                infoContainer.classList.remove('show');
-            });
-        });
+        }
+    
+        // Rest of your code for mobile styles adjustment
         if (window.innerWidth <= 768) {
             // For article titles
             const titles = document.querySelectorAll('.article-title');
             titles.forEach(title => title.classList.add('mobile-title'));
-        
+            
             // For individual shields
             const shields = document.querySelectorAll('.shield');
             shields.forEach(shield => shield.classList.add('mobile-shield'));
-    
+        
             // For shields container
             const shieldsContainers = document.querySelectorAll('.shields');
             shieldsContainers.forEach(container => container.classList.add('mobile-shields-container'));
