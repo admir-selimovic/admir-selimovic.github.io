@@ -32,30 +32,23 @@
       displayMath: [["$$", "$$"], ["\\[", "\\]"]],
       tags: 'ams',
       packages: { '[+]': ['ams'] },
-      // New line breaking configuration
       linebreaks: {
-        automatic: true,
-        width: "container" // or a specific value like '80%'
+        automatic: true, // Automatic line breaks
+        width: 'container' // Line break relative to container width
       }
     },
-    // Additional scaling configurations if needed
     svg: {
-      scale: 0.9, // global scaling factor for all expressions
-      minScale: 0.5, // smallest scaling factor to use
-      mtextInheritFont: true,
-      merrorInheritFont: true,
+      fontCache: 'global'
     },
-    startup: {
-      ready: () => {
-        MathJax.startup.defaultReady();
-        MathJax.startup.promise.then(() => {
-          // This will run after all the initial typesetting is complete
-          // Here you can perform any actions that need to happen after typesetting
-        });
+    options: {
+      renderActions: {
+        addMenu: [],
+        checkLoading: []
       }
     }
   };
 </script>
+
 
 
 
@@ -311,17 +304,6 @@
       }
 
 
-/* Desktop view - regular size */
-.MathJax_SVG {
-    font-size: 100%;
-}
-
-/* Mobile view - reduced size */
-@media screen and (max-width: 480px) {
-    .MathJax_SVG {
-        font-size: 70%; /* or whatever scale you find appropriate */
-    }
-}
 
       
     </style>
