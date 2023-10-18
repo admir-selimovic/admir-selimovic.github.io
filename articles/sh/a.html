@@ -432,27 +432,27 @@
 
           <h3>Harmonic oscillations on \(S^2\)</h3>
           
-          Spherical harmonics, $Y_{l}^m: S^2 \rightarrow \mathbb{C}$, are functions of two angles: $\theta$ and $\phi$. They provide a complete orthogonal basis for functions on a sphere, $S^2$. In comparison, circular harmonics offer a basis for functions on the circle $S^1$, whilst Wigner D-matrices play a similar role for the group $\mathrm{SO}(3)$. 
+          Spherical harmonics, \(Y_{l}^m: S^2 \rightarrow \mathbb{C}$, are functions of two angles: \(\theta$ and \(\phi$. They provide a complete orthogonal basis for functions on a sphere, \(S^2$. In comparison, circular harmonics offer a basis for functions on the circle \(S^1$, whilst Wigner D-matrices play a similar role for the group \(\mathrm{SO}(3)$. 
           
-          These functions are constructed using the associated Legendre functions $P_{l}^m(\cos \theta)$ and the complex function ${e^{i m \phi}=\cos (m \phi)+i \sin (m \phi)}$. Spherical harmonics are defined as:
+          These functions are constructed using the associated Legendre functions \(P_{l}^m(\cos \theta)$ and the complex function \({e^{i m \phi}=\cos (m \phi)+i \sin (m \phi)}$. Spherical harmonics are defined as:
           
           $$
           {\small Y_{l}^m(\theta, \phi)=(-1)^m \sqrt{\frac{2 \ell+1}{4 \pi} \frac{(\ell-m) !}{(\ell+m) !}} P_{\ell}^m(\cos \theta) e^{i m \phi} } ,
           $$
-          where $(-1)^m$ serves as the normalisation factor and the angles $\phi$ and $\theta$ are part of the spherical coordinate set $(r,\theta, \phi)$. 
+          where \((-1)^m$ serves as the normalisation factor and the angles \(\phi$ and \(\theta$ are part of the spherical coordinate set \((r,\theta, \phi)$. 
           
           <figure id="sh-glyph" class="auto-number-figure">
             <img src="assets/sh-glyph.svg" width="600px" />
             <figcaption>
-              Spherical harmonics, $Y_l^m(\theta, \phi)$; real and imaginary part. Radial distance from the sphere's origin represents the magnitude in a given direction as a function of the polar angle $\theta$ and the azimuthal angle $\phi$.
+              Spherical harmonics, \(Y_l^m(\theta, \phi)$; real and imaginary part. Radial distance from the sphere's origin represents the magnitude in a given direction as a function of the polar angle \(\theta$ and the azimuthal angle \(\phi$.
             </figcaption>
           </figure>
                     
-          Any function of $\theta$ and $\phi$ can be thought of as a function on the surface of a sphere. Thus, a handy interpretation of spherical harmonics is as a set of functions on the surface of a sphere. 
+          Any function of \(\theta$ and \(\phi$ can be thought of as a function on the surface of a sphere. Thus, a handy interpretation of spherical harmonics is as a set of functions on the surface of a sphere. 
           The relationship between these angles and a point on a sphere's surface is:
-          $x=r \sin \theta \cos \phi, y=r \sin \theta \sin \phi, \text{and} z=r \cos \theta$.
+          \(x=r \sin \theta \cos \phi, y=r \sin \theta \sin \phi, \text{and} z=r \cos \theta$.
           
-          For illustrative purposes, the solutions for the initial spherical harmonics, with $l$ values of $0, 1,$ and $2$, are:
+          For illustrative purposes, the solutions for the initial spherical harmonics, with \(l$ values of \(0, 1,$ and \(2$, are:
           
           $$
           \begin{array}{r|lll}
@@ -463,12 +463,12 @@
           \scriptstyle 2 & & & \scriptstyle \sqrt{\frac{15}{32 \pi}} \sin ^2 \theta e^{2 i \phi}
           \end{array}
           $$
-          where columns correspond to the frequency $l$, and rows correspond to the degree $m$, which spans from $-l$ to $l$.
+          where columns correspond to the frequency \(l$, and rows correspond to the degree \(m$, which spans from \(-l$ to \(l$.
           
           The completeness and orthogonality of spherical harmonics make them crucial for dealing with problems that have spherical symmetry and extremely useful for solving partial differential equations on spherical domains, as well as for performing Fourier-like expansions of functions defined on \( S^2 \).
 
           
-          <h3>Orthogonality and completeness of spherical harmonics on $S^2$</h3>
+          <h3>Orthogonality and completeness of spherical harmonics on \(S^2$</h3>
 
 
 The spherical harmonics \( Y_{l}^m(\theta, \phi) \) are orthogonal with respect to the measure \( \sin(\theta) \, d\theta \, d\phi \). The measure comes from the Jacobian determinant in the transformation to spherical coordinates and ensures the orthogonality condition is physically meaningful) over the domain \( \theta \in (0, \pi), \, \phi \in (0, 2\pi )\). The orthogonality condition can be stated as:
@@ -476,7 +476,7 @@ The spherical harmonics \( Y_{l}^m(\theta, \phi) \) are orthogonal with respect 
 \begin{equation} \label{sh-orthogonality}
 \int_{0}^{\pi} \int_{0}^{2\pi} Y_{l}^m(\theta, \phi) Y_{l'}^{m'*}(\theta, \phi) \sin(\theta) \, d\theta \, d\phi = \delta_{ll'} \delta_{mm'} \ ,
 \end{equation}  
-where $Y_{l'}^{m'*}(\theta, \phi)$ is the complex conjugate of the initial or another spherical harmonic; in complex-valued mathematics, especially in quantum mechanics and the study of wave functions, it is common to use complex conjugates when setting up conditions for orthogonality. Thus, the initial spherical harmonic is being checked for orthogonality against its complex conjugate. 
+where \(Y_{l'}^{m'*}(\theta, \phi)$ is the complex conjugate of the initial or another spherical harmonic; in complex-valued mathematics, especially in quantum mechanics and the study of wave functions, it is common to use complex conjugates when setting up conditions for orthogonality. Thus, the initial spherical harmonic is being checked for orthogonality against its complex conjugate. 
 
 The Kronecker delta functions \( \delta_{ll'} \) and \( \delta_{mm'} \) serve as conditions that enforce the orthogonality of the spherical harmonics when \( l \neq l' \) or \( m \neq m' \).
 In the above expression, \( \delta_{ll'} \) takes the value of 1 if \( l = l' \) and 0 otherwise. Similarly, \( \delta_{mm'} \) takes the value of 1 if \( m = m' \) and 0 otherwise. 
