@@ -383,37 +383,44 @@
     </script>
 
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-          var isMobile = window.matchMedia("only screen and (max-width: 480px)").matches;
-      
-          if (isMobile) {
-              // Select all MathJax SVG elements
-              var mathJaxSVGs = document.querySelectorAll('.MathJax_SVG');
-      
-              // Adjust the height of each SVG's container based on the scale factor
-              var scaleFactor = 0.7;
-              mathJaxSVGs.forEach(function(svg) {
-                  // Get the height of the SVG element
-                  var rect = svg.getBoundingClientRect();
-      
-                  // Calculate the new height based on the scale factor
-                  var adjustedHeight = rect.height * scaleFactor;
-      
-                  // Set the new height for the SVG container
-                  svg.style.height = adjustedHeight + 'px';
-      
-                  // You might also need to adjust the parent container of the SVG, depending on your DOM structure
-                  svg.parentNode.style.height = adjustedHeight + 'px';
-      
-                  // Apply the scaling transformation
-                  svg.style.transform = 'scale(' + scaleFactor + ')';
-                  svg.style.transformOrigin = '0 0';
-              });
-          }
-      });
+    MathJax = {
+      startup: {
+        // other MathJax configuration here
+        pageReady: () => {
+          MathJax.startup.defaultPageReady().then(() => {
+            // your code here
+            var isMobile = window.matchMedia("only screen and (max-width: 480px)").matches;
+    
+            if (isMobile) {
+                // Select all MathJax SVG elements
+                var mathJaxSVGs = document.querySelectorAll('.MathJax_SVG');
+    
+                // Adjust the size of each SVG's container based on the scale factor
+                var scaleFactor = 0.7;
+                mathJaxSVGs.forEach(function(svg) {
+                    // Get the size of the SVG element
+                    var rect = svg.getBoundingClientRect();
+    
+                    // Calculate the new size based on the scale factor
+                    var adjustedHeight = rect.height * scaleFactor;
+    
+                    // Set the new size for the SVG container
+                    svg.style.height = adjustedHeight + 'px';
+    
+                    // You might also need to adjust the parent container of the SVG, depending on your DOM structure
+                    svg.parentNode.style.height = adjustedHeight + 'px';
+    
+                    // Apply the scaling transformation
+                    svg.style.transform = 'scale(' + scaleFactor + ')';
+                    svg.style.transformOrigin = '0 0';
+                });
+            }
+          });
+        }
+      }
+    };
     </script>
 
-    
     <h1><a href="/"> &nbsp;&nbsp;Admir Selimovic Research<sup style="color: pink;">+</sup> Repositories</a></h1>
 
     <div class="content">
