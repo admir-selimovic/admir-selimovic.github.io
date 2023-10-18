@@ -41,18 +41,26 @@
           var isMobile = window.matchMedia("only screen and (max-width: 768px)").matches;
 
           if (isMobile) {
-            // Adjust the global scaling factor for MathJax
-            MathJax.config.svg.fontScale = 70; // This sets the scaling to 70%
-          }
+            // Get all MathJax SVG elements
+            var mathJaxSVGs = document.querySelectorAll('.MathJax_SVG');
 
-          // Reprocess the math in the document for MathJax to adjust to new settings
-          return MathJax.typesetPromise();
+            // Define the scale factor
+            var scaleFactor = 0.7;
+
+            mathJaxSVGs.forEach(function(svg) {
+              // Scale the SVG elements
+              svg.style.transform = 'scale(' + scaleFactor + ')';
+              svg.style.transformOrigin = '0 0';
+
+              // Adjust the margin to prevent overlap (if necessary)
+              svg.style.marginBottom = '10px';
+            });
+
+            // Reprocess the math in the document for MathJax to adjust bounding boxes, etc.
+            return MathJax.typesetPromise();
+          }
         });
       }
-    },
-    svg: {
-      fontCache: 'global',
-      // other SVG configuration here
     }
   };
 </script>
