@@ -545,35 +545,64 @@
           Wigner D-Matrices are both orthogonal and complete over \(\text{SO}(3)\). These properties make them invaluable for describing functions on the group \(\text{SO}(3)\).
 
           
-<h3>Orthogonality and completeness of Wigner D-matrices on \(\mathrm{SO}(3)\)</h3>
+          <h3>Orthogonality and completeness of Wigner D-matrices on \(\mathrm{SO}(3)\)</h3>
+          
+          The Wigner D-Matrices satisfy the orthogonality condition, which can be expressed as:
+          \[
+          \int_{\text{SO}(3)} D^{(l)}_{m' m}(\alpha, \beta, \gamma) {D^{(l')}_{n' n}}^*(\alpha, \beta, \gamma) \, d\alpha \, d\beta \, d\gamma = \delta_{ll'} \delta_{m' n'} \delta_{mn}
+          \]
+          Here, \(D^{(l)}_{m' m}(\alpha, \beta, \gamma)\) is the initial \(D\)-matrix element and \({D^{(l')}_{n' n}}^*(\alpha, \beta, \gamma)\) is the complex conjugate of another \(D\)-matrix element.
+          
+          The Kronecker delta \(\delta_{ll'}\) ensures that the integral becomes nonzero solely for identical frequencies \(l\) and \(l'\), thereby establishing orthogonality between different \(D\)-matrices corresponding to these frequencies. 
+          \(\delta_{m'n'}\) ensures that the integral is nonzero only if the top indices \(m'\) and \(n'\) match. This signifies that the two \(D\)-matrix elements must correspond to the same row index for the integral to be nonzero. 
+          \(\delta_{mn}\) ensures that the integral is nonzero only if the bottom indices \(m\) and \(n\) match. This signifies that the two \(D\)-matrix elements must correspond to the same column index for the integral to be nonzero.
+          
+          Orthogonality in this context means that if we take two \(D\)-matrices and multiply corresponding elements, then sum all these products over the entire group \( \text{SO}(3) \), we will obtain zero unless the \(D\)-matrices are identical in all harmonic parameters \( l, m', m \).
+          
+          If \( l \neq l' \), \( m' \neq n' \), or \( m \neq n \), then at least one of the Kronecker delta functions will be zero, making the whole integral zero. Therefore, the two \(D\)-matrices are orthogonal in these cases.
+          
+          Basically, the above expression sets a strict condition for when two \(D\)-matrices can be considered identical (non-orthogonal), and this condition is encapsulated by the Kronecker delta functions. If they are not identical in the frequency and mode indices, then they are orthogonal, meaning the integral will be zero.
+          
+          Wigner D-functions are orthogonal to each other. Due to this, they form a complete orthogonal basis for functions on \(\mathrm{SO}(3)\). Naturally, this implies that we can consider them as Fourier basis for this group. Any function on \(\mathrm{SO}(3)\) can be represented as a series of weighted Wigner D-functions.
+          
+          Wigner D-Matrices are complete, meaning that any function \( f(\alpha, \beta, \gamma) \) defined on \(\text{SO}(3)\) can be expanded in terms of them:
+          \[
+          f(\alpha, \beta, \gamma) = \sum_l \sum_{m,m'} D^{(l)}_{m'm}(\alpha, \beta, \gamma) \, c_{m'm}^{(l)} \ ,
+          \]
+          where \(c_{m'm}^{(l)}\) are the expansion coefficients, which can be determined through the inner product with the conjugate of \(D^{(l)}_{m'm}(\alpha, \beta, \gamma)\).
 
-The Wigner D-Matrices satisfy the orthogonality condition, which can be expressed as:
+
+<h3>$\mathrm{SO}(3)$ irreps under $\mathrm{SO}(3)$ action</h3>
+
+Wigner D-matrices can be considered as both irreducible representations of \( \mathrm{SO}(3) \) and a complete orthogonal basis for functions on \( \mathrm{SO}(3) \). 
+The orthogonality conditions show that these matrices are orthogonal with respect to the group integration over \( \mathrm{SO}(3) \), and the Kronecker deltas ensure that they are orthogonal unless their harmonic parameters \( l, m', m \) are identical. 
+
+The completeness relation demonstrates that any function \( f(\alpha, \beta, \gamma) \) defined on \( \mathrm{SO}(3) \) can be expanded in terms of these Wigner D-matrices. This also implies that they can serve as a kind of Fourier basis for functions on \( \mathrm{SO}(3) \), allowing for the representation of any function on \( \mathrm{SO}(3) \) as a series of weighted Wigner D-functions.
+
+Thus, we can say that Wigner D-matrices provide a complete orthogonal basis for functions on \( \mathrm{SO}(3) \) and also serve as irreducible representations of the group.
+
+Previously, we have discussed Wigner-D functions as providing a complete orthogonal basis for functions on \( \mathrm{SO}(3) \), capturing the intrinsic properties and symmetries of the 3D rotation space. Now, we can think of Wigner D-matrices not only as the irreducible representations of $\mathrm{SO}(3)$ but also as functions that the group can act on. Let us briefly elaborate on that.
+
+Since matrices can be thought of as functions that map vectors to vectors, it is worth noting that Wigner \( D \)-matrices can also be thought of as functions:
 \[
-\int_{\text{SO}(3)} D^{(l)}_{m' m}(\alpha, \beta, \gamma) {D^{(l')}_{n' n}}^*(\alpha, \beta, \gamma) \, d\alpha \, d\beta \, d\gamma = \delta_{ll'} \delta_{m' n'} \delta_{mn}
+\mathbf{D}^{(l)} : \text{SO}(3) \rightarrow \text{Mat}_{(2l+1) \times (2l+1)}(\mathbb{C})
 \]
-Here, \(D^{(l)}_{m' m}(\alpha, \beta, \gamma)\) is the initial \(D\)-matrix element and \({D^{(l')}_{n' n}}^*(\alpha, \beta, \gamma)\) is the complex conjugate of another \(D\)-matrix element.
 
-The Kronecker delta \(\delta_{ll'}\) ensures that the integral becomes nonzero solely for identical frequencies \(l\) and \(l'\), thereby establishing orthogonality between different \(D\)-matrices corresponding to these frequencies. 
-\(\delta_{m'n'}\) ensures that the integral is nonzero only if the top indices \(m'\) and \(n'\) match. This signifies that the two \(D\)-matrix elements must correspond to the same row index for the integral to be nonzero. 
-\(\delta_{mn}\) ensures that the integral is nonzero only if the bottom indices \(m\) and \(n\) match. This signifies that the two \(D\)-matrix elements must correspond to the same column index for the integral to be nonzero.
+This function takes an element \( \mathbf{R} \) of \( \mathrm{SO}(3) \) (often parameterized by Euler angles \( \alpha, \beta, \gamma \)) and maps it to a matrix of complex numbers. The matrix is of size \( (2l+1) \times (2l+1) \), and its elements are denoted as \( D^{(l)}_{m'm}(\alpha, \beta, \gamma) \). In this sense, Wigner \( D \)-matrices are functions on the group \( \mathrm{SO}(3) \).
 
-Orthogonality in this context means that if we take two \(D\)-matrices and multiply corresponding elements, then sum all these products over the entire group \( \text{SO}(3) \), we will obtain zero unless the \(D\)-matrices are identical in all harmonic parameters \( l, m', m \).
-
-If \( l \neq l' \), \( m' \neq n' \), or \( m \neq n \), then at least one of the Kronecker delta functions will be zero, making the whole integral zero. Therefore, the two \(D\)-matrices are orthogonal in these cases.
-
-Basically, the above expression sets a strict condition for when two \(D\)-matrices can be considered identical (non-orthogonal), and this condition is encapsulated by the Kronecker delta functions. If they are not identical in the frequency and mode indices, then they are orthogonal, meaning the integral will be zero.
-
-
-Wigner D-functions are orthogonal to each other. Due to this, they form a complete orthogonal basis for functions on \(\mathrm{SO}(3)\). Naturally, this implies that we can consider them as Fourier basis for this group. Any function on \(\mathrm{SO}(3)\) can be represented as a series of weighted Wigner D-functions.
-
-
-Wigner D-Matrices are complete, meaning that any function \( f(\alpha, \beta, \gamma) \) defined on \(\text{SO}(3)\) can be expanded in terms of them:
-
+The action of \( \mathrm{SO}(3) \) on Wigner \( \mathbf{D} \)-matrices can be understood through their transformation properties under the composition of rotations. Let \( \mathbf{R}_1 \) and \( \mathbf{R}_2 \) be elements of \( \mathrm{SO}(3) \). The transformation of a Wigner D-matrix under the composition \( \mathbf{R}_1 \mathbf{R}_2 \) can be expressed as:
 \[
-f(\alpha, \beta, \gamma) = \sum_l \sum_{m,m'} D^{(l)}_{m'm}(\alpha, \beta, \gamma) \, c_{m'm}^{(l)} \ ,
+\mathbf{D}^{(l)}(\mathbf{R}_1 \mathbf{R}_2) = \mathbf{D}^{(l)}(\mathbf{R}_1) \mathbf{D}^{(l)}(\mathbf{R}_2)
 \]
-where \(c_{m'm}^{(l)}\) are the expansion coefficients, which can be determined through the inner product with the conjugate of \(D^{(l)}_{m'm}(\alpha, \beta, \gamma)\).
 
+Here, the elements of the matrices are given by:
+\[
+D^{(1)}_{m' m}(\mathbf{R}_1 \mathbf{R}_2) = \sum_{n=-1}^{1} D^{(1)}_{m' n}(\mathbf{R}_1) D^{(1)}_{n m}(\mathbf{R}_2)
+\]
+where \( m' \), \( m \), and \( n \) are mode indices (in physics, magnetic quantum numbers).
+Here, \( n \) serves as the intermediate mode number that ranges from \( -1 \) to \( 1 \) for \( l = 1 \). \( \mathbf{D}^{(l)} \)-matrix corresponding to the composed rotation \( \mathbf{R}_1 \mathbf{R}_2 \) can be obtained by summing over an intermediate magnetic quantum number \( n \), while multiplying the corresponding elements of the \( \mathbf{D}^{(l)} \)-matrices for \( \mathbf{R}_1 \) and \( \mathbf{R}_2 \).
+
+This captures how Wigner D-matrices transform under the composition of rotations, which is the group operation of \( \mathrm{SO}(3) \).
 
           
 
