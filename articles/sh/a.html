@@ -395,15 +395,24 @@ MathJax = {
             // Select all MathJax SVG elements
             var mathJaxSVGs = document.querySelectorAll('.MathJax_SVG');
 
-            // Adjust the size of each SVG's container based on the scale factor
+            // Define the scale factor
             var scaleFactor = 0.7;
+
             mathJaxSVGs.forEach(function(svg) {
                 // Apply the scaling transformation
                 svg.style.transform = 'scale(' + scaleFactor + ')';
                 svg.style.transformOrigin = '0 0';
+                
+                // Adjust the margin if needed to prevent overlap
+                svg.style.marginBottom = '10px'; // Adjust as necessary based on your actual layout
+            });
 
-                // Adjust the margin to compensate for the change in visual size
-                svg.style.marginBottom = 
+            // Reprocess all the math on the page after scaling
+            // This step is crucial because MathJax needs to be aware of the style changes
+            MathJax.typesetPromise().then(() => {
+                console.log("Typesetting complete after rescaling!");
+            }).catch((err) => {
+                console.log("Typesetting error after rescaling: ", err);
             });
         }
       });
@@ -411,6 +420,7 @@ MathJax = {
   }
 };
 </script>
+
 
 
     <h1><a href="/"> &nbsp;&nbsp;Admir Selimovic Research<sup style="color: pink;">+</sup> Repositories</a></h1>
