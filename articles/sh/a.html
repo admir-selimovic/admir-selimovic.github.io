@@ -502,6 +502,58 @@ By using these coefficients, any square-integrable function \( f(\theta, \phi) \
           
 
 
+<h3>Harmonic representations on \(\mathrm{SO}(3)\)</h3>
+
+The Wigner D-matrix is expressed as:
+$$
+\mathbf{D}^{(l)}(\mathbf{R})=
+\left(D_{m^{\prime} m}^{(l)}(\mathbf{R})\right)_{m^{\prime}, m=-l}^l \ ,
+$$
+where \(\mathbf{R} \in \mathrm{SO}(3)\) is the rotation matrix representing 3D rotations. This is a compact representation of the Wigner D-matrix \(\mathbf{D}^{(l)}(\mathbf{R})\) for a specific frequency \(l\) and rotation matrix \(\mathbf{R}\). 
+
+The matrix elements, \(D_{m^{\prime} m}^{(l)}(\mathbf{R})\), have indices \(m^{\prime}\) and \(m\) ranging from \(-l\) to \(l\). The Wigner D-matrix is consequently a square matrix of size \({(2l+1) \times (2l+1)}\). 
+It operates on \((2 l + 1)\)-dimensional vector spaces, termed steerable vector spaces of type \(l\). Represented as \(V_l=\mathbb{R}^{2 l+1}\), a vector \(\mathbf{v} \in V_l\) is labelled a type-\(l\) vector or a vector of order \(l\).
+
+For the rotation matrix \(\mathbf{R}\), the composition of the Wigner D-matrix \(\mathbf{D}^{(l)}(\mathbf{R})\) is as follows:
+$$
+\mathbf{D}^{(l)}(\mathbf{R}) = 
+\left(\begin{smallmatrix}
+D_{-l,-l}^{(l)}(\mathbf{R}) & D_{-l,-l+1}^{(l)}(\mathbf{R}) & \ldots & D_{-l,l}^{(l)}(\mathbf{R}) \\
+D_{-l+1,-l}^{(l)}(\mathbf{R}) & D_{-l+1,-l+1}^{(l)}(\mathbf{R}) & \ldots & D_{-l+1,l}^{(l)}(\mathbf{R}) \\
+\vdots & \vdots & \ddots & \vdots \\
+D_{l,-l}^{(l)}(\mathbf{R}) & D_{l,-l+1}^{(l)}(\mathbf{R}) & \ldots & D_{l,l}^{(l)}(\mathbf{R})
+\end{smallmatrix}\right)
+$$
+To find each element, it is essential to employ the explicit formulations of the Wigner D-matrix elements, which hinge upon the Euler angles or rotation angles associated with the rotation matrix \(\mathbf{R}\). 
+The specific form of the elements \(D_{m^{\prime} m}^{(l)}(\mathbf{R})\) is contingent on the parameterisation of the rotation matrix \(\mathbf{R}\). 
+
+
+
+The elements \(D_{m' m}^{(l)}(\mathbf{R})\) of the Wigner D-matrix for a rotation \( \mathbf{R} \), where the rotation \(\mathbf{R}\) is parameterized by the Euler angles \((\alpha, \beta, \gamma)\), are given by:
+\begin{equation} \label{eq-d-matrix-element}
+D_{m' m}^{(l)}(\alpha, \beta, \gamma) = e^{-i m' \alpha} d_{m', m}^{(l)}(\beta) e^{-i m \gamma},
+\end{equation}
+where \(d_{m' m}^{(l)}(\beta)\) is a Wigner D-function. 
+
+Wigner D-function captures the dependence on the Euler angle \(\beta\). The function carries essential information about the transformation, especially about the behavior under rotations about one of the principal axes (in this case, rotations about the Y-axis). 
+
+Wigner D-function takes a form dependent on the exact values of \(m'\) and \(m\), which span from -1 to 1:
+$$
+d_{m', m}^{(l)}(\beta)=\sum_k w_k^{(l, m', m)}\left(\cos \frac{\beta}{2}\right)^{2 l-2 k+m-m'}\left(\sin \frac{\beta}{2}\right)^{2 k+m'-m} ,
+$$
+where the weighting factor is:
+$$
+w_k^{(l, m', m)}=\frac{(-1)^{k+m'-m} \sqrt{(l+m') !(l-m') !(l+m) !(l-m) !}}{(l-m'-k) !(l+m-k) !(k+m'-m) ! k !}. 
+$$
+The sum is carried out over all \(k\) that render the factorials within the bounds of non-negative integers: \({k \in[\max (0, m-m'), \min (l-m', l+m)]}\).
+
+
+
+Wigner D-Matrices are both orthogonal and complete over \(\text{SO}(3)\). These properties make them invaluable for describing functions on the group \(\text{SO}(3)\).
+
+
+          
+
         </div>
       </div>
     </div>
