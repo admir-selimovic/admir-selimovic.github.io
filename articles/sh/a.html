@@ -413,6 +413,10 @@
       
                   // You might also need to adjust the parent container of the SVG, depending on your DOM structure
                   svg.parentNode.style.height = adjustedHeight + 'px';
+      
+                  // Apply the scaling transformation
+                  svg.style.transform = 'scale(' + scaleFactor + ')';
+                  svg.style.transformOrigin = '0 0';
               });
           }
       });
