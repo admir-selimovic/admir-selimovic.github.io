@@ -35,37 +35,36 @@
       packages: { '[+]': ['ams'] }
     },
     startup: {
-      ready: function () {
-        // This ensures the default pageReady runs first and page is fully rendered by MathJax
-        MathJax.startup.defaultReady();
+      pageReady: () => {
+        return MathJax.startup.defaultPageReady().then(() => {
+          // Check if it's a mobile device based on screen width
+          var isMobile = window.matchMedia("only screen and (max-width: 480px)").matches;
 
-        var isMobile = window.matchMedia("only screen and (max-width: 480px)").matches;
+          if (isMobile) {
+            // Get all MathJax SVG elements
+            var mathJaxSVGs = document.querySelectorAll('.MathJax_SVG');
 
-        if (isMobile) {
-          // Select all MathJax SVG elements
-          var mathJaxSVGs = document.querySelectorAll('.MathJax_SVG');
+            // Define the scale factor
+            var scaleFactor = 0.7;
 
-          // Define the scale factor
-          var scaleFactor = 0.7;
+            mathJaxSVGs.forEach(function(svg) {
+              // Scale the SVG elements
+              svg.style.transform = 'scale(' + scaleFactor + ')';
+              svg.style.transformOrigin = '0 0';
 
-          mathJaxSVGs.forEach(function(svg) {
-            // Apply the scaling transformation
-            svg.style.transform = 'scale(' + scaleFactor + ')';
-            svg.style.transformOrigin = '0 0';
+              // Adjust the margin to prevent overlap (if necessary)
+              svg.style.marginBottom = '10px';
+            });
 
-            // Adjust the margin if needed to prevent overlap
-            svg.style.marginBottom = '10px'; // Adjust as necessary based on your actual layout
-          });
-        }
-      },
-      pageReady: function() {
-        return MathJax.startup.defaultPageReady();
+            // Reprocess the math in the document for MathJax to adjust bounding boxes, etc.
+            return MathJax.typesetPromise();
+          }
+        });
       }
     }
   };
 </script>
 
-    
     <style>
       body {
         font-family: "Roboto", Arial, sans-serif;
