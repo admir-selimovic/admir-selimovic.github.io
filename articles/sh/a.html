@@ -25,17 +25,38 @@
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
     ></script>
 
-<!-- MathJax Configuration -->
 <script>
   window.MathJax = {
     tex: {
       inlineMath: [["$", "$"], ["\\(", "\\)"]],
       displayMath: [["$$", "$$"], ["\\[", "\\]"]],
       tags: 'ams',
-      packages: { '[+]': ['ams'] }
+      packages: { '[+]': ['ams'] },
+      // New line breaking configuration
+      linebreaks: {
+        automatic: true,
+        width: "container" // or a specific value like '80%'
+      }
+    },
+    // Additional scaling configurations if needed
+    svg: {
+      scale: 0.9, // global scaling factor for all expressions
+      minScale: 0.5, // smallest scaling factor to use
+      mtextInheritFont: true,
+      merrorInheritFont: true,
+    },
+    startup: {
+      ready: () => {
+        MathJax.startup.defaultReady();
+        MathJax.startup.promise.then(() => {
+          // This will run after all the initial typesetting is complete
+          // Here you can perform any actions that need to happen after typesetting
+        });
+      }
     }
   };
 </script>
+
 
 
     <style>
@@ -381,6 +402,8 @@
         }
       });
     </script>
+
+
     
     <h1><a href="/"> &nbsp;&nbsp;Admir Selimovic Research<sup style="color: pink;">+</sup> Repositories</a></h1>
 
