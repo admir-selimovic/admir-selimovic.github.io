@@ -396,13 +396,24 @@
           var isMobile = window.matchMedia("only screen and (max-width: 480px)").matches;
       
           if (isMobile) {
-              // For MathJax version 3, the global configuration might look like this:
-              MathJax.config = MathJax.config || {};
-              MathJax.config.svg = MathJax.config.svg || {};
-              MathJax.config.svg.scale = 70; // scales all math by 70%
+              // Select all MathJax SVG elements
+              var mathJaxSVGs = document.querySelectorAll('.MathJax_SVG');
       
-              // Then rerender the equations with the new settings
-              MathJax.typesetPromise();
+              // Adjust the height of each SVG's container based on the scale factor
+              var scaleFactor = 0.7;
+              mathJaxSVGs.forEach(function(svg) {
+                  // Get the height of the SVG element
+                  var rect = svg.getBoundingClientRect();
+      
+                  // Calculate the new height based on the scale factor
+                  var adjustedHeight = rect.height * scaleFactor;
+      
+                  // Set the new height for the SVG container
+                  svg.style.height = adjustedHeight + 'px';
+      
+                  // You might also need to adjust the parent container of the SVG, depending on your DOM structure
+                  svg.parentNode.style.height = adjustedHeight + 'px';
+              });
           }
       });
     </script>
