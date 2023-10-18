@@ -469,87 +469,110 @@
 
           
           <h3>Orthogonality and completeness of spherical harmonics on \(S^2\)</h3>
-
-
-The spherical harmonics \( Y_{l}^m(\theta, \phi) \) are orthogonal with respect to the measure \( \sin(\theta) \, d\theta \, d\phi \). The measure comes from the Jacobian determinant in the transformation to spherical coordinates and ensures the orthogonality condition is physically meaningful) over the domain \( \theta \in (0, \pi), \, \phi \in (0, 2\pi )\). The orthogonality condition can be stated as:
-
-\begin{equation} \label{sh-orthogonality}
-\int_{0}^{\pi} \int_{0}^{2\pi} Y_{l}^m(\theta, \phi) Y_{l'}^{m'*}(\theta, \phi) \sin(\theta) \, d\theta \, d\phi = \delta_{ll'} \delta_{mm'} \ ,
-\end{equation}  
-where \(Y_{l'}^{m'*}(\theta, \phi)\) is the complex conjugate of the initial or another spherical harmonic; in complex-valued mathematics, especially in quantum mechanics and the study of wave functions, it is common to use complex conjugates when setting up conditions for orthogonality. Thus, the initial spherical harmonic is being checked for orthogonality against its complex conjugate. 
-
-The Kronecker delta functions \( \delta_{ll'} \) and \( \delta_{mm'} \) serve as conditions that enforce the orthogonality of the spherical harmonics when \( l \neq l' \) or \( m \neq m' \).
-In the above expression, \( \delta_{ll'} \) takes the value of 1 if \( l = l' \) and 0 otherwise. Similarly, \( \delta_{mm'} \) takes the value of 1 if \( m = m' \) and 0 otherwise. 
-This implies that if \( l = l' \) and \( m = m' \), then the integral evaluates to \( 1 \times 1 = 1 \), affirming the self-orthogonality of each spherical harmonic. This is because \( \delta_{ll'} = 1 \) and \( \delta_{mm'} = 1 \) under these conditions.
-On the other hand, if either \( l \neq l' \) or \( m \neq m' \), then \( \delta_{ll'} \) or \( \delta_{mm'} \) will be 0, making the integral equal to zero. This verifies the orthogonality between different spherical harmonics.
-
-In general, the orthogonality property of spherical harmonics ensures that any function \( f(\theta, \phi) \) defined on the sphere can be decomposed into a sum of spherical harmonics without ambiguity.
-
-Spherical harmonics form a complete set for square-integrable functions on \( S^2 \), i.e., any square-integrable function \( f: S^2 \rightarrow \mathbb{C} \) can be represented as an infinite sum of spherical harmonics:
-
-\begin{equation} \label{sh-completeness}
-f(\theta, \phi) = \sum_{l=0}^{\infty} \sum_{m=-l}^{l} c_{l}^m Y_{l}^m(\theta, \phi) \ .
-\end{equation}
-
-The coefficients \( c_{l}^m \) can be uniquely determined by exploiting the orthogonality of spherical harmonics:
-
-\[
-c_{l}^m = \int_{0}^{\pi} \int_{0}^{2\pi} f(\theta, \phi) Y_{l}^{m*}(\theta, \phi) \sin(\theta) \, d\theta \, d\phi \ .
-\]
-
-By using these coefficients, any square-integrable function \( f(\theta, \phi) \) defined on the sphere can be decomposed into a sum of spherical harmonics without ambiguity.
+          
+          The spherical harmonics \( Y_{l}^m(\theta, \phi) \) are orthogonal with respect to the measure \( \sin(\theta) \, d\theta \, d\phi \). The measure comes from the Jacobian determinant in the transformation to spherical coordinates and ensures the orthogonality condition is physically meaningful) over the domain \( \theta \in (0, \pi), \, \phi \in (0, 2\pi )\). The orthogonality condition can be stated as:
+          
+          \begin{equation} \label{sh-orthogonality}
+          \int_{0}^{\pi} \int_{0}^{2\pi} Y_{l}^m(\theta, \phi) Y_{l'}^{m'*}(\theta, \phi) \sin(\theta) \, d\theta \, d\phi = \delta_{ll'} \delta_{mm'} \ ,
+          \end{equation}  
+          where \(Y_{l'}^{m'*}(\theta, \phi)\) is the complex conjugate of the initial or another spherical harmonic; in complex-valued mathematics, especially in quantum mechanics and the study of wave functions, it is common to use complex conjugates when setting up conditions for orthogonality. Thus, the initial spherical harmonic is being checked for orthogonality against its complex conjugate. 
+          
+          The Kronecker delta functions \( \delta_{ll'} \) and \( \delta_{mm'} \) serve as conditions that enforce the orthogonality of the spherical harmonics when \( l \neq l' \) or \( m \neq m' \).
+          In the above expression, \( \delta_{ll'} \) takes the value of 1 if \( l = l' \) and 0 otherwise. Similarly, \( \delta_{mm'} \) takes the value of 1 if \( m = m' \) and 0 otherwise. 
+          This implies that if \( l = l' \) and \( m = m' \), then the integral evaluates to \( 1 \times 1 = 1 \), affirming the self-orthogonality of each spherical harmonic. This is because \( \delta_{ll'} = 1 \) and \( \delta_{mm'} = 1 \) under these conditions.
+          On the other hand, if either \( l \neq l' \) or \( m \neq m' \), then \( \delta_{ll'} \) or \( \delta_{mm'} \) will be 0, making the integral equal to zero. This verifies the orthogonality between different spherical harmonics.
+          
+          In general, the orthogonality property of spherical harmonics ensures that any function \( f(\theta, \phi) \) defined on the sphere can be decomposed into a sum of spherical harmonics without ambiguity.
+          
+          Spherical harmonics form a complete set for square-integrable functions on \( S^2 \), i.e., any square-integrable function \( f: S^2 \rightarrow \mathbb{C} \) can be represented as an infinite sum of spherical harmonics:
+          
+          \begin{equation} \label{sh-completeness}
+          f(\theta, \phi) = \sum_{l=0}^{\infty} \sum_{m=-l}^{l} c_{l}^m Y_{l}^m(\theta, \phi) \ .
+          \end{equation}
+          
+          The coefficients \( c_{l}^m \) can be uniquely determined by exploiting the orthogonality of spherical harmonics:
+          
+          \[
+          c_{l}^m = \int_{0}^{\pi} \int_{0}^{2\pi} f(\theta, \phi) Y_{l}^{m*}(\theta, \phi) \sin(\theta) \, d\theta \, d\phi \ .
+          \]
+          
+          By using these coefficients, any square-integrable function \( f(\theta, \phi) \) defined on the sphere can be decomposed into a sum of spherical harmonics without ambiguity.
+          
+          
+          <h3>Harmonic representations on \(\mathrm{SO}(3)\)</h3>
+          
+          The Wigner D-matrix is expressed as:
+          \[
+          \mathbf{D}^{(l)}(\mathbf{R})=
+          \left(D_{m^{\prime} m}^{(l)}(\mathbf{R})\right)_{m^{\prime}, m=-l}^l \ ,
+          \]
+          where \(\mathbf{R} \in \mathrm{SO}(3)\) is the rotation matrix representing 3D rotations. This is a compact representation of the Wigner D-matrix \(\mathbf{D}^{(l)}(\mathbf{R})\) for a specific frequency \(l\) and rotation matrix \(\mathbf{R}\). 
+          
+          The matrix elements, \(D_{m^{\prime} m}^{(l)}(\mathbf{R})\), have indices \(m^{\prime}\) and \(m\) ranging from \(-l\) to \(l\). The Wigner D-matrix is consequently a square matrix of size \({(2l+1) \times (2l+1)}\). 
+          It operates on \((2 l + 1)\)-dimensional vector spaces, termed steerable vector spaces of type \(l\). Represented as \(V_l=\mathbb{R}^{2 l+1}\), a vector \(\mathbf{v} \in V_l\) is labelled a type-\(l\) vector or a vector of order \(l\).
+          
+          For the rotation matrix \(\mathbf{R}\), the composition of the Wigner D-matrix \(\mathbf{D}^{(l)}(\mathbf{R})\) is as follows:
+          \[
+          \mathbf{D}^{(l)}(\mathbf{R}) = 
+          \left(\begin{smallmatrix}
+          D_{-l,-l}^{(l)}(\mathbf{R}) & D_{-l,-l+1}^{(l)}(\mathbf{R}) & \ldots & D_{-l,l}^{(l)}(\mathbf{R}) \\
+          D_{-l+1,-l}^{(l)}(\mathbf{R}) & D_{-l+1,-l+1}^{(l)}(\mathbf{R}) & \ldots & D_{-l+1,l}^{(l)}(\mathbf{R}) \\
+          \vdots & \vdots & \ddots & \vdots \\
+          D_{l,-l}^{(l)}(\mathbf{R}) & D_{l,-l+1}^{(l)}(\mathbf{R}) & \ldots & D_{l,l}^{(l)}(\mathbf{R})
+          \end{smallmatrix}\right)
+          \]
+          To find each element, it is essential to employ the explicit formulations of the Wigner D-matrix elements, which hinge upon the Euler angles or rotation angles associated with the rotation matrix \(\mathbf{R}\). 
+          The specific form of the elements \(D_{m^{\prime} m}^{(l)}(\mathbf{R})\) is contingent on the parameterisation of the rotation matrix \(\mathbf{R}\). 
+          
+          The elements \(D_{m' m}^{(l)}(\mathbf{R})\) of the Wigner D-matrix for a rotation \( \mathbf{R} \), where the rotation \(\mathbf{R}\) is parameterized by the Euler angles \((\alpha, \beta, \gamma)\), are given by:
+          \begin{equation} \label{eq-d-matrix-element}
+          D_{m' m}^{(l)}(\alpha, \beta, \gamma) = e^{-i m' \alpha} d_{m', m}^{(l)}(\beta) e^{-i m \gamma},
+          \end{equation}
+          where \(d_{m' m}^{(l)}(\beta)\) is a Wigner D-function. 
+          
+          Wigner D-function captures the dependence on the Euler angle \(\beta\). The function carries essential information about the transformation, especially about the behavior under rotations about one of the principal axes (in this case, rotations about the Y-axis). 
+          
+          Wigner D-function takes a form dependent on the exact values of \(m'\) and \(m\), which span from -1 to 1:
+          \[
+          d_{m', m}^{(l)}(\beta)=\sum_k w_k^{(l, m', m)}\left(\cos \frac{\beta}{2}\right)^{2 l-2 k+m-m'}\left(\sin \frac{\beta}{2}\right)^{2 k+m'-m} ,
+          \]
+          where the weighting factor is:
+          \[
+          w_k^{(l, m', m)}=\frac{(-1)^{k+m'-m} \sqrt{(l+m') !(l-m') !(l+m) !(l-m) !}}{(l-m'-k) !(l+m-k) !(k+m'-m) ! k !}. 
+          \]
+          The sum is carried out over all \(k\) that render the factorials within the bounds of non-negative integers: \({k \in[\max (0, m-m'), \min (l-m', l+m)]}\).
+          
+          Wigner D-Matrices are both orthogonal and complete over \(\text{SO}(3)\). These properties make them invaluable for describing functions on the group \(\text{SO}(3)\).
 
           
+<h3>Orthogonality and completeness of Wigner D-matrices on \(\mathrm{SO}(3)\)</h3>
 
-
-<h3>Harmonic representations on \(\mathrm{SO}(3)\)</h3>
-
-The Wigner D-matrix is expressed as:
+The Wigner D-Matrices satisfy the orthogonality condition, which can be expressed as:
 \[
-\mathbf{D}^{(l)}(\mathbf{R})=
-\left(D_{m^{\prime} m}^{(l)}(\mathbf{R})\right)_{m^{\prime}, m=-l}^l \ ,
+\int_{\text{SO}(3)} D^{(l)}_{m' m}(\alpha, \beta, \gamma) {D^{(l')}_{n' n}}^*(\alpha, \beta, \gamma) \, d\alpha \, d\beta \, d\gamma = \delta_{ll'} \delta_{m' n'} \delta_{mn}
 \]
-where \(\mathbf{R} \in \mathrm{SO}(3)\) is the rotation matrix representing 3D rotations. This is a compact representation of the Wigner D-matrix \(\mathbf{D}^{(l)}(\mathbf{R})\) for a specific frequency \(l\) and rotation matrix \(\mathbf{R}\). 
+Here, \(D^{(l)}_{m' m}(\alpha, \beta, \gamma)\) is the initial \(D\)-matrix element and \({D^{(l')}_{n' n}}^*(\alpha, \beta, \gamma)\) is the complex conjugate of another \(D\)-matrix element.
 
-The matrix elements, \(D_{m^{\prime} m}^{(l)}(\mathbf{R})\), have indices \(m^{\prime}\) and \(m\) ranging from \(-l\) to \(l\). The Wigner D-matrix is consequently a square matrix of size \({(2l+1) \times (2l+1)}\). 
-It operates on \((2 l + 1)\)-dimensional vector spaces, termed steerable vector spaces of type \(l\). Represented as \(V_l=\mathbb{R}^{2 l+1}\), a vector \(\mathbf{v} \in V_l\) is labelled a type-\(l\) vector or a vector of order \(l\).
+The Kronecker delta \(\delta_{ll'}\) ensures that the integral becomes nonzero solely for identical frequencies \(l\) and \(l'\), thereby establishing orthogonality between different \(D\)-matrices corresponding to these frequencies. 
+\(\delta_{m'n'}\) ensures that the integral is nonzero only if the top indices \(m'\) and \(n'\) match. This signifies that the two \(D\)-matrix elements must correspond to the same row index for the integral to be nonzero. 
+\(\delta_{mn}\) ensures that the integral is nonzero only if the bottom indices \(m\) and \(n\) match. This signifies that the two \(D\)-matrix elements must correspond to the same column index for the integral to be nonzero.
 
-For the rotation matrix \(\mathbf{R}\), the composition of the Wigner D-matrix \(\mathbf{D}^{(l)}(\mathbf{R})\) is as follows:
+Orthogonality in this context means that if we take two \(D\)-matrices and multiply corresponding elements, then sum all these products over the entire group \( \text{SO}(3) \), we will obtain zero unless the \(D\)-matrices are identical in all harmonic parameters \( l, m', m \).
+
+If \( l \neq l' \), \( m' \neq n' \), or \( m \neq n \), then at least one of the Kronecker delta functions will be zero, making the whole integral zero. Therefore, the two \(D\)-matrices are orthogonal in these cases.
+
+Basically, the above expression sets a strict condition for when two \(D\)-matrices can be considered identical (non-orthogonal), and this condition is encapsulated by the Kronecker delta functions. If they are not identical in the frequency and mode indices, then they are orthogonal, meaning the integral will be zero.
+
+
+Wigner D-functions are orthogonal to each other. Due to this, they form a complete orthogonal basis for functions on \(\mathrm{SO}(3)\). Naturally, this implies that we can consider them as Fourier basis for this group. Any function on \(\mathrm{SO}(3)\) can be represented as a series of weighted Wigner D-functions.
+
+
+Wigner D-Matrices are complete, meaning that any function \( f(\alpha, \beta, \gamma) \) defined on \(\text{SO}(3)\) can be expanded in terms of them:
+
 \[
-\mathbf{D}^{(l)}(\mathbf{R}) = 
-\left(\begin{smallmatrix}
-D_{-l,-l}^{(l)}(\mathbf{R}) & D_{-l,-l+1}^{(l)}(\mathbf{R}) & \ldots & D_{-l,l}^{(l)}(\mathbf{R}) \\
-D_{-l+1,-l}^{(l)}(\mathbf{R}) & D_{-l+1,-l+1}^{(l)}(\mathbf{R}) & \ldots & D_{-l+1,l}^{(l)}(\mathbf{R}) \\
-\vdots & \vdots & \ddots & \vdots \\
-D_{l,-l}^{(l)}(\mathbf{R}) & D_{l,-l+1}^{(l)}(\mathbf{R}) & \ldots & D_{l,l}^{(l)}(\mathbf{R})
-\end{smallmatrix}\right)
+f(\alpha, \beta, \gamma) = \sum_l \sum_{m,m'} D^{(l)}_{m'm}(\alpha, \beta, \gamma) \, c_{m'm}^{(l)} \ ,
 \]
-To find each element, it is essential to employ the explicit formulations of the Wigner D-matrix elements, which hinge upon the Euler angles or rotation angles associated with the rotation matrix \(\mathbf{R}\). 
-The specific form of the elements \(D_{m^{\prime} m}^{(l)}(\mathbf{R})\) is contingent on the parameterisation of the rotation matrix \(\mathbf{R}\). 
-
-
-
-The elements \(D_{m' m}^{(l)}(\mathbf{R})\) of the Wigner D-matrix for a rotation \( \mathbf{R} \), where the rotation \(\mathbf{R}\) is parameterized by the Euler angles \((\alpha, \beta, \gamma)\), are given by:
-\begin{equation} \label{eq-d-matrix-element}
-D_{m' m}^{(l)}(\alpha, \beta, \gamma) = e^{-i m' \alpha} d_{m', m}^{(l)}(\beta) e^{-i m \gamma},
-\end{equation}
-where \(d_{m' m}^{(l)}(\beta)\) is a Wigner D-function. 
-
-Wigner D-function captures the dependence on the Euler angle \(\beta\). The function carries essential information about the transformation, especially about the behavior under rotations about one of the principal axes (in this case, rotations about the Y-axis). 
-
-Wigner D-function takes a form dependent on the exact values of \(m'\) and \(m\), which span from -1 to 1:
-\[
-d_{m', m}^{(l)}(\beta)=\sum_k w_k^{(l, m', m)}\left(\cos \frac{\beta}{2}\right)^{2 l-2 k+m-m'}\left(\sin \frac{\beta}{2}\right)^{2 k+m'-m} ,
-\]
-where the weighting factor is:
-\[
-w_k^{(l, m', m)}=\frac{(-1)^{k+m'-m} \sqrt{(l+m') !(l-m') !(l+m) !(l-m) !}}{(l-m'-k) !(l+m-k) !(k+m'-m) ! k !}. 
-\]
-The sum is carried out over all \(k\) that render the factorials within the bounds of non-negative integers: \({k \in[\max (0, m-m'), \min (l-m', l+m)]}\).
-
-
-
-Wigner D-Matrices are both orthogonal and complete over \(\text{SO}(3)\). These properties make them invaluable for describing functions on the group \(\text{SO}(3)\).
+where \(c_{m'm}^{(l)}\) are the expansion coefficients, which can be determined through the inner product with the conjugate of \(D^{(l)}_{m'm}(\alpha, \beta, \gamma)\).
 
 
           
