@@ -25,25 +25,41 @@
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
     ></script>
 
+<!-- MathJax Configuration -->
 <script>
   window.MathJax = {
     tex: {
       inlineMath: [["$", "$"], ["\\(", "\\)"]],
       displayMath: [["$$", "$$"], ["\\[", "\\]"]],
       tags: 'ams',
-      packages: { '[+]': ['ams'] },
-      linebreaks: {
-        automatic: true, // Automatic line breaks
-        width: 'container' // Line break relative to container width
-      }
+      packages: { '[+]': ['ams'] }
     },
-    svg: {
-      fontCache: 'global'
-    },
-    options: {
-      renderActions: {
-        addMenu: [],
-        checkLoading: []
+    startup: {
+      ready: function () {
+        // This ensures the default pageReady runs first and page is fully rendered by MathJax
+        MathJax.startup.defaultReady();
+
+        // Now we add our scaling adjustments after a delay
+        setTimeout(function() {
+          var isMobile = window.matchMedia("only screen and (max-width: 480px)").matches;
+          
+          if (isMobile) {
+            // Select all MathJax SVG elements
+            var mathJaxSVGs = document.querySelectorAll('.MathJax_SVG');
+            
+            // Define the scale factor
+            var scaleFactor = 0.7;
+            
+            mathJaxSVGs.forEach(function(svg) {
+              // Apply the scaling transformation
+              svg.style.transform = 'scale(' + scaleFactor + ')';
+              svg.style.transformOrigin = '0 0';
+              
+              // Adjust the margin if needed to prevent overlap
+              svg.style.marginBottom = '10px'; // Adjust as necessary based on your actual layout
+            });
+          }
+        }, 3000); // 3000 ms delay to ensure MathJax has completed rendering
       }
     }
   };
@@ -303,14 +319,6 @@
         }
       }
 
-/* Replace .YourMathJaxClass with the class you identified */
-.mjx-container {
-    overflow-x: auto; /* This will add a scrollbar if the content overflows on the x-axis */
-    max-width: 100%; /* This ensures the content doesn't overflow its container */
-}
-
-
-
       
     </style>
   </head>
@@ -390,8 +398,6 @@
         }
       });
     </script>
-
-
     
     <h1><a href="/"> &nbsp;&nbsp;Admir Selimovic Research<sup style="color: pink;">+</sup> Repositories</a></h1>
 
