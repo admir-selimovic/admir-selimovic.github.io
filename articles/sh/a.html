@@ -25,31 +25,60 @@
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
     ></script>
 
-    <!-- Mathjax Configuration -->
-    <script>
-      window.MathJax = {
+<!-- Single Unified MathJax Configuration -->
+<script>
+    window.MathJax = {
         tex: {
-          inlineMath: [
-            ["$", "$"],
-            ["\\(", "\\)"],
-          ],
-          displayMath: [
-            ["$$", "$$"],
-            ["\\[", "\\]"],
-          ],
-          tags: "ams",
-          packages: { "[+]": ["ams"] },
+            inlineMath: [
+                ["$", "$"],
+                ["\\(", "\\)"]
+            ],
+            displayMath: [
+                ["$$", "$$"],
+                ["\\[", "\\]"]
+            ],
+            tags: 'ams',
+            packages: { '[+]': ['ams'] }
         },
         startup: {
-          ready: function () {
-            MathJax.startup.defaultReady();
-            MathJax.startup.promise.then(function () {
-              // Adjust styles here, if needed
-            });
-          },
-        },
-      };
-    </script>
+            ready: function () {
+                // Call the default ready handler
+                MathJax.startup.defaultReady();
+                
+                // Once the default typesetting is done, proceed with the custom code
+                MathJax.startup.promise.then(function () {
+                    // Your custom code for scaling on mobile devices
+                    var isMobile = window.matchMedia("only screen and (max-width: 480px)").matches;
+
+                    if (isMobile) {
+                        // Select all MathJax SVG elements
+                        var mathJaxSVGs = document.querySelectorAll('.MathJax_SVG');
+
+                        // Define the scale factor
+                        var scaleFactor = 0.7;
+
+                        mathJaxSVGs.forEach(function(svg) {
+                            // Apply the scaling transformation
+                            svg.style.transform = 'scale(' + scaleFactor + ')';
+                            svg.style.transformOrigin = '0 0';
+                            
+                            // Adjust the margin if needed to prevent overlap
+                            svg.style.marginBottom = '10px'; // Adjust as necessary based on your actual layout
+                        });
+
+                        // Reprocess all the math on the page after scaling
+                        MathJax.typesetPromise().then(() => {
+                            console.log("Typesetting complete after rescaling!");
+                        }).catch((err) => {
+                            console.log("Typesetting error after rescaling: ", err);
+                        });
+                    }
+                });
+            }
+        }
+    };
+</script>
+
 
     <style>
       body {
@@ -381,48 +410,7 @@
         }
       });
     </script>
-
-<script>
-MathJax = {
-  startup: {
-    // other MathJax configuration here
-    pageReady: () => {
-      MathJax.startup.defaultPageReady().then(() => {
-        // your code here
-        var isMobile = window.matchMedia("only screen and (max-width: 480px)").matches;
-
-        if (isMobile) {
-            // Select all MathJax SVG elements
-            var mathJaxSVGs = document.querySelectorAll('.MathJax_SVG');
-
-            // Define the scale factor
-            var scaleFactor = 0.7;
-
-            mathJaxSVGs.forEach(function(svg) {
-                // Apply the scaling transformation
-                svg.style.transform = 'scale(' + scaleFactor + ')';
-                svg.style.transformOrigin = '0 0';
-                
-                // Adjust the margin if needed to prevent overlap
-                svg.style.marginBottom = '10px'; // Adjust as necessary based on your actual layout
-            });
-
-            // Reprocess all the math on the page after scaling
-            // This step is crucial because MathJax needs to be aware of the style changes
-            MathJax.typesetPromise().then(() => {
-                console.log("Typesetting complete after rescaling!");
-            }).catch((err) => {
-                console.log("Typesetting error after rescaling: ", err);
-            });
-        }
-      });
-    }
-  }
-};
-</script>
-
-
-
+    
     <h1><a href="/"> &nbsp;&nbsp;Admir Selimovic Research<sup style="color: pink;">+</sup> Repositories</a></h1>
 
     <div class="content">
@@ -462,10 +450,7 @@ MathJax = {
                     
           Any function of $\theta$ and $\phi$ can be thought of as a function on the surface of a sphere. Thus, a handy interpretation of spherical harmonics is as a set of functions on the surface of a sphere. 
           The relationship between these angles and a point on a sphere's surface is:
-          
-          $$
-          x=r \sin \theta \cos \phi, \quad y=r \sin \theta \sin \phi, \quad z=r \cos \theta .
-          $$
+          $x=r \sin \theta \cos \phi, y=r \sin \theta \sin \phi, \text{and} z=r \cos \theta$.
           
           For illustrative purposes, the solutions for the initial spherical harmonics, with $l$ values of $0, 1,$ and $2$, are:
           
