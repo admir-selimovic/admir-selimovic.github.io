@@ -605,11 +605,11 @@
           This captures how Wigner D-matrices transform under the composition of rotations, which is the group operation of \( \mathrm{SO}(3) \).
 
           
-<h3>$S^2$ basis under $\mathrm{SO}(3)$ action</h3>
+<h3>\(S^2\) basis under \(\mathrm{SO}(3)\) action</h3>
 
 We have briefly discussed how \( \mathrm{SO}(3) \) can act on Wigner D-matrices when viewed as functions on the group. This group can also act on spherical harmonics. Here, Wigner D-matrices function as irreducible representations of \( \mathrm{SO}(3) \), through which the group acts on these basis functions. 
 
-Wigner D-matrix encodes the rotation $\mathbf{R}$ in the space of spherical harmonics. Consider a point \( x \) on the unit sphere \( \mathrm{S}^2 \) and a rotation matrix \( \mathbf{R} \). The spherical harmonic \( Y_n^l \) evaluated at the rotated point \( \mathbf{R} x \) can be expressed as a linear combination of the spherical harmonics \( Y_{m'}^l \) evaluated at the original point \( x \). We can express this relationship by:
+Wigner D-matrix encodes the rotation \(\mathbf{R}\) in the space of spherical harmonics. Consider a point \( x \) on the unit sphere \( \mathrm{S}^2 \) and a rotation matrix \( \mathbf{R} \). The spherical harmonic \( Y_n^l \) evaluated at the rotated point \( \mathbf{R} x \) can be expressed as a linear combination of the spherical harmonics \( Y_{m'}^l \) evaluated at the original point \( x \). We can express this relationship by:
 
 \[
 Y_n^l\left(\mathbf{R}^{-1} x\right)=\sum_{m^{\prime}} Y_{m^{\prime}}^l(x) D_{m^{\prime}, n}^l(\mathbf{R}) ,
@@ -620,20 +620,19 @@ We can obtain the value of the spherical harmonic \( Y_n^l \) at a rotated point
 
 
 
-Let us give an example of how Wigner D-matrices act on spherical harmonics. First, we make a spherical harmonics embedding of a vector. Given a three-dimensional vector $\mathbf{v} = (x, y, z)$, we transform its Cartesian coordinates to spherical ones to find $r$ (the radial distance), $\theta$ (the colatitudinal or polar angle), and $\phi$ (the longitudinal or azimuthal angle). These conversions are:
+Let us give an example of how Wigner D-matrices act on spherical harmonics. First, we make a spherical harmonics embedding of a vector. Given a three-dimensional vector \(\mathbf{v} = (x, y, z)\), we transform its Cartesian coordinates to spherical ones to find \(r\) (the radial distance), \(\theta\) (the colatitudinal or polar angle), and \(\phi\) (the longitudinal or azimuthal angle). These conversions are:
 
-$$
+\[
 \begin{aligned}
 \theta &= \arccos \left( \frac{z}{r} \right), \quad 
 \phi &= \operatorname{sgn}(y) \arccos \left( \frac{x}{\sqrt{x^2+y^2}} \right) .
 \end{aligned}
-$$
+\]
 
 
-Having the spherical coordinates $r$, $\theta$, and $\phi$, we can compute the spherical harmonics:
+Having the spherical coordinates \(r\), \(\theta\), and \(\phi\), we can compute the spherical harmonics:
 
-$$
-%\mathbf{v}^{(1)} =
+\[
 \tilde{\mathbf{v}}^{(l)} =
 Y^{(l)}_m(\mathbf{v}) = 
 \left(\begin{smallmatrix} 
@@ -651,18 +650,18 @@ Y^{l=1}_{m=1}(\mathbf{v}) \\
 -\sqrt{\frac{3}{8 \pi}} \sin \theta e^{i \phi} \\
 \vdots
 \end{smallmatrix}\right)
-$$
+\]
 
-Consequently, we have generated the spherical harmonic embedding, $\tilde{\mathbf{v}}^{(l)}$, of our initial vector. 
+Consequently, we have generated the spherical harmonic embedding, \(\tilde{\mathbf{v}}^{(l)}\), of our initial vector. 
 
 
-Let us consider the the Wigner D-matrix for a three-dimensional vector such as $\mathbf{v}$. 
-Employing the Tait-Bryan angle convention (XYZ convention), the rotation matrix  $\mathbf{R}$ for type-1 vector can be defined as the product of three individual rotation matrices around the fixed coordinate axes:
-$$
+Let us consider the the Wigner D-matrix for a three-dimensional vector such as \(\mathbf{v}\). 
+Employing the Tait-Bryan angle convention (XYZ convention), the rotation matrix  \(\mathbf{R}\) for type-1 vector can be defined as the product of three individual rotation matrices around the fixed coordinate axes:
+\[
 \mathbf{R}(\alpha, \beta, \gamma) = \mathbf{R}_z(\gamma) \ \mathbf{R}_y(\beta) \ \mathbf{R}_x(\alpha) ,
-$$
-where $\mathbf{R}_x(\alpha)$ represents the rotation matrix around the x-axis by angle $\alpha$, $\mathbf{R}_y(\beta)$ represents the rotation matrix around the y-axis by angle $\beta$, and $\mathbf{R}_z(\gamma)$ represents the rotation matrix around the z-axis by angle $\gamma$. These rotation matrices are given as:
-$$
+\]
+where \(\mathbf{R}_x(\alpha)\) represents the rotation matrix around the x-axis by angle \(\alpha\), \(\mathbf{R}_y(\beta)\) represents the rotation matrix around the y-axis by angle \(\beta\), and \(\mathbf{R}_z(\gamma)\) represents the rotation matrix around the z-axis by angle \(\gamma\). These rotation matrices are given as:
+\[
 %\begin{aligned}
 \mathbf{R}_x(\alpha)= 
 \left(\begin{smallmatrix}
@@ -685,20 +684,20 @@ $$
 0 & 0 & 1
 \end{smallmatrix}\right) .
 %\end{aligned} 
-$$
+\]
 
-The rotation matrix $\mathbf{R}(\alpha, \beta, \gamma)$ blends the three individual rotations to a combined rotation about the z-axis, y-axis, and x-axis, in that order, yielding:
-$$
+The rotation matrix \(\mathbf{R}(\alpha, \beta, \gamma)\) blends the three individual rotations to a combined rotation about the z-axis, y-axis, and x-axis, in that order, yielding:
+\[
 \mathbf{R}(\alpha, \beta, \gamma) =
 \left(\begin{smallmatrix}
 \cos(\alpha) \cos(\gamma) - \sin(\alpha) \cos(\beta) \sin(\gamma) & \sin(\beta) \sin(\gamma) & \cos(\alpha) \cos(\beta) \sin(\gamma) + \sin(\alpha) \cos(\gamma) \\
 \sin(\alpha) \sin(\beta) & \cos(\beta) & -\cos(\alpha) \sin(\beta) \\
 -\sin(\alpha) \cos(\beta) \cos(\gamma) - \cos(\alpha) \sin(\gamma) & \sin(\beta) \cos(\gamma) & \cos(\alpha) \cos(\beta) \cos(\gamma) - \sin(\alpha) \sin(\gamma)
 \end{smallmatrix}\right)
-$$
+\]
 
 
-With the Euler angles parameterisation and the Tait-Bryan angles convention, the elements of the Wigner D-matrix, $D_{m'm}^{(1)}\bigl(\mathbf{R}(\alpha, \beta, \gamma)\bigr)$,  are given by Eq. \ref{eq-d-matrix-element}. 
+With the Euler angles parameterisation and the Tait-Bryan angles convention, the elements of the Wigner D-matrix, \(D_{m'm}^{(1)}\bigl(\mathbf{R}(\alpha, \beta, \gamma)\bigr)\),  are given by Eq. \ref{eq-d-matrix-element}. 
 
 The Wigner D-matrix is thus given by:
 \begin{equation} \label{wig-d-mat-l-1}
@@ -718,32 +717,31 @@ e^{i\alpha}d_{1,-1}^{(1)}(\beta)e^{i\gamma} & e^{i\alpha}d_{1,0}^{(1)}(\beta)e^{
 \end{smallmatrix}\right) ,
 \end{aligned}
 \end{equation}
-where $\alpha$, $\beta$, and $\gamma$ are the Euler angles representing rotations around the X, Y, and Z axes, respectively. The term $d_{m' m}^{(l)}(\beta)$ represents the Wigner D-function associated with the rotation angle $\beta$. 
+where \(\alpha\), \(\beta\), and \(\gamma\) are the Euler angles representing rotations around the X, Y, and Z axes, respectively. The term \(d_{m' m}^{(l)}(\beta)\) represents the Wigner D-function associated with the rotation angle \(\beta\). 
 
-It is worth noting that the type-$1$ vector $\mathbf{\tilde{v}}$ transforms directly via the rotation matrix $\mathbf{R} \in \mathrm{SO}(3)$:
-$$
+It is worth noting that the type-\(1\) vector \(\mathbf{\tilde{v}}\) transforms directly via the rotation matrix \(\mathbf{R} \in \mathrm{SO}(3)\):
+\[
 \mathbf{D}^{(1)}\bigl(\mathbf{R}(\alpha, \beta, \gamma)\bigr) \ \mathbf{\tilde{v}} = \mathbf{R}(\alpha, \beta, \gamma) \ \mathbf{\tilde{v}}
-$$
+\]
 In this case, the associated Wigner D-matrix does not alter the rotation matrix. We will omit the proof of this, since it would involve extensive algebraic manipulations.
 
 
 We have explored the transformation of spherical harmonics through Wigner D-matrices, focusing particularly on their role as irreducible representations of the \( \mathrm{SO}(3) \) group. We have examined how these matrices act on spherical harmonics and extended our discussion to the specific case of type-1 vectors and their associated rotation matrices. Now, we will extend our focus and generalise to include vector spaces \( V_{l} \) of varying types \( l \).
 
 
-Given a transformation group with parameters $g$, the transformation of the vector $\tilde{\mathbf{v}}$ can be represented as $\mathbf{D}(g)\tilde{\mathbf{v}}$. An illustration is the transformation of a Euclidean vector in $\mathbb{R}^3$, which is steerable for rotations defined by $g = \mathbf{R} \in \mathrm{SO}(3)$. Thus, the vector transformation becomes $\mathbf{D}(g) = \mathbf{R}$.
+Given a transformation group with parameters \(g\), the transformation of the vector \(\tilde{\mathbf{v}}\) can be represented as \(\mathbf{D}(g)\tilde{\mathbf{v}}\). An illustration is the transformation of a Euclidean vector in \(\mathbb{R}^3\), which is steerable for rotations defined by \(g = \mathbf{R} \in \mathrm{SO}(3)\). Thus, the vector transformation becomes \(\mathbf{D}(g) = \mathbf{R}\).
 
-Steerability is not confined solely to 3D vectors. Steerable vector spaces are constructed to extend the concept of 3D rotations to vectors of larger dimensions. These type-$l$ steerable vector spaces, $\tilde{V}_l=\mathbb{R}^{2 l+1}$, are acted upon by the Wigner-D matrices $\mathbf{D}^{(l)}(g)$, whose dimensionality is $(2 l + 1) \times (2 l + 1)$. A vector belonging to this space, $\tilde{\mathbf{v}} \in \tilde{V}_l$, is termed a type-$l$ vector.
+Steerability is not confined solely to 3D vectors. Steerable vector spaces are constructed to extend the concept of 3D rotations to vectors of larger dimensions. These type-\(l\) steerable vector spaces, \(\tilde{V}_l=\mathbb{R}^{2 l+1}\), are acted upon by the Wigner-D matrices \(\mathbf{D}^{(l)}(g)\), whose dimensionality is \((2 l + 1) \times (2 l + 1)\). A vector belonging to this space, \(\tilde{\mathbf{v}} \in \tilde{V}_l\), is termed a type-\(l\) vector.
 
-The merging of independent steerable vector spaces $V_{l}$ of varying types $l$ forms the direct sum 
-$\tilde{V}_L = \tilde{V}_{l_0} \oplus \tilde{V}_{l_1} \oplus \dots \oplus \tilde{V}_{l_L}$.
+The merging of independent steerable vector spaces \(V_{l}\) of varying types \(l\) forms the direct sum 
+\(\tilde{V}_L = \tilde{V}_{l_0} \oplus \tilde{V}_{l_1} \oplus \dots \oplus \tilde{V}_{l_L}\).
 To facilitate the transformation of this aggregated space, we utilise the direct sum of Wigner-D matrices:
-$
+\(
 {\mathbf{D}_L(g) = \mathbf{D}^{(l_1)}(g) \oplus \mathbf{D}^{(l_2)}(g) \dots \oplus \mathbf{D}^{(l_L)}(g)} .
-$
+\)
 
-This matrix is block-diagonal, with each block corresponding to a Wigner-D matrix for its respective type-$l$ steerable vector space. As a result, a steerable vector $\tilde{\mathbf{v}}$ can transform so:
-
-$$
+This matrix is block-diagonal, with each block corresponding to a Wigner-D matrix for its respective type-\(l\) steerable vector space. As a result, a steerable vector \(\tilde{\mathbf{v}}\) can transform so:
+\[
 \mathbf{D}_L(g)\tilde{\mathbf{v}} =
 \left(\begin{smallmatrix}
 \mathbf{D}^{l_1}(g) & & & \\
@@ -770,7 +768,7 @@ $$
         \tilde{v}^{l_L}_{m_{M}}
     \end{smallmatrix}\right) \\ 
 \end{smallmatrix}\right) .
-$$
+\]
 
 The construction of the direct sum matrix \( \mathbf{D}_L(g) \), which aggregates Wigner-D matrices across varying type-\( l \) steerable spaces \( \tilde{V}_l \), provides a framework for simultaneously transforming vectors of different dimensionalities. The block-diagonal structure of \( \mathbf{D}_L(g) \) allows for the efficient execution of group operations on a composite vector \( \tilde{\mathbf{v}} \) within the aggregate space \( \tilde{V}_L \), while strictly adhering to the transformation rules of each constituent type-\( l \) space. This methodology is computationally advantageous when multi-dimensional, rotation-like transformations are required, as it minimizes computational complexity without compromising the algebraic consistency dictated by \( \mathrm{SO}(3) \) representation theory.
 
