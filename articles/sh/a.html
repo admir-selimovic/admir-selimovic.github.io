@@ -41,42 +41,41 @@
             packages: { '[+]': ['ams'] }
         },
         startup: {
-            ready: function () {
-                // Call the default ready handler
-                MathJax.startup.defaultReady();
-                
-                // Once the default typesetting is done, proceed with the custom code
-                MathJax.startup.promise.then(function () {
-                    // Your custom code for scaling on mobile devices
-                    var isMobile = window.matchMedia("only screen and (max-width: 480px)").matches;
-
-                    if (isMobile) {
-                        // Select all MathJax SVG elements
-                        var mathJaxSVGs = document.querySelectorAll('.MathJax_SVG');
-
-                        // Define the scale factor
-                        var scaleFactor = 0.7;
-
-                        mathJaxSVGs.forEach(function(svg) {
-                            // Apply the scaling transformation
-                            svg.style.transform = 'scale(' + scaleFactor + ')';
-                            svg.style.transformOrigin = '0 0';
-                            
-                            // Adjust the margin if needed to prevent overlap
-                            svg.style.marginBottom = '10px'; // Adjust as necessary based on your actual layout
-                        });
-
-                        // Reprocess all the math on the page after scaling
-                        MathJax.typesetPromise().then(() => {
-                            console.log("Typesetting complete after rescaling!");
-                        }).catch((err) => {
-                            console.log("Typesetting error after rescaling: ", err);
-                        });
-                    }
-                });
-            }
+          // other MathJax configuration here
+          pageReady: () => {
+            MathJax.startup.defaultPageReady().then(() => {
+              // your code here
+              var isMobile = window.matchMedia("only screen and (max-width: 480px)").matches;
+      
+              if (isMobile) {
+                  // Select all MathJax SVG elements
+                  var mathJaxSVGs = document.querySelectorAll('.MathJax_SVG');
+      
+                  // Adjust the size of each SVG's container based on the scale factor
+                  var scaleFactor = 0.7;
+                  mathJaxSVGs.forEach(function(svg) {
+                      // Get the size of the SVG element
+                      var rect = svg.getBoundingClientRect();
+      
+                      // Calculate the new size based on the scale factor
+                      var adjustedHeight = rect.height * scaleFactor;
+      
+                      // Set the new size for the SVG container
+                      svg.style.height = adjustedHeight + 'px';
+      
+                      // You might also need to adjust the parent container of the SVG, depending on your DOM structure
+                      svg.parentNode.style.height = adjustedHeight + 'px';
+      
+                      // Apply the scaling transformation
+                      svg.style.transform = 'scale(' + scaleFactor + ')';
+                      svg.style.transformOrigin = '0 0';
+                  });
+              }
+            });
+          }
         }
-    };
+      }
+  };
 </script>
 
 
@@ -330,6 +329,7 @@
           font-size: 1em;
         }
       }
+
 
       
     </style>
