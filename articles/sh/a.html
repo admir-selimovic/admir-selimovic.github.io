@@ -33,34 +33,6 @@
       displayMath: [["$$", "$$"], ["\\[", "\\]"]],
       tags: 'ams',
       packages: { '[+]': ['ams'] }
-    },
-    startup: {
-      pageReady: () => {
-        return MathJax.startup.defaultPageReady().then(() => {
-          // Check if it's a mobile device based on screen width
-          var isMobile = window.matchMedia("only screen and (max-width: 768px)").matches;
-
-          if (isMobile) {
-            // Get all MathJax SVG elements
-            var mathJaxSVGs = document.querySelectorAll('.MathJax_SVG');
-
-            // Define the scale factor
-            var scaleFactor = 0.7;
-
-            mathJaxSVGs.forEach(function(svg) {
-              // Scale the SVG elements
-              svg.style.transform = 'scale(' + scaleFactor + ')';
-              svg.style.transformOrigin = '0 0';
-
-              // Adjust the margin to prevent overlap (if necessary)
-              svg.style.marginBottom = '10px';
-            });
-
-            // Reprocess the math in the document for MathJax to adjust bounding boxes, etc.
-            return MathJax.typesetPromise();
-          }
-        });
-      }
     }
   };
 </script>
@@ -316,6 +288,19 @@
           font-size: 1em;
         }
       }
+
+
+/* Desktop view - regular size */
+.MathJax_SVG {
+    font-size: 100%;
+}
+
+/* Mobile view - reduced size */
+@media screen and (max-width: 480px) {
+    .MathJax_SVG {
+        font-size: 70%; /* or whatever scale you find appropriate */
+    }
+}
 
       
     </style>
