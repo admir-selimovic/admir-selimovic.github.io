@@ -374,15 +374,17 @@
     </script>
 
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const content = document.querySelector(".content");
-        if (content) {
-          const paragraphs = content.innerHTML.split(/\n\s*\n/); // Split content at empty lines
-          content.innerHTML = paragraphs
-            .map((p) => `<p>${p.trim()}</p>`)
-            .join(""); // Wrap each split content in <p> tags
-        }
-      });
+	document.addEventListener("DOMContentLoaded", function () {
+	    document.querySelectorAll("a[data-eq-ref]").forEach(link => {
+	        let eqId = link.getAttribute("data-eq-ref");
+	        let equation = document.getElementById(eqId);
+	        if (equation) {
+	            let eqNumber = equation.querySelector(".eq-number").innerText;
+	            link.textContent = `Equation ${eqNumber}`;
+	            link.href = "#" + eqId;
+	        }
+	    });
+	});
     </script>
     
     <h1><a href="/"> &nbsp;&nbsp;Admir Selimovic Research<sup style="color: #FF0000;">+Dev</sup> Index</a></h1>
