@@ -428,7 +428,6 @@
           </div>
 
 
-
 <h3>Sets and graphs</h3>
 
 Graphs offer a versatile and easily analysable structure that extends sets by incorporating relationships between entities. We will explore this domain by considering both the basic structure of sets and the more intricate structure of topological graphs, focusing on permutation group invariance and equivariance.
@@ -492,10 +491,6 @@ f(\rho(g)x,  \rho(g) e_{ij}) = \rho(g) f(x, e_{ij}) \quad \forall \rho(g) \in G
 which corresponds to as \( f(\mathbf{PX},\mathbf{PAP}^T) = \mathbf{P}f(\mathbf{X},\mathbf{A}) \).
 
 
-
-
-
-
 <h3>Simplicial complexes</h3>
 
 Like with sets and graphs, we require a permutation \( G \)-map over simplicial complexes due to the possible relabeling of simplices in the complex.
@@ -517,13 +512,6 @@ f(\rho(g) x, \rho(g) \{\partial_i\}_{i=1}^{k}) = \rho(g) f(x, \{\partial_i\}_{i=
 
 <figure id="perm-g-map-sc-diag-1" class="auto-number-figure">
     <img src="assets/perm-g-map-sc-diag-1.png" />
-    <figcaption>
-      
-    </figcaption>
-</figure>
-
-<figure id="perm-g-map-sc-diag-1" class="auto-number-figure">
-    <img src="assets/perm-g-map-sc-diag-1.png" />
 </figure>
           
 Recall that the boundary matrix \( \mathbf{B}_k \) represents the boundary operator. \( \mathbf{B}_k \) maps the set of \( k \)-simplices, \( \sigma^k \), to the set of \( (k-1) \)-simplices. In this mapping, each row \( i \) of the matrix corresponds to a unique \( (k-1) \)-dimensional simplex in the boundary of \( \sigma^k \), and each column \( j \) of the matrix corresponds to a unique \( k \)-dimensional simplex \( \sigma^k \). The entry in row \( i \) and column \( j \) of \( \mathbf{B}_k \) is \( +1 \) if \( i \) and \( j \) have the same relative orientations, \( -1 \) if \( i \) and \( j \) have inverse relative orientations, and \( 0 \) if \( j \) does not contain \( i \) as a face. 
@@ -536,7 +524,6 @@ Let \( \mathbf{P} = (\mathbf{P}_0, \mathbf{P}_1, \dots , \mathbf{P}_k) \) be a f
 \mathbf{PB} = ( \mathbf{P}_0 \mathbf{B}_1 \mathbf{P}^{\top}_1, \mathbf{P}_1 \mathbf{B}_2 \mathbf{P}^{\top}_2, \dots , \mathbf{P}_{k-1} \mathbf{B}_k \mathbf{P}^{\top}_k) ,
 \]
 where \( \mathbf{P}_0 \mathbf{B}_1 \mathbf{P}^{\top}_1 \) denotes a permutation of the rows of \( \mathbf{B}_1 \) by the node permutation matrix \( \mathbf{P}_0 \) and columns by the edge permutation matrix \( \mathbf{P}^{\top}_1 \).
-
 
 Features of a simplicial complex are given by a collection of feature matrices, \( \mathbf{X} = (\mathbf{X}_0, \mathbf{X}_1, \dots, \mathbf{X}_k) \). Permutation of feature matrices \( \mathbf{X} \) takes the following form:
 \( {\mathbf{PX} = ( \mathbf{P}_0 \mathbf{X}_0, \mathbf{P}_1 \mathbf{X}_1, \dots , \mathbf{P}_{k} \mathbf{X}_k)} \).
@@ -551,10 +538,9 @@ Permutation \( G \)-map over simplicial complexes takes the form:
 f(\mathbf{PB}, \mathbf{P} \mathbf{X}) = \mathbf{P} f(\mathbf{B},\mathbf{X})
 \]
 
-\[\begin{tikzcd}[row sep=large]
-    (\mathbf{B}, \mathbf{X}) \arrow[r, "f"{description}] \arrow[d, "\mathbf{P}"{description}] & f(\mathbf{B}, \mathbf{X}) \arrow[d, "\mathbf{P}"{description}] \\
-    (\mathbf{PB}, \mathbf{P}\mathbf{X}) \arrow[r, "f"{description}] & f(\mathbf{PB}, \mathbf{P}\mathbf{X}) = \mathbf{P} f(\mathbf{B},\mathbf{X})
-\end{tikzcd}\]
+<figure id="perm-g-map-sc-diag-2" class="auto-number-figure">
+    <img src="assets/perm-g-map-sc-diag-2.png" />
+</figure>
 
 
 
@@ -577,7 +563,6 @@ Here, the permutation matrices act on the rows and columns corresponding to the 
 \( G \)-invariance and \( G \)-map can then be defined analogously to the simplicial complex case, utilising the transformed incidence matrices or adjacency matrices.
 
 
-
           
 </div>
         
@@ -585,42 +570,26 @@ Here, the permutation matrices act on the rows and columns corresponding to the 
           <h2>References</h2>
           <div
             class="citation"
-            id="gilmer2017"
-            data-authors="Gilmer et al."
+            id="zaheer2017"
+            data-authors="Manzil Zaheer, Satwik Kottur, Siamak Ravanbakhsh, Barnabás Póczos, Ruslan Salakhutdinov, Alexander J. Smola"
             data-year="2017"
           >
-            Justin Gilmer, Samuel S. Schoenholz, Patrick F. Riley, Oriol
-            Vinyals, George E. Dahl.
-            <a href="http://proceedings.mlr.press/v70/gilmer17a/gilmer17a.pdf"
-              >"Neural Message Passing for Quantum Chemistry"</a
-            >. Proceedings of the 34th International Conference on Machine
-            Learning, 2017. pp. 1263-1272.
+            Manzil Zaheer, Satwik Kottur, Siamak Ravanbakhsh, Barnabás Póczos, Ruslan Salakhutdinov, Alexander J. Smola.
+            <a href="http://arxiv.org/abs/1703.06114"
+              >"Deep Sets"</a
+            >. CoRR, abs/1703.06114, 2017.
           </div>
           <div
             class="citation"
-            id="satorras2021"
-            data-authors="Satorras et al."
-            data-year="2017"
+            id="wagstaff2019"
+            data-authors="Edward Wagstaff, Fabian B. Fuchs, Martin Engelcke, Ingmar Posner, Michael A. Osborne"
+            data-year="2019"
           >
-            Victor Garcia Satorras, Emiel Hoogeboom, Max Welling
-            <a href="https://arxiv.org/abs/2102.09844"
-              >"E(n) Equivariant Graph Neural Networks"</a
-            >. CoRR, 2021.
+            Edward Wagstaff, Fabian B. Fuchs, Martin Engelcke, Ingmar Posner, Michael A. Osborne.
+            <a href="http://arxiv.org/abs/1901.09006"
+              >"On the Limitations of Representing Functions on Sets"</a
+            >. CoRR, abs/1901.09006, 2019.
           </div>
-          <div
-            class="citation"
-            id="wu2015"
-            data-authors="Wu et al."
-            data-year="2015"
-          >
-            Zhirong Wu, Shuran Song, Aditya Khosla, Fisher Yu, Linguang Zhang,
-            Xiaoou Tang, Jianxiong Xiao.
-            <a
-              href="http://doi.ieeecomputersociety.org/10.1109/CVPR.2015.7298801"
-              >"3D ShapeNets: A deep representation for volumetric shapes."</a
-            >. CVPR, 2015. pp. 1912-1920.
-          </div>
-          <!-- ... Other citations ... -->
         </div>
       </div>
     </div>
