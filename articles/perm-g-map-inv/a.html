@@ -460,17 +460,16 @@ A function \( f(x) \) is said to be permutation invariant if \(\forall \rho(g) \
           
 Deep Sets zaheer2017 is often invoked as a standard way of implementing permutation invariance over sets and as a generic model capable of expressing any other permutation invariant model wagstaff2019. 
 
-\( f(\mathbf{X}) = \phi(\bigoplus_{i \in V} \psi(\mathbf{x}_i)) \)
-The standard implementation of a permutation invariant function in a neural network may be expressed as $f(\mathbf{X}) = \phi(\bigoplus_{i \in V} \psi(\mathbf{x}_i))$, 
-where we compute outputs over the input set given by the node feature matrix $\mathbf{X}$ by applying a learnable function $\psi$ to every single node feature vector $\mathbf{x}_i$, after which we aggregate the resulting vectors. Finally, to predict the outputs, we use another learnable function $\phi$, applied over the output of the aggregate.
-Here, $\bigoplus$ represents a binary operation that combines two elements in a way that is insensitive to their order; it is any permutation-invariant operator.
+The standard implementation of a permutation invariant function in a neural network may be expressed as \( f(\mathbf{X}) = \phi(\bigoplus_{i \in V} \psi(\mathbf{x}_i)) \), 
+where we compute outputs over the input set given by the node feature matrix \( \mathbf{X} \) by applying a learnable function \( \psi \) to every single node feature vector \( \mathbf{x}_i \), after which we aggregate the resulting vectors. Finally, to predict the outputs, we use another learnable function \( \phi \), applied over the output of the aggregate.
+Here, \( \bigoplus \) represents a binary operation that combines two elements in a way that is insensitive to their order; it is any permutation-invariant operator.
 
-Having an additional object — edges $e_{ij}$ — in graphs means that the permutation matrix does not act only on the nodes, but also on the edges.. Permutation invariance over graphs is thus expressed as:
+Having an additional object — edges \( e_{ij} \) — in graphs means that the permutation matrix does not act only on the nodes, but also on the edges. Permutation invariance over graphs is thus expressed as:
 $$
 f(\rho(g)x, \rho(g) e_{ij}) = f(x, e_{ij}) \quad \forall \rho(g) \in G
 $$
 
-Edges are represented by an adjacency matrix $\mathbf{A}$. Permuting $\mathbf{A}$ implies a permutation of both its rows and its columns. The permutation takes the linear-algebraic form $\mathbf{PAP}^T$ and the invariance wrt permutation over graphs is expressed as $f(\mathbf{PX},\mathbf{PAP}^T) = f(\mathbf{X},\mathbf{A})$.
+Edges are represented by an adjacency matrix \( \mathbf{A}$. Permuting $\mathbf{A}$ implies a permutation of both its rows and its columns. The permutation takes the linear-algebraic form \( \mathbf{PAP}^T$ and the invariance wrt permutation over graphs is expressed as \( f(\mathbf{PX},\mathbf{PAP}^T) = f(\mathbf{X},\mathbf{A}) \).
 
 While permutation invariance is powerful for handling sets as a whole, it is less suitable for operations that depend on the specific position or identity of individual elements within the set.
 A permutation-invariant aggregator does not recognise the order or specific identity of elements within a set. If the position or role of an individual node within the set carries important information (e.g., the first element represents a unique identifier), a permutation-invariant function would not consider it.
@@ -478,9 +477,9 @@ By treating all nodes equally and without considering their order, a permutation
 In tasks where the sequence or ordering of nodes matters (e.g., time-series data, natural language processing), applying a permutation-invariant function would disrupt the inherent sequence-based relationships between nodes. It would make the function unsuitable for modeling or predicting sequence-dependent phenomena.
 
 For the outputs at the level of a node, we need functions that do not influence the node order. It should be so that permuting the nodes order can be done before or after those functions, such that every single node output can be identified afterward. 
-This leads us to the notion of $G$-map for the specific case of permutation group $G = \mathrm{Sym}(M)$. 
+This leads us to the notion of \( G \)-map for the specific case of permutation group \( G = \mathrm{Sym}(M) \). 
 
-We say that $f(x)$ is permutation group equivariant over sets if 
+We say that \( f(x) \) is permutation group equivariant over sets if 
 $$
 f(\rho(g)x) = \rho(g) f(x) \quad \forall \rho(g) \in G
 $$
