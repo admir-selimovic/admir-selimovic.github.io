@@ -636,18 +636,66 @@ Notice how the feature of the second edge and the triangle has changed sign due 
 
 Given the 2-complex \( K \), we can define the boundary matrices.
 
-\begin{center}
-\begin{tikzpicture}
-  \node[circle, draw, fill=black, inner sep=2pt, label=left:$a$] (a) at (0,0) {};
-  \node[circle, draw, fill=black, inner sep=2pt, label=right:$b$] (b) at (2,0) {};
-  \node[circle, draw, fill=black, inner sep=2pt, label=above:$c$] (c) at (1,1.6) {};
-  \node at (1,0.6) {$t_1\circlearrowright$};
-  \path[fill=black,opacity=0.05] (a.center) -- (b.center) -- (c.center) -- cycle;
-  \draw[->] (b) -- node[below] {$e_1$} (a);
-  \draw[->] (b) -- node[right] {$e_3$} (c);
-  \draw[->] (c) -- node[left] {$e_2$} (a);
-\end{tikzpicture}
-\end{center}
+  <figure id="fig-bound-adj" class="tikz-figure auto-number-figure">
+    <script type="text/tikz">
+      \begin{tikzpicture}[scale=3, >=latex]
+      \def \n {4}
+      \def \radius {1}
+      \def \circradius {0.02}
+      \def \opacity {0.05}
+      \def \bend {30}
+
+      \foreach \i in {1,...,\n} {
+	\coordinate (\i) at (90*\i:\radius);
+	\fill (\i) circle (\circradius);
+      }
+      \path[fill=black,opacity=\opacity] (1) -- (2)  -- (3) -- (4) -- cycle;
+      \draw (1) -- (2) -- (3) -- (4) -- cycle;
+
+      % nodes-to-edges messages
+      \draw[-{>},line width=0.5mm,bend right=\bend] (1) to node[pos=0.5,right] {} (-0.5,0.5);
+      \draw[-{>},line width=0.5mm,bend left=\bend] (1) to node[pos=0.5,right] {} (0.5,0.5);
+
+      \draw[-{>},line width=0.5mm,bend left=\bend] (2) to node[pos=0.5,right] {} (-0.5,0.5);
+      \draw[-{>},line width=0.5mm,bend right=\bend] (2) to node[pos=0.5,right] {} (-0.5,-0.5);
+
+      \draw[-{>},line width=0.5mm,bend left=\bend] (3) to node[pos=0.5,right] {} (-0.5,-0.5);
+      \draw[-{>},line width=0.5mm,bend right=\bend] (3) to node[pos=0.5,right] {} (0.5,-0.5);
+
+      \draw[-{>},line width=0.5mm,bend left=\bend] (4) to node[pos=0.5,right] {} (0.5,-0.5);
+      \draw[-{>},line width=0.5mm,bend right=\bend] (4) to node[pos=0.5,right] {} (0.5,0.5);
+
+      % edges-to-faces messages
+      \draw[-{>},line width=0.5mm,bend right=\bend] (-0.5,0.5) to node[pos=0.5,right] {} (-0.1,0.1);
+      \draw[-{>},line width=0.5mm,bend right=\bend] (0.5,0.5) to node[pos=0.5,right] {} (0.1,0.1);
+      \draw[-{>},line width=0.5mm,bend right=\bend] (0.5,-0.5) to node[pos=0.5,right] {} (0.1,-0.1);
+      \draw[-{>},line width=0.5mm,bend right=\bend] (-0.5,-0.5) to node[pos=0.5,right] {} (-0.1,-0.1);
+      \end{tikzpicture}
+    </script>
+    <figcaption>
+      Boundary adjacency message passing on a cell 2-complex.
+    </figcaption>
+  </figure>
+
+
+		
+  <figure id="fig-bound-adj" class="tikz-figure auto-number-figure">
+    <script type="text/tikz">
+      \begin{tikzpicture}[scale=3, >=latex]
+	  \node[circle, draw, fill=black, inner sep=2pt, label=left:$a$] (a) at (0,0) {};
+	  \node[circle, draw, fill=black, inner sep=2pt, label=right:$b$] (b) at (2,0) {};
+	  \node[circle, draw, fill=black, inner sep=2pt, label=above:$c$] (c) at (1,1.6) {};
+	  \node at (1,0.6) {$t_1\circlearrowright$};
+	  \path[fill=black,opacity=0.05] (a.center) -- (b.center) -- (c.center) -- cycle;
+	  \draw[->] (b) -- node[below] {$e_1$} (a);
+	  \draw[->] (b) -- node[right] {$e_3$} (c);
+	  \draw[->] (c) -- node[left] {$e_2$} (a);
+      \end{tikzpicture}
+    </script>
+    <figcaption>
+      .
+    </figcaption>
+  </figure>
 
 \( \mathbf{B}_1 \) represents the relationship between edges and vertices. Each column corresponds to an edge, and each row corresponds to a vertex. The entries in the matrix indicate which vertices are endpoints of each edge. Let us assume:
 \[ 
