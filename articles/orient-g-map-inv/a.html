@@ -276,6 +276,9 @@
           display: inline-block;
           vertical-align: middle;
       }
+      a[data-eq-ref] {
+	      color: blue;
+      }
       
       @media screen and (max-width: 768px) {
         /* adjust 768px if needed */
@@ -371,6 +374,19 @@
         placeholder.innerHTML = citationText;
       }
     });
+
+    // Automatic Paragraphing
+    const content = document.querySelector(".content");
+    if (content) {
+      const paragraphs = content.innerHTML.split(/\n\s*\n/);
+      content.innerHTML = paragraphs.map(p => `<p>${p.trim()}</p>`).join("");
+    }
+
+    // Update references for equations to be blue
+    document.querySelectorAll("a[data-eq-ref]").forEach(link => {
+      link.style.color = "blue";
+    });	  
+	  
   });
 </script>
 
