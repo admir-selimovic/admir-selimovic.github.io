@@ -433,6 +433,19 @@ The orientation-preserving automorphism group of a simplicial complex is denoted
 When a simplex \( \sigma \) changes its orientation, it changes its relative orientation with respect to all of its neighboring simplices. This means that if the original orientation had a relative orientation of \( +1 \), then the new orientation will have a relative orientation of \( -1 \), and vice versa. Additionally, the change in orientation of \( \sigma \)  results in a flip of the sign of its own features. This corresponds to modifications in the signature of the entries of the boundary matrices, as well as the rows of the feature matrices. We can express the multiplication of the boundary matrix and the feature matrix by \( -1 \) as a linear transformation.
 
 A function \( f: K \rightarrow \tilde{K} \) is said to be orientation group equivariant if: 
+
+
+\begin{equation} \label{message-eq1}
+  \begin{aligned} \tilde{\mathbf{m}}_{\mathcal{B}, \sigma \tau}^{t+1} &=
+  \bigoplus_{\tau \in \mathcal{B}(\sigma)}\biggl(\phi_{\mathcal{B}}
+  (\underbrace{\tilde{\mathbf{f}}_\sigma^{t},
+  \tilde{\mathbf{f}}_\tau^{t}}_{\tilde{\mathbf{h}}_{\mathcal{B}, \sigma
+  \tau}}) \biggl), \\ & \quad {\scriptstyle k_{\sigma} = k_{\tau} + 1, \
+  \tilde{\mathbf{m}}_{\mathcal{B}}^{t+1}(\sigma) = \emptyset \ \forall
+  \sigma_{k=0} } \end{aligned} 
+\end{equation}
+		
+		
 <div id="orient-cov">
     \begin{equation}
         f\left( (-1)^\sigma \ \sigma\right)=(-1)^{\tilde{\sigma}} \ f(\sigma) \quad \forall \sigma \in K ,
