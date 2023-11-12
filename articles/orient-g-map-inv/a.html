@@ -305,87 +305,75 @@
   </head>
 
   <body>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // Auto-numbering for figures
-        const figures = document.querySelectorAll(".auto-number-figure");
-        figures.forEach((fig, index) => {
-          const number = index + 1;
-          fig.setAttribute("data-number", number);
-        });
-
-        // Auto-numbering for tables
-        const tables = document.querySelectorAll("table");
-        tables.forEach((table, index) => {
-          const number = index + 1;
-          table.setAttribute("data-number", number);
-        });
-
-        const links = document.querySelectorAll(
-          'a[href^="#fig-"], a[href^="#tab-"]'
-        );
-        links.forEach((link) => {
-          const targetId = link.getAttribute("href");
-          const targetItem = document.querySelector(targetId);
-          if (targetItem) {
-            const itemNumber = targetItem.getAttribute("data-number");
-            if (targetId.startsWith("#fig-")) {
-              link.innerHTML = `Figure ${itemNumber}`;
-              link.style.color = "blue";
-            } else if (targetId.startsWith("#tab-")) {
-              link.innerHTML = `Table ${itemNumber}`;
-              link.style.color = "blue";
-            }
-          }
-        });
-
-        // Update citations in the text
-        const citationPlaceholders = document.querySelectorAll(".autocite");
-        citationPlaceholders.forEach((placeholder) => {
-          const refId = placeholder.getAttribute("data-ref");
-          const targetCitation = document.querySelector(`#${refId}`);
-          if (targetCitation) {
-            const authors = targetCitation
-              .getAttribute("data-authors")
-              .split(",");
-            const year = targetCitation.getAttribute("data-year");
-            let citationText = `<a href="#${refId}" class="citation-link">(`;
-            if (authors.length === 1) {
-              citationText += `${authors[0]} ${year}`;
-            } else {
-              citationText += `${authors[0]} et al. ${year}`;
-            }
-            citationText += `)</a>`;
-            placeholder.innerHTML = citationText;
-          }
-        });
-      });
-
-      // Assign numbers to equations
-    document.querySelectorAll("a[data-eq-ref]").forEach(link => {
-	let eqId = link.getAttribute("data-eq-ref");
-	let equation = document.getElementById(eqId);
-	if (equation) {
-	    let eqNumber = equation.querySelector(".eq-number").innerText;
-	    link.textContent = `Equation ${eqNumber}`;
-	    link.href = "#" + eqId;
-	}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Auto-numbering for figures
+    const figures = document.querySelectorAll(".auto-number-figure");
+    figures.forEach((fig, index) => {
+      const number = index + 1;
+      fig.setAttribute("data-number", number);
     });
-    </script>
 
-    <script>
-	document.addEventListener("DOMContentLoaded", function () {
-	    document.querySelectorAll("a[data-eq-ref]").forEach(link => {
-	        let eqId = link.getAttribute("data-eq-ref");
-	        let equation = document.getElementById(eqId);
-	        if (equation) {
-	            let eqNumber = equation.querySelector(".eq-number").innerText;
-	            link.textContent = `Equation ${eqNumber}`;
-	            link.href = "#" + eqId;
-	        }
-	    });
-	});
-    </script>
+    // Auto-numbering for tables
+    const tables = document.querySelectorAll("table");
+    tables.forEach((table, index) => {
+      const number = index + 1;
+      table.setAttribute("data-number", number);
+    });
+
+    // Update links for figures and tables
+    document.querySelectorAll('a[href^="#fig-"], a[href^="#tab-"]').forEach((link) => {
+      const targetId = link.getAttribute("href");
+      const targetItem = document.querySelector(targetId);
+      if (targetItem) {
+        const itemNumber = targetItem.getAttribute("data-number");
+        if (targetId.startsWith("#fig-")) {
+          link.innerHTML = `Figure ${itemNumber}`;
+          link.style.color = "blue";
+        } else if (targetId.startsWith("#tab-")) {
+          link.innerHTML = `Table ${itemNumber}`;
+          link.style.color = "blue";
+        }
+      }
+    });
+
+    // Auto-numbering for equations
+    document.querySelectorAll(".equation").forEach((equation, index) => {
+      const number = index + 1;
+      equation.querySelector(".eq-number").innerText = `(${number})`;
+    });
+
+    // Update references for equations
+    document.querySelectorAll("a[data-eq-ref]").forEach(link => {
+      let eqId = link.getAttribute("data-eq-ref");
+      let equation = document.getElementById(eqId);
+      if (equation) {
+        let eqNumber = equation.querySelector(".eq-number").innerText;
+        link.textContent = `Equation ${eqNumber}`;
+        link.href = "#" + eqId;
+      }
+    });
+
+    // Update citations in the text
+    document.querySelectorAll(".autocite").forEach((placeholder) => {
+      const refId = placeholder.getAttribute("data-ref");
+      const targetCitation = document.querySelector(`#${refId}`);
+      if (targetCitation) {
+        const authors = targetCitation.getAttribute("data-authors").split(",");
+        const year = targetCitation.getAttribute("data-year");
+        let citationText = `<a href="#${refId}" class="citation-link">(`;
+        if (authors.length === 1) {
+          citationText += `${authors[0]} ${year}`;
+        } else {
+          citationText += `${authors[0]} et al. ${year}`;
+        }
+        citationText += `)</a>`;
+        placeholder.innerHTML = citationText;
+      }
+    });
+  });
+</script>
+
     
     <h1><a href="/"> &nbsp;&nbsp;Admir Selimovic Research<sup style="color: #FF0000;">+Dev</sup> Index</a></h1>
 
