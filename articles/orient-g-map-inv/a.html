@@ -428,15 +428,15 @@
           </div>
 
 
-The orientation-preserving automorphism group of a simplicial complex is denoted by $\text{Aut}^+(K)$, where + indicates that it consists of the automorphisms that preserve the orientation of the  complex $K$. The orientation of a simplex can be thought of as an ordering of its vertices, and this ordering can have implications on various mathematical operations, such as the computation of homology groups.
+The orientation-preserving automorphism group of a simplicial complex is denoted by \( \text{Aut}^+(K) \), where \( + \) indicates that it consists of the automorphisms that preserve the orientation of the  complex \( K \). The orientation of a simplex can be thought of as an ordering of its vertices, and this ordering can have implications on various mathematical operations, such as the computation of homology groups.
 
-When a simplex $\sigma$ changes its orientation, it changes its relative orientation with respect to all of its neighboring simplices. This means that if the original orientation had a relative orientation of $+1$, then the new orientation will have a relative orientation of $-1$, and vice versa. Additionally, the change in orientation of $\sigma$ results in a flip of the sign of its own features. This corresponds to modifications in the signature of the entries of the boundary matrices, as well as the rows of the feature matrices. We can express the multiplication of the boundary matrix and the feature matrix by $-1$ as a linear transformation.
+When a simplex \( \sigma \) changes its orientation, it changes its relative orientation with respect to all of its neighboring simplices. This means that if the original orientation had a relative orientation of \( +1 \), then the new orientation will have a relative orientation of \( -1 \), and vice versa. Additionally, the change in orientation of \( \sigma \)  results in a flip of the sign of its own features. This corresponds to modifications in the signature of the entries of the boundary matrices, as well as the rows of the feature matrices. We can express the multiplication of the boundary matrix and the feature matrix by \( -1 \) as a linear transformation.
 
-A function $f: K \rightarrow \tilde{K}$ is said to be orientation group equivariant if: 
+A function \( f: K \rightarrow \tilde{K} \) is said to be orientation group equivariant if: 
 \begin{equation} \label{orient-cov}
 f\left( (-1)^\sigma \ \sigma\right)=(-1)^{\tilde{\sigma}} \ f(\sigma) \quad \forall \sigma \in K
 \end{equation}
-where $(-1)^\sigma \in \mathbb{Z}_2$ is the change of orientation of a simplex $\sigma$, $\mathbb{Z}_2$ is the group of integers modulo 2, and $f$ is any function of interest (e.g. convolution). The group operation in this case is addition modulo 2. If $\sigma$ is an odd-dimensional simplex, then $(-1)^\sigma$ is equal to $-1$, and if $\sigma$ is an even-dimensional simplex, then $(-1)^\sigma$ is equal to $+1$. 
+where \( (-1)^\sigma \in \mathbb{Z}_2 \) is the change of orientation of a simplex \( \sigma \), \( \mathbb{Z}_2 \) is the group of integers modulo 2, and \( f \) is any function of interest (e.g. convolution). The group operation in this case is addition modulo 2. If \( \sigma \) is an odd-dimensional simplex, then \( (-1)^\sigma \) is equal to \( -1 \), and if \( \sigma \) is an even-dimensional simplex, then \( (-1)^\sigma \) is equal to \( +1 \). 
 
 \[\begin{tikzcd}
 	\sigma && \tilde{\sigma} \\
@@ -448,10 +448,9 @@ where $(-1)^\sigma \in \mathbb{Z}_2$ is the change of orientation of a simplex $
 	\arrow["f"{description}, from=3-1, to=3-3]
 \end{tikzcd}\]
 
-It is important to note here that $f(x)$ is and odd function. A function $f(x)$ defined on a domain that is symmetric about zero is called an odd function if $f(-x) = -f(x)$ for all $x$ in the domain. Reflecting the function about the origin results in the same function, subject to a change in sign. Geometrically, the graph of an odd function is symmetric about the origin. 
-%Examples of odd functions include $f(x) = -x$ and $f(x) = \sin(x)$.
+It is important to note here that \( f(x) \) is and odd function. A function \( f(x) \) defined on a domain that is symmetric about zero is called an odd function if \( f(-x) = -f(x) \) for all \( x \) in the domain. Reflecting the function about the origin results in the same function, subject to a change in sign. Geometrically, the graph of an odd function is symmetric about the origin. 
 
-The equation $\ref{orient-cov}$ essentially states that the function \( f \) is orientation group equivariant. To prove this, we need to show that the function behaves consistently with the change of orientation of the simplices.
+The equation \( \ref{orient-cov} \) essentially states that the function \( f \) is orientation group equivariant. To prove this, we need to show that the function behaves consistently with the change of orientation of the simplices.
 
 The term \( (-1)^\sigma \) represents the change in orientation of a simplex \( \sigma \). If \( \sigma \) is odd-dimensional, \( (-1)^\sigma = -1 \), and if \( \sigma \) is even-dimensional, \( (-1)^\sigma = 1 \).
 
@@ -480,17 +479,17 @@ Convolution on simplicial complexes can be thought of as a local aggregation ope
 
 Let us consider the convolution operation \( f \) to be the average of the features of a simplex and its boundary simplices. 
 
-For simplices $\sigma, \tau, \delta \in K$, boundary incidence $\sigma \prec \tau$ implies $\sigma \subset \tau$ with no intermediate $\delta$. Boundary adjacency, given by $\mathcal{B}(\sigma) = \{ \tau \mid \tau \prec \sigma \}$, denotes simplices $\tau$ as proper faces of $\sigma$, reflecting relationships within the boundary of higher-dimensional simplices.
+For simplices \( \sigma, \tau, \delta \in K \), boundary incidence \( \sigma \prec \tau \) implies \( \sigma \subset \tau \) with no intermediate \( \delta \). Boundary adjacency, given by \( \mathcal{B}(\sigma) = \{ \tau \mid \tau \prec \sigma \} \), denotes simplices \( \tau \) as proper faces of \( \sigma \), reflecting relationships within the boundary of higher-dimensional simplices.
 
 With this background, the convolution operation on simplicial complexes can be defined as:
 $$
 f^{\ast}(K) = 
 \frac{\mathbf{x}_{\sigma} + \sum_{\tau \in \mathcal{B}(\sigma)} \mathbf{x}_{\tau}}{|\mathcal{B}(\sigma)| + 1} 
 $$
-where $\mathbf{x}_{\sigma}$ are the features of the simplex $\sigma$, 
-$\mathcal{B}(\sigma)$ is the set of simplices that are on the boundary of $\sigma$, and $\mathbf{x}_{\tau}$ are the features of the simplex $\tau$.
+where \( \mathbf{x}_{\sigma} \) are the features of the simplex \( \sigma \), 
+\( \mathcal{B}(\sigma) \) is the set of simplices that are on the boundary of \( \sigma \), and \( \mathbf{x}_{\tau} \) are the features of the simplex \( \tau \).
 
-We say that $f^{\ast}$ is orientation group equivariant over simplicial complexes if the following commutative diagram holds:
+We say that \( f^{\ast} \) is orientation group equivariant over simplicial complexes if the following commutative diagram holds:
 \[\begin{tikzcd}
 	K && \tilde{K} \\
 	\\
@@ -502,16 +501,16 @@ We say that $f^{\ast}$ is orientation group equivariant over simplicial complexe
 \end{tikzcd}\]
 
 Here, we apply the convolution operation 
-$f^{\ast}$ to the simplicial complex $K$. This will give us a new set of features for each simplex in $\tilde{K}$.
-Next, we change the orientation of the simplices in $\tilde{K}$. This not only results in a change of sign for the features of the simplices whose orientation has changed but also modifies the boundary matrices. This gives us $K^{(-1)}$ and its associated boundary matrices. 
-The outcome of applying the two operations in that order is the same as if we changed the orientation of the simplices (features and boundary matrices) in $K$, obtaining $K^{(-1)}$, and, subsequently, performed the convolution.
+\( f^{\ast} \) to the simplicial complex \( K \). This will give us a new set of features for each simplex in \( \tilde{K} \).
+Next, we change the orientation of the simplices in \( \tilde{K} \). This not only results in a change of sign for the features of the simplices whose orientation has changed but also modifies the boundary matrices. This gives us \( K^{(-1)} \) and its associated boundary matrices. 
+The outcome of applying the two operations in that order is the same as if we changed the orientation of the simplices (features and boundary matrices) in \( K \), obtaining \( K^{(-1)} \), and, subsequently, performed the convolution.
 
 
 
 
 
-Consider a simplicial $k$-complex $K$ and its features $\mathbf{X} = (\mathbf{X}_0, \mathbf{X}_1, \dots, \mathbf{X}_k)$. 
-To systematically handle changes in orientation, we introduce a sequence of diagonal matrices, denoted by $\mathbf{O} = (\mathbf{O}_0, \mathbf{O}_1, \dots , \mathbf{O}_k)$. This sequence is finite and ordered, with each matrix corresponding to a specific dimension of the simplices in the complex. The entries of these matrices are determined by the following criteria:
+Consider a simplicial \( k \)-complex \( K \) and its features \( \mathbf{X} = (\mathbf{X}_0, \mathbf{X}_1, \dots, \mathbf{X}_k) \). 
+To systematically handle changes in orientation, we introduce a sequence of diagonal matrices, denoted by \( \mathbf{O} = (\mathbf{O}_0, \mathbf{O}_1, \dots , \mathbf{O}_k) \). This sequence is finite and ordered, with each matrix corresponding to a specific dimension of the simplices in the complex. The entries of these matrices are determined by the following criteria:
 $$
 \mathbf{O}_{i(j,j)} = 
 \begin{cases} 
@@ -528,19 +527,19 @@ Here, the matrix $\mathbf{O}_0$ is the identity matrix $\mathbf{I}$, representin
 
 It is unusual to speak about features having orientation. In data structures like graphs or simplicial complexes, there might be a notion of orientation for the data structure itself, but not commonly for the features. However, if we think of features as functions defined on a simplicial complex, then these functions might have values that change based on the orientation of the underlying simplices. For instance, consider a function that measures some form of flow or directionality on a complex. The orientation of the simplices might affect the function's values, and thus, the features derived from this function would be orientation-dependent.
 
-When we talk about the change of orientation of feature matrices $\mathbf{X}$, their orientation can be modified using our sequence of diagonal matrices. The transformation is applied element-wise, resulting in a new sequence of feature matrices:
+When we talk about the change of orientation of feature matrices \( \mathbf{X} \), their orientation can be modified using our sequence of diagonal matrices. The transformation is applied element-wise, resulting in a new sequence of feature matrices:
 $$
 \mathbf{OX} = ( \mathbf{O}_0 \mathbf{X}_0, \mathbf{O}_1 \mathbf{X}_1, \dots , \mathbf{O}_{k} \mathbf{X}_k )
 $$
 
-Similarly, the boundary matrices $\mathbf{B}$ undergo a change in orientation. This change is slightly more intricate, as it involves a combination of different matrices from our sequence:
+Similarly, the boundary matrices \( \mathbf{B} \) undergo a change in orientation. This change is slightly more intricate, as it involves a combination of different matrices from our sequence:
 $$
 \mathbf{OB} = ( \mathbf{O}_0 \mathbf{B}_1 \mathbf{O}_1, \mathbf{O}_1 \mathbf{B}_2 \mathbf{O_2}, \dots , \mathbf{O}_{k-1} \mathbf{B}_k \mathbf{O}_k )
 $$
 
 
 
-With these transformations in place, we can define certain properties of functions with respect to orientation. A function $f$ is termed orientation invariant if its output remains unchanged despite alterations in the orientation of its input matrices:
+With these transformations in place, we can define certain properties of functions with respect to orientation. A function \( f \) is termed orientation invariant if its output remains unchanged despite alterations in the orientation of its input matrices:
 $$
 f(\mathbf{OB},\mathbf{O} \mathbf{X}) = f(\mathbf{B},\mathbf{X})
 $$
@@ -646,7 +645,7 @@ Notice how the feature of the second edge and the triangle has changed sign due 
 
 
 
-Given the 2-complex $K$, we can define the boundary matrices.
+Given the 2-complex \( K \), we can define the boundary matrices.
 
 \begin{center}
 \begin{tikzpicture}
