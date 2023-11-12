@@ -689,18 +689,25 @@ Given the 2-complex \( K \), we can define the boundary matrices.
             \def \opacity {0.05}
             \def \bend {30}
 
-            \node[circle, draw, fill=black, inner sep=2pt, label=left:$a$] (a) at (0,0) {};
-            \node[circle, draw, fill=black, inner sep=2pt, label=right:$b$] (b) at (2,0) {};
-            \node[circle, draw, fill=black, inner sep=2pt, label=above:$c$] (c) at (1,1.6) {};
+            \foreach \i in {1,...,\n} {
+                \coordinate (\i) at (90*\i:\radius);
+                \fill (\i) circle (\circradius);
+            }
+            \path[fill=black,opacity=\opacity] (1) -- (2) -- (3) -- cycle;
+            \draw (1) -- (2) -- (3) -- cycle;
+
+            \node[circle, draw, fill=black, inner sep=2pt, label=left:$a$] at (0,0) {};
+            \node[circle, draw, fill=black, inner sep=2pt, label=right:$b$] at (2,0) {};
+            \node[circle, draw, fill=black, inner sep=2pt, label=above:$c$] at (1,1.6) {};
             \node at (1,0.6) {$t_1\circlearrowright$};
-            \path[fill=black,opacity=0.05] (a.center) -- (b.center) -- (c.center) -- cycle;
+
             \draw[->] (b) -- node[below] {$e_1$} (a);
             \draw[->] (b) -- node[right] {$e_3$} (c);
             \draw[->] (c) -- node[left] {$e_2$} (a);
         \end{tikzpicture}
     </script>
     <figcaption>
-        .
+        Boundary adjacency message passing on a cell 2-complex.
     </figcaption>
 </figure>
 
