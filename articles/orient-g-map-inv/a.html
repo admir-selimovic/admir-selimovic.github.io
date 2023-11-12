@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Orientation-Preserving Automorphism Group G-Map and Invariant Map: Simplicial Complexes and Cell Complexes - Admir Selimovic Research+Dev Index</title>
+    <title>Geometric Cell Complex Neural Networks: Message Passing Mechanism - Admir Selimovic Research+Dev Index</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
       rel="stylesheet"
@@ -25,59 +25,31 @@
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
     ></script>
 
-<!-- Single Unified MathJax Configuration -->
-<script>
-    window.MathJax = {
+    <!-- Mathjax Configuration -->
+    <script>
+      window.MathJax = {
         tex: {
-            inlineMath: [
-                ["$", "$"],
-                ["\\(", "\\)"]
-            ],
-            displayMath: [
-                ["$$", "$$"],
-                ["\\[", "\\]"]
-            ],
-            tags: 'ams',
-            packages: { '[+]': ['ams'] }
+          inlineMath: [
+            ["$", "$"],
+            ["\\(", "\\)"],
+          ],
+          displayMath: [
+            ["$$", "$$"],
+            ["\\[", "\\]"],
+          ],
+          tags: "ams",
+          packages: { "[+]": ["ams"] },
         },
         startup: {
-          // other MathJax configuration here
-          pageReady: () => {
-            MathJax.startup.defaultPageReady().then(() => {
-              // your code here
-              var isMobile = window.matchMedia("only screen and (max-width: 480px)").matches;
-      
-              if (isMobile) {
-                  // Select all MathJax SVG elements
-                  var mathJaxSVGs = document.querySelectorAll('.MathJax_SVG');
-      
-                  // Adjust the size of each SVG's container based on the scale factor
-                  var scaleFactor = 0.5;
-                  mathJaxSVGs.forEach(function(svg) {
-                      // Get the size of the SVG element
-                      var rect = svg.getBoundingClientRect();
-      
-                      // Calculate the new size based on the scale factor
-                      var adjustedHeight = rect.height * scaleFactor;
-      
-                      // Set the new size for the SVG container
-                      svg.style.height = adjustedHeight + 'px';
-      
-                      // You might also need to adjust the parent container of the SVG, depending on your DOM structure
-                      svg.parentNode.style.height = adjustedHeight + 'px';
-      
-                      // Apply the scaling transformation
-                      svg.style.transform = 'scale(' + scaleFactor + ')';
-                      svg.style.transformOrigin = '0 0';
-                  });
-              }
+          ready: function () {
+            MathJax.startup.defaultReady();
+            MathJax.startup.promise.then(function () {
+              // Adjust styles here, if needed
             });
-          }
-        }
-      }
-  };
-</script>
-
+          },
+        },
+      };
+    </script>
 
     <style>
       body {
@@ -329,9 +301,6 @@
           font-size: 1em;
         }
       }
-
-
-      
     </style>
   </head>
 
