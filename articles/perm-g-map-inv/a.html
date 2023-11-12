@@ -430,6 +430,81 @@
           <h3>Summary</h3>
 
 
+
+<h3>Sets and graphs</h3>
+
+Graphs offer a versatile and easily analysable structure that extends sets by incorporating relationships between entities. We will explore this domain by considering both the basic structure of sets and the more intricate structure of topological graphs, focusing on permutation group invariance and equivariance.
+
+A set \( S = (V) \) consists of nodes \( V = \{v_1, v_2, \ldots, v_n\}\). A graph \({\Gamma = (V,E)}\), on the other hand, consists of nodes and edges, where \(E \subseteq V \times V\), i.e., edges are a subset of the Cartesian product of the nodes with themselves and form a set of pairs of nodes. In graph theory, edges \(E\) can be represented in an adjacency matrix \(\mathbf{A}\), which is a symmetric matrix where the value of 1 indicates a connection, or edge \((i,j)\), between two nodes \(i\) and \(j\), and 0 otherwise:
+$$
+a_{i j}= \begin{cases} 1 & \text{ if } (i,j) \in E \\ 0 & \text{ if } (i,j) \notin E \end{cases}
+$$
+
+Each node \(v_i\) contains a feature vector \(\mathbf{x}_i\), and these features lie in a channel space \( C = \mathbb{R}^k \). The node features are assembled into a matrix \(\mathbf{X}\) of shape \(n \times k\): \(\mathbf{X} = {(\mathbf{x}_1, \dots, \mathbf{x}_n)}^T\), associating the \(i\)-th row with \(\mathbf{x}_i\).
+
+Although a particular node ordering in the set \(S\) or in the graph \(\Gamma\) is implied, it is essential for our purposes that the output of the neural network remains unaffected by this order. To achieve this, we use permutation-invariant functions capable of distilling an order-independent aggregate from the data. Such functions are fundamental in handling sets or unordered data collections where the element order lacks relevance.
+
+Examples of permutation-invariant functions include statistical measures such as the mean, maximum, and sum. These functions operate on the set of features in a way that ignores their sequence, producing a consistent result.
+
+Let \( G \) be a group acting on the set \( S \) and graph \(\Gamma\), and let \( \rho: G \rightarrow \text{GL}(V) \) be a group representation, where \(\text{GL}(V)\) is the general linear group of invertible matrices over a vector space \( V \). This representation encodes how the elements of \( G \) act on the set, the graph, and any other associated structures like the adjacency matrix and feature matrix.
+
+The required symmetry group \( G = \mathrm{Sym}(M) \) here is the \( n \)-element permutation group. Each element \( g \in G \) represents a permutation. There are \( n! \) such permutations possible.
+
+A function \( f(x) \) is said to be permutation invariant if \(\forall \rho(g) \in G\), \( f(\rho(g) x) = f(x) \). In linear-algebraic terms, \(\rho(g)\) corresponds to an \( n \times n \) matrix or permutation matrix \(\mathbf{X}\). Permutation matrices merely shuffle the rows of another matrix, which, in our case, is the node feature matrix \(\mathbf{X}\). We thus say that \( f(\mathbf{X}) \) is permutation invariant if \(\forall \mathbf{P}\), \( f(\mathbf{PX}) = f(\mathbf{X}) \), i.e., \( f(\mathbf{X}) \) is permutation group equivariant if it does not matter whether the permutation matrix \(\mathbf{P}\) is applied before or after applying the function \( f \); the function should return the same result. This property forms the foundation for designing functions resilient to permutations on sets.
+
+Deep Sets \autocite{zaheer2017} is often invoked as a standard way of implementing permutation invariance over sets and as a generic model capable of expressing any other permutation invariant model \autocite{wagstaff2019}. 
+
+The standard implementation of a permutation invariant function in a neural network may be expressed as 
+$f(\mathbf{X})=\phi\left(\bigoplus_{i \in V} \psi\left(\mathbf{x}_i\right)\right)$, 
+where we compute outputs over the input set given by the node feature matrix $\mathbf{X}$ by applying a learnable function $\psi$ to every single node feature vector $\mathbf{x}_i$, after which we aggregate the resulting vectors. Finally, to predict the outputs, we use another learnable function $\phi$, applied over the output of the aggregate.
+Here, $\bigoplus$ represents a binary operation that combines two elements in a way that is insensitive to their order; it is any permutation-invariant operator.
+
+
+
+
+Having an additional object — edges $e_{ij}$ — in graphs means that the permutation matrix does not act only on the nodes, but also on the edges.. Permutation invariance over graphs is thus expressed as:
+$$
+f(\rho(g)x, \rho(g) e_{ij}) = f(x, e_{ij}) \quad \forall \rho(g) \in G
+$$
+
+Edges are represented by an adjacency matrix $\mathbf{A}$. Permuting $\mathbf{A}$ implies a permutation of both its rows and its columns. The permutation takes the linear-algebraic form $\mathbf{PAP}^T$ and the invariance wrt permutation over graphs is expressed as $f(\mathbf{PX},\mathbf{PAP}^T) = f(\mathbf{X},\mathbf{A})$.
+
+
+
+While permutation invariance is powerful for handling sets as a whole, it is less suitable for operations that depend on the specific position or identity of individual elements within the set.
+A permutation-invariant aggregator does not recognise the order or specific identity of elements within a set. If the position or role of an individual node within the set carries important information (e.g., the first element represents a unique identifier), a permutation-invariant function would not consider it.
+By treating all nodes equally and without considering their order, a permutation-invariant function might overlook specialised or role-based behaviors of individual nodes. In graph-based models, for instance, some nodes might have specific functions or relationships that are essential to the overall system's behavior. A permutation-invariant aggregator would not allow for this specialised treatment.
+In tasks where the sequence or ordering of nodes matters (e.g., time-series data, natural language processing), applying a permutation-invariant function would disrupt the inherent sequence-based relationships between nodes. It would make the function unsuitable for modeling or predicting sequence-dependent phenomena.
+
+
+For the outputs at the level of a node, we need functions that do not influence the node order. It should be so that permuting the nodes order can be done before or after those functions, such that every single node output can be identified afterward. 
+This leads us to the notion of $G$-map for the specific case of permutation group $G = \mathrm{Sym}(M)$. 
+
+We say that $f(x)$ is permutation group equivariant over sets if 
+$$
+f(\rho(g)x) = \rho(g) f(x) \quad \forall \rho(g) \in G
+$$
+In linear-algebraic terms, this corresponds to 
+$\forall \mathbf{P}, f(\mathbf{PX}) = \mathbf{P}f(\mathbf{X})$, i.e.,
+$f(\mathbf{X})$ is permutation equivariant if, regardless of what permutation matrix we choose, it does not matter whether $\mathbf{P}$ is applied before or after applying the function $f$; it should return the same result.
+
+
+$G$-map wrt permutation over graphs is expressed as
+$$
+f(\rho(g)x,  \rho(g) e_{ij}) = \rho(g) f(x, e_{ij}) \quad \forall \rho(g) \in G
+$$
+which corresponds to as $f(\mathbf{PX},\mathbf{PAP}^T) = \mathbf{P}f(\mathbf{X},\mathbf{A})$.
+
+
+
+
+
+
+
+
+
+          
+
           <h3>Harmonic oscillations on \(S^2\)</h3>
           
           Spherical harmonics, \(Y_{l}^m: S^2 \rightarrow \mathbb{C}\), are functions of two angles: \(\theta\) and \(\phi\). They provide a complete orthogonal basis for functions on a sphere, \(S^2\). In comparison, circular harmonics offer a basis for functions on the circle \(S^1\), whilst Wigner D-matrices play a similar role for the group \(\mathrm{SO}(3)\). 
