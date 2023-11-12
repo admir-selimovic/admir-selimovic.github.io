@@ -515,11 +515,17 @@ f(\rho(g) x, \rho(g) \{\partial_i\}_{i=1}^{k}) = f(x, \{\partial_i\}_{i=1}^{k}) 
 f(\rho(g) x, \rho(g) \{\partial_i\}_{i=1}^{k}) = \rho(g) f(x, \{\partial_i\}_{i=1}^{k}) \quad \forall \rho(g) \in G
 \]
 
-\begin{tikzcd}[row sep=large]
-    (x,\{\partial_i\}_{i=1}^{k}) \arrow[r, "f"{description}] \arrow[d, "{\rho(g)}"{description}] & f(x,\{\partial_i\}_{i=1}^{k}) \arrow[d, "{\rho(g)}"{description}] \\
-    (\rho(g) x, \rho(g) \{\partial_i\}_{i=1}^{k}) \arrow[r, "f"{description}] & f(\rho(g) x, \rho(g) \{\partial_i\}_{i=1}^{k}) = \rho(g) f(x,\{\partial_i\}_{i=1}^{k})
-\end{tikzcd}
+<figure id="perm-g-map-sc-diag-1" class="auto-number-figure">
+    <img src="assets/perm-g-map-sc-diag-1.png" />
+    <figcaption>
+      
+    </figcaption>
+</figure>
 
+<figure id="perm-g-map-sc-diag-1" class="auto-number-figure">
+    <img src="assets/perm-g-map-sc-diag-1.png" />
+</figure>
+          
 Recall that the boundary matrix \( \mathbf{B}_k \) represents the boundary operator. \( \mathbf{B}_k \) maps the set of \( k \)-simplices, \( \sigma^k \), to the set of \( (k-1) \)-simplices. In this mapping, each row \( i \) of the matrix corresponds to a unique \( (k-1) \)-dimensional simplex in the boundary of \( \sigma^k \), and each column \( j \) of the matrix corresponds to a unique \( k \)-dimensional simplex \( \sigma^k \). The entry in row \( i \) and column \( j \) of \( \mathbf{B}_k \) is \( +1 \) if \( i \) and \( j \) have the same relative orientations, \( -1 \) if \( i \) and \( j \) have inverse relative orientations, and \( 0 \) if \( j \) does not contain \( i \) as a face. 
 \( \mathbf{B}_k \) is a \( (n_{k-1}) \times n_k \) matrix, where \( n_k \) is the number of \( k \)-dimensional simplices in \( K \). 
 
