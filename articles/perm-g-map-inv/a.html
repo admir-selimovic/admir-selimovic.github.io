@@ -493,6 +493,83 @@ which corresponds to as $f(\mathbf{PX},\mathbf{PAP}^T) = \mathbf{P}f(\mathbf{X},
 
 
 
+<h3>Simplicial complexes</h3>
+
+Like with sets and graphs, we require a permutation $G$-map over simplicial complexes due to the possible relabeling of simplices in the complex.
+
+One approach to permuting a simplicial complex $K$ of dimension $k$ is to permute the underlying $k=0$ simplices, or vertices. This would induce the permutation of the higher order simplices $k>0$. The other approach is to permute all the simplices in $K$ that are of the same dimension independently, which is the approach we are going to take.
+
+Recall that the boundary operator of a simplex is a linear map \(\partial_k: C_k \rightarrow C_{k-1}\), assigning to each \(k\)-simplex \(\sigma\) in a simplicial complex a \((k-1)\)-chain \(\partial_k(\sigma)\). This chain is the formal sum of its \((k-1)\)-dimensional faces with alternating signs, where \(C_k\) is the \(k\)-th chain group of the simplicial complex. 
+We denote the collection of all boundary operators of a simplicial complex $K$ of dimension $k$ by $\{\partial_i\}_{i=1}^{k}$.
+
+Now, we can define invariance wrt permutation over simplicial complexes as:
+$$
+f(\rho(g) x, \rho(g) \{\partial_i\}_{i=1}^{k}) = f(x, \{\partial_i\}_{i=1}^{k}) \quad \forall \rho(g) \in G
+$$
+
+$G$-map wrt permutation over simplicial complexes is expressed as:
+$$
+f(\rho(g) x, \rho(g) \{\partial_i\}_{i=1}^{k}) = \rho(g) f(x, \{\partial_i\}_{i=1}^{k}) \quad \forall \rho(g) \in G
+$$
+
+\begin{tikzcd}[row sep=large]
+    (x,\{\partial_i\}_{i=1}^{k}) \arrow[r, "f"{description}] \arrow[d, "{\rho(g)}"{description}] & f(x,\{\partial_i\}_{i=1}^{k}) \arrow[d, "{\rho(g)}"{description}] \\
+    (\rho(g) x, \rho(g) \{\partial_i\}_{i=1}^{k}) \arrow[r, "f"{description}] & f(\rho(g) x, \rho(g) \{\partial_i\}_{i=1}^{k}) = \rho(g) f(x,\{\partial_i\}_{i=1}^{k})
+\end{tikzcd}
+$$
+$$
+Recall that the boundary matrix \(\mathbf{B}_k\) represents the boundary operator. \(\mathbf{B}_k\) maps the set of \(k\)-simplices, \(\sigma^k\), to the set of \((k-1)\)-simplices. In this mapping, each row \(i\) of the matrix corresponds to a unique \((k-1)\)-dimensional simplex in the boundary of \(\sigma^k\), and each column \(j\) of the matrix corresponds to a unique \(k\)-dimensional simplex \(\sigma^k\). The entry in row \(i\) and column \(j\) of \(\mathbf{B}_k\) is \(+1\) if \(i\) and \(j\) have the same relative orientations, \(-1\) if \(i\) and \(j\) have inverse relative orientations, and \(0\) if \(j\) does not contain \(i\) as a face. 
+$\mathbf{B}_k$ is a $(n_{k-1}) \times n_k$ matrix, where $n_k$ is the number of $k$-dimensional simplices in $K$. 
+
+A simplicial complex $K$ of dimension $k$ can be represented by all of its boundary matrices $\mathbf{B} = (\mathbf{B}_1, \mathbf{B}_2, \dots , \mathbf{B}_k)$. 
+
+Let $\mathbf{P} = (\mathbf{P}_0, \mathbf{P}_1, \dots , \mathbf{P}_k)$ be a finite ordered sequence of permutation matrices. Permutation of $\mathbf{B}$ takes the linear-algebraic form
+$$
+\mathbf{PB} = ( \mathbf{P}_0 \mathbf{B}_1 \mathbf{P}^{\top}_1, \mathbf{P}_1 \mathbf{B}_2 \mathbf{P}^{\top}_2, \dots , \mathbf{P}_{k-1} \mathbf{B}_k \mathbf{P}^{\top}_k)
+$$
+where $\mathbf{P}_0 \mathbf{B}_1 \mathbf{P}^{\top}_1$ denotes a permutation of the rows of $\mathbf{B}_1$ by the node permutation matrix $\mathbf{P}_0$ and columns by the edge permutation matrix $\mathbf{P}^{\top}_1$.
+
+
+Features of a simplicial complex are given by a collection of feature matrices, $\mathbf{X} = (\mathbf{X}_0, \mathbf{X}_1, \hdots, \mathbf{X}_k)$. Permutation of feature matrices $\mathbf{X}$ takes the following form:
+${\mathbf{PX} = ( \mathbf{P}_0 \mathbf{X}_0, \mathbf{P}_1 \mathbf{X}_1, \dots , \mathbf{P}_{k} \mathbf{X}_k)}$.
+
+Thus, we can define permutation invariance wrt simplicial complexes as: 
+$$
+f(\mathbf{PB},\mathbf{P} \mathbf{X}) =  f(\mathbf{B},\mathbf{X})
+$$
+
+Permutation $G$-map over simplicial complexes takes the form:
+$$
+f(\mathbf{PB}, \mathbf{P} \mathbf{X}) = \mathbf{P} f(\mathbf{B},\mathbf{X})
+$$
+
+\[\begin{tikzcd}[row sep=large]
+    (\mathbf{B}, \mathbf{X}) \arrow[r, "f"{description}] \arrow[d, "\mathbf{P}"{description}] & f(\mathbf{B}, \mathbf{X}) \arrow[d, "\mathbf{P}"{description}] \\
+    (\mathbf{PB}, \mathbf{P}\mathbf{X}) \arrow[r, "f"{description}] & f(\mathbf{PB}, \mathbf{P}\mathbf{X}) = \mathbf{P} f(\mathbf{B},\mathbf{X})
+\end{tikzcd}\]
+
+
+
+<h3>Cell complexes</h3>
+
+Adjacencies and boundary relationships in cell complexes are more intricate to describe compared to graphs or simplicial complexes. Unlike simplicial complexes, cell complexes do not naturally have a hierarchy of faces that lend themselves to a simple matrix representation like boundary matrices. 
+
+Cell complexes are built by gluing cells of various dimensions together. An incidence matrix can be defined to describe how these cells of different dimensions are connected. For a cell complex with cells of dimensions ranging from \(0\) to \(k\), one might define a sequence of incidence matrices \(\mathbf{I} = (\mathbf{I}_0, \mathbf{I}_1, \ldots, \mathbf{I}_{k-1})\), where \(\mathbf{I}_i\) captures the relationships between \(i\)-cells and \((i+1)\)-cells.
+
+%Special Case: Uniform Dimension Cell Complexes
+In the case where a cell complex consists entirely of cells of the same dimension \(k\), the usual definition of an incidence matrix does not directly apply. A common approach to handle this special case is to define adjacency based on a broader sense of sharing common boundaries. This can be captured by an adjacency matrix \(\mathbf{A}\), where \(a_{ij} = 1\) if the \(i\)-th and \(j\)-th \(k\)-cells share a common boundary, and \(0\) otherwise.
+
+Another approach is to employ a dual complex where vertices correspond to the \(k\)-cells of the original complex, and edges in the dual connect vertices corresponding to adjacent \(k\)-cells in the original. This dual complex can have an adjacency matrix \(\mathbf{A}\) in the usual graph-theoretic sense, providing a matrix representation for adjacency within a uniform dimension cell complex.
+
+Permutation $G$-invariance and $G$-equivariance can be defined over cell complexes, much like in simplicial complexes. For incidence matrices, the permutation might be expressed through a sequence of permutation matrices \(\mathbf{P} = (\mathbf{P}_0, \mathbf{P}_1, \ldots, \mathbf{P}_{k-1})\), with the transformation given by:
+\[
+\mathbf{PI} = ( \mathbf{P}_0 \mathbf{I}_0 \mathbf{P}^{\top}_1, \mathbf{P}_1 \mathbf{I}_1 \mathbf{P}^{\top}_2, \ldots, \mathbf{P}_{k-2} \mathbf{I}_{k-1} \mathbf{P}^{\top}_{k-1})
+\]
+Here, the permutation matrices act on the rows and columns corresponding to the cells they permute.
+
+$G$-invariance and $G$-equivariance can then be defined analogously to the simplicial complex case, utilising the transformed incidence matrices or adjacency matrices.
+
+
 
 
 
