@@ -438,15 +438,9 @@ f\left( (-1)^\sigma \ \sigma\right)=(-1)^{\tilde{\sigma}} \ f(\sigma) \quad \for
 \end{equation}
 where \( (-1)^\sigma \in \mathbb{Z}_2 \) is the change of orientation of a simplex \( \sigma \), \( \mathbb{Z}_2 \) is the group of integers modulo 2, and \( f \) is any function of interest (e.g. convolution). The group operation in this case is addition modulo 2. If \( \sigma \) is an odd-dimensional simplex, then \( (-1)^\sigma \) is equal to \( -1 \), and if \( \sigma \) is an even-dimensional simplex, then \( (-1)^\sigma \) is equal to \( +1 \). 
 
-\[\begin{tikzcd}
-	\sigma && \tilde{\sigma} \\
-	\\
-	\sigma && \tilde{\sigma}
-	\arrow["f"{description}, from=1-1, to=1-3]
-	\arrow["{(-1)^\sigma \in \mathbb{Z}_2}"{description}, from=1-1, to=3-1]
-	\arrow["{(-1)^{\tilde{\sigma}} \in \mathbb{Z}_2}"{description}, from=1-3, to=3-3]
-	\arrow["f"{description}, from=3-1, to=3-3]
-\end{tikzcd}\]
+<figure id="orient-g-map-inv-diag-1" class="auto-number-figure">
+    <img src="assets/orient-g-map-inv-diag-1.png" />
+</figure>
 
 It is important to note here that \( f(x) \) is and odd function. A function \( f(x) \) defined on a domain that is symmetric about zero is called an odd function if \( f(-x) = -f(x) \) for all \( x \) in the domain. Reflecting the function about the origin results in the same function, subject to a change in sign. Geometrically, the graph of an odd function is symmetric about the origin. 
 
@@ -490,15 +484,10 @@ where \( \mathbf{x}_{\sigma} \) are the features of the simplex \( \sigma \),
 \( \mathcal{B}(\sigma) \) is the set of simplices that are on the boundary of \( \sigma \), and \( \mathbf{x}_{\tau} \) are the features of the simplex \( \tau \).
 
 We say that \( f^{\ast} \) is orientation group equivariant over simplicial complexes if the following commutative diagram holds:
-\[\begin{tikzcd}
-	K && \tilde{K} \\
-	\\
-	K^{(-1)}&& \tilde{K}^{(-1)}
-	\arrow["f^{\ast}(\cdot)"{description}, from=1-1, to=1-3]
-	\arrow["{(-1)^K \in \mathbb{Z}_2}"{description}, from=1-1, to=3-1]
-	\arrow["{(-1)^{\tilde{K}} \in \mathbb{Z}_2}"{description}, from=1-3, to=3-3]
-	\arrow["f^{\ast}(\cdot)"{description}, from=3-1, to=3-3]
-\end{tikzcd}\]
+		
+<figure id="orient-g-map-inv-diag-1" class="auto-number-figure">
+    <img src="assets/orient-g-map-inv-diag-2.png" />
+</figure>
 
 Here, we apply the convolution operation 
 \( f^{\ast} \) to the simplicial complex \( K \). This will give us a new set of features for each simplex in \( \tilde{K} \).
