@@ -452,10 +452,14 @@ The required symmetry group \( G = \mathrm{Sym}(M) \) here is the \( n \)-elemen
 
 A function \( f(x) \) is said to be permutation invariant if \(\forall \rho(g) \in G\), \( f(\rho(g) x) = f(x) \). In linear-algebraic terms, \(\rho(g)\) corresponds to an \( n \times n \) matrix or permutation matrix \(\mathbf{X}\). Permutation matrices merely shuffle the rows of another matrix, which, in our case, is the node feature matrix \(\mathbf{X}\). We thus say that \( f(\mathbf{X}) \) is permutation invariant if \(\forall \mathbf{P}\), \( f(\mathbf{PX}) = f(\mathbf{X}) \), i.e., \( f(\mathbf{X}) \) is permutation group equivariant if it does not matter whether the permutation matrix \(\mathbf{P}\) is applied before or after applying the function \( f \); the function should return the same result. This property forms the foundation for designing functions resilient to permutations on sets.
 
-Deep Sets \autocite{zaheer2017} is often invoked as a standard way of implementing permutation invariance over sets and as a generic model capable of expressing any other permutation invariant model \autocite{wagstaff2019}. 
 
-$f(\mathbf{X})=\phi(\bigoplus {i \in V} \psi(\mathbf{x}_i))$
-$f(\mathbf{X})=\phi(\bigoplus \psi(\mathbf{x}_i))$,
+
+
+
+
+          
+Deep Sets zaheer2017 is often invoked as a standard way of implementing permutation invariance over sets and as a generic model capable of expressing any other permutation invariant model wagstaff2019. 
+
 The standard implementation of a permutation invariant function in a neural network may be expressed as $f(\mathbf{X})=\phi(\bigoplus_{i \in V} \psi(\mathbf{x}_i))$, 
 where we compute outputs over the input set given by the node feature matrix $\mathbf{X}$ by applying a learnable function $\psi$ to every single node feature vector $\mathbf{x}_i$, after which we aggregate the resulting vectors. Finally, to predict the outputs, we use another learnable function $\phi$, applied over the output of the aggregate.
 Here, $\bigoplus$ represents a binary operation that combines two elements in a way that is insensitive to their order; it is any permutation-invariant operator.
