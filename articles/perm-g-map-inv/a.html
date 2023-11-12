@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Permutation Symmetry G-Map and Invariance: Sets, Graphs, Simplicial Complexes, and Cell Complexes - Admir Selimovic Research+Dev Index</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Computer+Modern+Serif:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://tikzjax.com/v1/fonts.css"
+    />
+    <script src="https://tikzjax.com/v1/tikzjax.js"></script>
+    <script
+      type="text/javascript"
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+
+<!-- Single Unified MathJax Configuration -->
+<script>
+    window.MathJax = {
+        tex: {
+            inlineMath: [
+                ["$", "$"],
+                ["\\(", "\\)"]
+            ],
+            displayMath: [
+                ["$$", "$$"],
+                ["\\[", "\\]"]
+            ],
+            tags: 'ams',
+            packages: { '[+]': ['ams'] }
+        },
+        startup: {
+          // other MathJax configuration here
+          pageReady: () => {
+            MathJax.startup.defaultPageReady().then(() => {
+              // your code here
+              var isMobile = window.matchMedia("only screen and (max-width: 480px)").matches;
+      
+              if (isMobile) {
+                  // Select all MathJax SVG elements
+                  var mathJaxSVGs = document.querySelectorAll('.MathJax_SVG');
+      
+                  // Adjust the size of each SVG's container based on the scale factor
+                  var scaleFactor = 0.5;
+                  mathJaxSVGs.forEach(function(svg) {
+                      // Get the size of the SVG element
+                      var rect = svg.getBoundingClientRect();
+      
+                      // Calculate the new size based on the scale factor
+                      var adjustedHeight = rect.height * scaleFactor;
+      
+                      // Set the new size for the SVG container
+                      svg.style.height = adjustedHeight + 'px';
+      
+                      // You might also need to adjust the parent container of the SVG, depending on your DOM structure
+                      svg.parentNode.style.height = adjustedHeight + 'px';
+      
+                      // Apply the scaling transformation
+                      svg.style.transform = 'scale(' + scaleFactor + ')';
+                      svg.style.transformOrigin = '0 0';
+                  });
+              }
+            });
+          }
+        }
+      }
+  };
+</script>
+
+
+    <style>
+      body {
+        font-family: "Roboto", Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        counter-reset: figure-counter;
+        counter-reset: table-counter;
+      }
+
+      h1 {
+        font-size: 1.3em; /* Change this according to your desired size if needed */
+        margin: 0.67em 0; /* Default browser styles for h1 */
+        font-weight: normal;
+      }
+
+      h1 a {
+        text-decoration: none;
+        color: #333; /* Set the desired color, this is black for instance */
+        font-weight: normal;
+        border: none; /* Reset the default border */
+        padding: 0; /* Reset the default padding */
+      }
+
+      h1 a:hover {
+        text-decoration: none;
+        font-weight: normal;
+      }
+
+      .article-container {
+        max-width: 750px; /* Make this consistent with the article-title max-width */
+        margin: 0 auto; /* This will center the container */
+        padding: 20px 20px 50px 20px; /* Add some right padding to avoid touching the screen's right edge */
+      }
+
+      .article-title {
+        max-width: 800px; /* Adjust this value if you want the title to break into more or fewer lines */
+        margin: 10% 5% 0 20%;
+        font-size: 38px;
+        text-align: left; /* Align the title to the left */
+        padding: 0 20px 0 0; /* Add padding only to the right to avoid touching the screen's right edge */
+      }
+
+      .article-content {
+        font-size: 22px;
+        counter-reset: figure-counter; /* Initializes the counter */
+      }
+
+      .article-content p {
+        margin-bottom: 20px;
+        text-align: justify;
+        font-size: 22px;
+      }
+
+      .article-content,
+      .article-content h3,
+      .article-content h4 {
+        font-family: "Computer Modern Serif", serif;
+      }
+
+      a {
+        text-decoration: none;
+        color: #333;
+      }
+
+      a[href^="#fig-"] {
+        color: blue;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      figure {
+        text-align: center; /* centers the content */
+        margin: 50px 0; /* adds some margin on top and bottom */
+        counter-increment: figure-counter;
+      }
+
+      figcaption {
+        font-style: italic;
+        font-size: 0.8em; /* makes the caption slightly smaller than regular text */
+        color: #000000; /* makes the caption a bit lighter than regular text */
+        padding-top: 10px; /* adds some padding between image and caption */
+        margin: 0 10%;
+        text-align: justify;
+      }
+
+      figcaption::before {
+        content: "Figure " counter(figure-counter) ": ";
+      }
+
+      table {
+        counter-increment: table-counter;
+        font-size: 0.8em;
+        width: 80%;
+        margin: 50px 10%;
+        border-collapse: collapse;
+      }
+
+      th {
+        text-align: left;
+        padding: 8px;
+      }
+
+      td {
+        text-align: left;
+        padding: 8px;
+      }
+
+      /* Thick line above the header */
+      thead tr:first-child {
+        border-top: 1pt solid black;
+      }
+
+      /* Thin line below the header */
+      thead tr:last-child {
+        border-bottom: 1px solid black;
+      }
+
+      /* Thick line at the bottom of the table */
+      tbody tr:last-child {
+        border-bottom: 1pt solid black;
+      }
+
+      table + figcaption::before {
+        content: "Table " counter(table-counter) ": ";
+        text-align: justify;
+      }
+
+      .article-content img {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .citation {
+        font-size: 0.9em;
+        margin-top: 20px;
+        padding: 5px 0;
+      }
+
+      .citation a {
+        color: blue;
+      }
+
+      .citation-link {
+        text-decoration: none;
+        color: blue;
+      }
+
+      .citation-link:hover {
+        text-decoration: underline;
+      }
+
+      .reference {
+        color: blue;
+        text-decoration: none;
+      }
+
+      .references-section {
+        margin-top: 40px;
+        border-top: 1px solid #ccc;
+        padding-top: 20px;
+      }
+
+      .references-section h2 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+      }
+
+      .content p {
+        margin-bottom: 1em; // or any other styling you want for paragraphs
+      }
+
+      .equation {
+        text-align: center;
+        position: relative;
+      }
+
+      .eq-number {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .tikz-figure {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      a.external-link {
+          color: blue;
+      }
+
+      pre {
+          background-color: #f6f8fa;
+          border-radius: 3px;
+          padding: 10px;
+          font-family: "Courier New", monospace;
+          overflow-x: auto;
+      }
+      code {
+          color: #000000; 
+      }
+
+      .github-badge img {
+          width: 120px; /* Value to set the desired width for the badge */
+          transition: background-color 0.3s ease; /* Transition effect for hover */
+      }
+  
+      .github-badge:hover img {
+          filter: brightness(90%); /* Slightly darken the badge on hover to indicate it's clickable */
+      }
+
+     .badge-container {
+          display: inline-block;
+      }
+      
+      .badge {
+          height: 20px;
+          display: inline-block;
+          vertical-align: middle;
+      }
+      
+      @media screen and (max-width: 768px) {
+        /* adjust 768px if needed */
+        h1 {
+          font-size: 1.2em; /* adjust this to the desired size for mobile */
+        }
+        .article-title {
+          margin: 10% 5% 0 5%;
+          font-size: 1.3em; /* adjust this to the desired size for mobile */
+        }
+        .article-content {
+          font-size: 1em; /* adjust this to the desired size for mobile */
+        }
+        .article-content p {
+          font-size: 1em; /* adjust this to the desired size for mobile */
+        }
+        table {
+          font-size: 0.6em;
+          width: 90%; /* Adjusted for the 5% margins on each side */
+          margin: 5% 5% 0 5%;
+        }
+        .references-section h2 {
+          font-size: 1em;
+        }
+      }
+
+
+      
+    </style>
+  </head>
+
+  <body>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Auto-numbering for figures
+        const figures = document.querySelectorAll(".auto-number-figure");
+        figures.forEach((fig, index) => {
+          const number = index + 1;
+          fig.setAttribute("data-number", number);
+        });
+
+        // Auto-numbering for tables
+        const tables = document.querySelectorAll("table");
+        tables.forEach((table, index) => {
+          const number = index + 1;
+          table.setAttribute("data-number", number);
+        });
+
+        const links = document.querySelectorAll(
+          'a[href^="#fig-"], a[href^="#tab-"]'
+        );
+        links.forEach((link) => {
+          const targetId = link.getAttribute("href");
+          const targetItem = document.querySelector(targetId);
+          if (targetItem) {
+            const itemNumber = targetItem.getAttribute("data-number");
+            if (targetId.startsWith("#fig-")) {
+              link.innerHTML = `Figure ${itemNumber}`;
+              link.style.color = "blue";
+            } else if (targetId.startsWith("#tab-")) {
+              link.innerHTML = `Table ${itemNumber}`;
+              link.style.color = "blue";
+            }
+          }
+        });
+
+        // Update citations in the text
+        const citationPlaceholders = document.querySelectorAll(".autocite");
+        citationPlaceholders.forEach((placeholder) => {
+          const refId = placeholder.getAttribute("data-ref");
+          const targetCitation = document.querySelector(`#${refId}`);
+          if (targetCitation) {
+            const authors = targetCitation
+              .getAttribute("data-authors")
+              .split(",");
+            const year = targetCitation.getAttribute("data-year");
+            let citationText = `<a href="#${refId}" class="citation-link">(`;
+            if (authors.length === 1) {
+              citationText += `${authors[0]} ${year}`;
+            } else {
+              citationText += `${authors[0]} et al. ${year}`;
+            }
+            citationText += `)</a>`;
+            placeholder.innerHTML = citationText;
+          }
+        });
+      });
+
+      // Assign numbers to equations
+      let equations = document.querySelectorAll(".equation");
+      equations.forEach((equation, index) => {
+        equation.querySelector(".eq-number").innerText = `( ${index + 1} )`;
+      });
+    </script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const content = document.querySelector(".content");
+        if (content) {
+          const paragraphs = content.innerHTML.split(/\n\s*\n/); // Split content at empty lines
+          content.innerHTML = paragraphs
+            .map((p) => `<p>${p.trim()}</p>`)
+            .join(""); // Wrap each split content in <p> tags
+        }
+      });
+    </script>
+    
+    <h1><a href="/"> &nbsp;&nbsp;Admir Selimovic Research<sup style="color: #FF0000;">+Dev</sup> Index</a></h1>
+
+    <div class="content">
+      <h2 class="article-title">Permutation Symmetry G-Map and Invariance: Sets, Graphs, Simplicial Complexes, and Cell Complexes</h2>
+    
+      <div class="article-container">
+        <div class="article-content">
+
+          <div align="center">
+            <img src="assets/perm-g-map-inv-0.png" />
+          </div>
+
+          <div class="badge-container">
+              <img src="https://img.shields.io/badge/Mathematical%20Study-DAF7A6" alt="Mathematical Study" class="badge">
+          </div>
+          
+          <h3>Summary</h3>
+
+
+          <h3>Harmonic oscillations on \(S^2\)</h3>
+          
+          Spherical harmonics, \(Y_{l}^m: S^2 \rightarrow \mathbb{C}\), are functions of two angles: \(\theta\) and \(\phi\). They provide a complete orthogonal basis for functions on a sphere, \(S^2\). In comparison, circular harmonics offer a basis for functions on the circle \(S^1\), whilst Wigner D-matrices play a similar role for the group \(\mathrm{SO}(3)\). 
+          
+          These functions are constructed using the associated Legendre functions \(P_{l}^m(\cos \theta)\) and the complex function \({e^{i m \phi}=\cos (m \phi)+i \sin (m \phi)}\). Spherical harmonics are defined as:
+          
+          \[
+          {\small Y_{l}^m(\theta, \phi)=(-1)^m \sqrt{\frac{2 \ell+1}{4 \pi} \frac{(\ell-m) !}{(\ell+m) !}} P_{\ell}^m(\cos \theta) e^{i m \phi} } ,
+          \]
+          where \((-1)^m\) serves as the normalisation factor and the angles \(\phi\) and \(\theta\) are part of the spherical coordinate set \((r,\theta, \phi)\). 
+          
+          <figure id="sh-glyph" class="auto-number-figure">
+            <img src="assets/sh-glyph.svg" width="600px" />
+            <figcaption>
+              Spherical harmonics, \(Y_l^m(\theta, \phi)\); real and imaginary part. Radial distance from the sphere's origin represents the magnitude in a given direction as a function of the polar angle \(\theta\) and the azimuthal angle \(\phi\).
+            </figcaption>
+          </figure>
+                    
+          Any function of \(\theta\) and \(\phi\) can be thought of as a function on the surface of a sphere. Thus, a handy interpretation of spherical harmonics is as a set of functions on the surface of a sphere. 
+          The relationship between these angles and a point on a sphere's surface is:
+          \(x=r \sin \theta \cos \phi\), \(y=r \sin \theta \sin \phi\), and \(z=r \cos \theta\).
+          
+          For illustrative purposes, the solutions for the initial spherical harmonics, with \(l\) values of \(0, 1,\) and \(2\), are:
+          
+          \[
+          \begin{array}{r|lll}
+          \scriptstyle -2 & & & \scriptstyle \sqrt{\frac{15}{32 \pi}} \sin ^2 \theta e^{-2 i \phi} \\
+          \scriptstyle -1 & & \scriptstyle \sqrt{\frac{3}{8 \pi}} \sin \theta e^{-i \phi} & \scriptstyle \sqrt{\frac{15}{8 \pi}} \sin \theta \cos \theta e^{-i \phi} \\
+          \scriptstyle 0 & \scriptstyle \sqrt{\frac{1}{4 \pi}} & \scriptstyle \sqrt{\frac{3}{4 \pi}} \cos \theta & \scriptstyle \sqrt{\frac{5}{16 \pi}}\left(3 \cos ^2 \theta-1\right) \\
+          \scriptstyle 1 & & \scriptstyle -\sqrt{\frac{3}{8 \pi}} \sin \theta e^{i \phi} & \scriptstyle -\sqrt{\frac{15}{8 \pi}} \sin \theta \cos \theta e^{i \phi} \\
+          \scriptstyle 2 & & & \scriptstyle \sqrt{\frac{15}{32 \pi}} \sin ^2 \theta e^{2 i \phi}
+          \end{array}
+          \]
+          where columns correspond to the frequency \(l\), and rows correspond to the degree \(m\), which spans from \(-l\) to \(l\).
+          
+          The completeness and orthogonality of spherical harmonics make them crucial for dealing with problems that have spherical symmetry and extremely useful for solving partial differential equations on spherical domains, as well as for performing Fourier-like expansions of functions defined on \( S^2 \).
+
+          
+          <h3>Orthogonality and completeness of spherical harmonics on \(S^2\)</h3>
+          
+          The spherical harmonics \( Y_{l}^m(\theta, \phi) \) are orthogonal with respect to the measure \( \sin(\theta) \, d\theta \, d\phi \). The measure comes from the Jacobian determinant in the transformation to spherical coordinates and ensures the orthogonality condition is physically meaningful) over the domain \( \theta \in (0, \pi), \, \phi \in (0, 2\pi )\). The orthogonality condition can be stated as:
+          
+          \begin{equation} \label{sh-orthogonality}
+          \int_{0}^{\pi} \int_{0}^{2\pi} Y_{l}^m(\theta, \phi) Y_{l'}^{m'*}(\theta, \phi) \sin(\theta) \, d\theta \, d\phi = \delta_{ll'} \delta_{mm'} \ ,
+          \end{equation}  
+          where \(Y_{l'}^{m'*}(\theta, \phi)\) is the complex conjugate of the initial or another spherical harmonic; in complex-valued mathematics, especially in quantum mechanics and the study of wave functions, it is common to use complex conjugates when setting up conditions for orthogonality. Thus, the initial spherical harmonic is being checked for orthogonality against its complex conjugate. 
+          
+          The Kronecker delta functions \( \delta_{ll'} \) and \( \delta_{mm'} \) serve as conditions that enforce the orthogonality of the spherical harmonics when \( l \neq l' \) or \( m \neq m' \).
+          In the above expression, \( \delta_{ll'} \) takes the value of 1 if \( l = l' \) and 0 otherwise. Similarly, \( \delta_{mm'} \) takes the value of 1 if \( m = m' \) and 0 otherwise. 
+          This implies that if \( l = l' \) and \( m = m' \), then the integral evaluates to \( 1 \times 1 = 1 \), affirming the self-orthogonality of each spherical harmonic. This is because \( \delta_{ll'} = 1 \) and \( \delta_{mm'} = 1 \) under these conditions.
+          On the other hand, if either \( l \neq l' \) or \( m \neq m' \), then \( \delta_{ll'} \) or \( \delta_{mm'} \) will be 0, making the integral equal to zero. This verifies the orthogonality between different spherical harmonics.
+          
+          In general, the orthogonality property of spherical harmonics ensures that any function \( f(\theta, \phi) \) defined on the sphere can be decomposed into a sum of spherical harmonics without ambiguity.
+          
+          Spherical harmonics form a complete set for square-integrable functions on \( S^2 \), i.e., any square-integrable function \( f: S^2 \rightarrow \mathbb{C} \) can be represented as an infinite sum of spherical harmonics:
+          
+          \begin{equation} \label{sh-completeness}
+          f(\theta, \phi) = \sum_{l=0}^{\infty} \sum_{m=-l}^{l} c_{l}^m Y_{l}^m(\theta, \phi) \ .
+          \end{equation}
+          
+          The coefficients \( c_{l}^m \) can be uniquely determined by exploiting the orthogonality of spherical harmonics:
+          
+          \[
+          c_{l}^m = \int_{0}^{\pi} \int_{0}^{2\pi} f(\theta, \phi) Y_{l}^{m*}(\theta, \phi) \sin(\theta) \, d\theta \, d\phi \ .
+          \]
+          
+          By using these coefficients, any square-integrable function \( f(\theta, \phi) \) defined on the sphere can be decomposed into a sum of spherical harmonics without ambiguity.
+          
+          
+          <h3>Harmonic representations on \(\mathrm{SO}(3)\)</h3>
+          
+          The Wigner D-matrix is expressed as:
+          \[
+          \mathbf{D}^{(l)}(\mathbf{R})=
+          \left(D_{m^{\prime} m}^{(l)}(\mathbf{R})\right)_{m^{\prime}, m=-l}^l \ ,
+          \]
+          where \(\mathbf{R} \in \mathrm{SO}(3)\) is the rotation matrix representing 3D rotations. This is a compact representation of the Wigner D-matrix \(\mathbf{D}^{(l)}(\mathbf{R})\) for a specific frequency \(l\) and rotation matrix \(\mathbf{R}\). 
+          
+          The matrix elements, \(D_{m^{\prime} m}^{(l)}(\mathbf{R})\), have indices \(m^{\prime}\) and \(m\) ranging from \(-l\) to \(l\). The Wigner D-matrix is consequently a square matrix of size \({(2l+1) \times (2l+1)}\). 
+          It operates on \((2 l + 1)\)-dimensional vector spaces, termed steerable vector spaces of type \(l\). Represented as \(V_l=\mathbb{R}^{2 l+1}\), a vector \(\mathbf{v} \in V_l\) is labelled a type-\(l\) vector or a vector of order \(l\).
+          
+          For the rotation matrix \(\mathbf{R}\), the composition of the Wigner D-matrix \(\mathbf{D}^{(l)}(\mathbf{R})\) is as follows:
+          \[
+          \mathbf{D}^{(l)}(\mathbf{R}) = 
+          \left(\begin{smallmatrix}
+          D_{-l,-l}^{(l)}(\mathbf{R}) & D_{-l,-l+1}^{(l)}(\mathbf{R}) & \ldots & D_{-l,l}^{(l)}(\mathbf{R}) \\
+          D_{-l+1,-l}^{(l)}(\mathbf{R}) & D_{-l+1,-l+1}^{(l)}(\mathbf{R}) & \ldots & D_{-l+1,l}^{(l)}(\mathbf{R}) \\
+          \vdots & \vdots & \ddots & \vdots \\
+          D_{l,-l}^{(l)}(\mathbf{R}) & D_{l,-l+1}^{(l)}(\mathbf{R}) & \ldots & D_{l,l}^{(l)}(\mathbf{R})
+          \end{smallmatrix}\right)
+          \]
+          To find each element, it is essential to employ the explicit formulations of the Wigner D-matrix elements, which hinge upon the Euler angles or rotation angles associated with the rotation matrix \(\mathbf{R}\). 
+          The specific form of the elements \(D_{m^{\prime} m}^{(l)}(\mathbf{R})\) is contingent on the parameterisation of the rotation matrix \(\mathbf{R}\). 
+          
+          The elements \(D_{m' m}^{(l)}(\mathbf{R})\) of the Wigner D-matrix for a rotation \( \mathbf{R} \), where the rotation \(\mathbf{R}\) is parameterized by the Euler angles \((\alpha, \beta, \gamma)\), are given by:
+          \begin{equation} \label{eq-d-matrix-element}
+          D_{m' m}^{(l)}(\alpha, \beta, \gamma) = e^{-i m' \alpha} d_{m', m}^{(l)}(\beta) e^{-i m \gamma},
+          \end{equation}
+          where \(d_{m' m}^{(l)}(\beta)\) is a Wigner D-function. 
+          
+          Wigner D-function captures the dependence on the Euler angle \(\beta\). The function carries essential information about the transformation, especially about the behavior under rotations about one of the principal axes (in this case, rotations about the Y-axis). 
+          
+          Wigner D-function takes a form dependent on the exact values of \(m'\) and \(m\), which span from -1 to 1:
+          \[
+          d_{m', m}^{(l)}(\beta)=\sum_k w_k^{(l, m', m)}\left(\cos \frac{\beta}{2}\right)^{2 l-2 k+m-m'}\left(\sin \frac{\beta}{2}\right)^{2 k+m'-m} ,
+          \]
+          where the weighting factor is:
+          \[
+          w_k^{(l, m', m)}=\frac{(-1)^{k+m'-m} \sqrt{(l+m') !(l-m') !(l+m) !(l-m) !}}{(l-m'-k) !(l+m-k) !(k+m'-m) ! k !}. 
+          \]
+          The sum is carried out over all \(k\) that render the factorials within the bounds of non-negative integers: \({k \in[\max (0, m-m'), \min (l-m', l+m)]}\).
+          
+          Wigner D-Matrices are both orthogonal and complete over \(\text{SO}(3)\). These properties make them invaluable for describing functions on the group \(\text{SO}(3)\).
+
+          
+          <h3>Orthogonality and completeness of Wigner D-matrices on \(\mathrm{SO}(3)\)</h3>
+          
+          The Wigner D-Matrices satisfy the orthogonality condition, which can be expressed as:
+          \[
+          \int_{\text{SO}(3)} D^{(l)}_{m' m}(\alpha, \beta, \gamma) {D^{(l')}_{n' n}}^*(\alpha, \beta, \gamma) \, d\alpha \, d\beta \, d\gamma = \delta_{ll'} \delta_{m' n'} \delta_{mn}
+          \]
+          Here, \(D^{(l)}_{m' m}(\alpha, \beta, \gamma)\) is the initial \(D\)-matrix element and \({D^{(l')}_{n' n}}^*(\alpha, \beta, \gamma)\) is the complex conjugate of another \(D\)-matrix element.
+          
+          The Kronecker delta \(\delta_{ll'}\) ensures that the integral becomes nonzero solely for identical frequencies \(l\) and \(l'\), thereby establishing orthogonality between different \(D\)-matrices corresponding to these frequencies. 
+          \(\delta_{m'n'}\) ensures that the integral is nonzero only if the top indices \(m'\) and \(n'\) match. This signifies that the two \(D\)-matrix elements must correspond to the same row index for the integral to be nonzero. 
+          \(\delta_{mn}\) ensures that the integral is nonzero only if the bottom indices \(m\) and \(n\) match. This signifies that the two \(D\)-matrix elements must correspond to the same column index for the integral to be nonzero.
+          
+          Orthogonality in this context means that if we take two \(D\)-matrices and multiply corresponding elements, then sum all these products over the entire group \( \text{SO}(3) \), we will obtain zero unless the \(D\)-matrices are identical in all harmonic parameters \( l, m', m \).
+          
+          If \( l \neq l' \), \( m' \neq n' \), or \( m \neq n \), then at least one of the Kronecker delta functions will be zero, making the whole integral zero. Therefore, the two \(D\)-matrices are orthogonal in these cases.
+          
+          Basically, the above expression sets a strict condition for when two \(D\)-matrices can be considered identical (non-orthogonal), and this condition is encapsulated by the Kronecker delta functions. If they are not identical in the frequency and mode indices, then they are orthogonal, meaning the integral will be zero.
+          
+          Wigner D-functions are orthogonal to each other. Due to this, they form a complete orthogonal basis for functions on \(\mathrm{SO}(3)\). Naturally, this implies that we can consider them as Fourier basis for this group. Any function on \(\mathrm{SO}(3)\) can be represented as a series of weighted Wigner D-functions.
+          
+          Wigner D-Matrices are complete, meaning that any function \( f(\alpha, \beta, \gamma) \) defined on \(\text{SO}(3)\) can be expanded in terms of them:
+          \[
+          f(\alpha, \beta, \gamma) = \sum_l \sum_{m,m'} D^{(l)}_{m'm}(\alpha, \beta, \gamma) \, c_{m'm}^{(l)} \ ,
+          \]
+          where \(c_{m'm}^{(l)}\) are the expansion coefficients, which can be determined through the inner product with the conjugate of \(D^{(l)}_{m'm}(\alpha, \beta, \gamma)\).
+
+          
+          <h3>\(\mathrm{SO}(3)\) irreps under \(\mathrm{SO}(3)\) action</h3>
+          
+          Wigner D-matrices can be considered as both irreducible representations of \( \mathrm{SO}(3) \) and a complete orthogonal basis for functions on \( \mathrm{SO}(3) \). 
+          The orthogonality conditions show that these matrices are orthogonal with respect to the group integration over \( \mathrm{SO}(3) \), and the Kronecker deltas ensure that they are orthogonal unless their harmonic parameters \( l, m', m \) are identical. 
+          
+          The completeness relation demonstrates that any function \( f(\alpha, \beta, \gamma) \) defined on \( \mathrm{SO}(3) \) can be expanded in terms of these Wigner D-matrices. This also implies that they can serve as a kind of Fourier basis for functions on \( \mathrm{SO}(3) \), allowing for the representation of any function on \( \mathrm{SO}(3) \) as a series of weighted Wigner D-functions.
+          
+          Thus, we can say that Wigner D-matrices provide a complete orthogonal basis for functions on \( \mathrm{SO}(3) \) and also serve as irreducible representations of the group.
+          
+          Previously, we have discussed Wigner-D functions as providing a complete orthogonal basis for functions on \( \mathrm{SO}(3) \), capturing the intrinsic properties and symmetries of the 3D rotation space. Now, we can think of Wigner D-matrices not only as the irreducible representations of \(\mathrm{SO}(3)\) but also as functions that the group can act on. Let us briefly elaborate on that.
+          
+          Since matrices can be thought of as functions that map vectors to vectors, it is worth noting that Wigner \( D \)-matrices can also be thought of as functions:
+          \[
+          \mathbf{D}^{(l)} : \text{SO}(3) \rightarrow \text{Mat}_{(2l+1) \times (2l+1)}(\mathbb{C})
+          \]
+          
+          This function takes an element \( \mathbf{R} \) of \( \mathrm{SO}(3) \) (often parameterized by Euler angles \( \alpha, \beta, \gamma \)) and maps it to a matrix of complex numbers. The matrix is of size \( (2l+1) \times (2l+1) \), and its elements are denoted as \( D^{(l)}_{m'm}(\alpha, \beta, \gamma) \). In this sense, Wigner \( D \)-matrices are functions on the group \( \mathrm{SO}(3) \).
+          
+          The action of \( \mathrm{SO}(3) \) on Wigner \( \mathbf{D} \)-matrices can be understood through their transformation properties under the composition of rotations. Let \( \mathbf{R}_1 \) and \( \mathbf{R}_2 \) be elements of \( \mathrm{SO}(3) \). The transformation of a Wigner D-matrix under the composition \( \mathbf{R}_1 \mathbf{R}_2 \) can be expressed as:
+          \[
+          \mathbf{D}^{(l)}(\mathbf{R}_1 \mathbf{R}_2) = \mathbf{D}^{(l)}(\mathbf{R}_1) \mathbf{D}^{(l)}(\mathbf{R}_2)
+          \]
+          
+          Here, the elements of the matrices are given by:
+          \[
+          D^{(1)}_{m' m}(\mathbf{R}_1 \mathbf{R}_2) = \sum_{n=-1}^{1} D^{(1)}_{m' n}(\mathbf{R}_1) D^{(1)}_{n m}(\mathbf{R}_2)
+          \]
+          where \( m' \), \( m \), and \( n \) are mode indices (in physics, magnetic quantum numbers).
+          Here, \( n \) serves as the intermediate mode number that ranges from \( -1 \) to \( 1 \) for \( l = 1 \). \( \mathbf{D}^{(l)} \)-matrix corresponding to the composed rotation \( \mathbf{R}_1 \mathbf{R}_2 \) can be obtained by summing over an intermediate magnetic quantum number \( n \), while multiplying the corresponding elements of the \( \mathbf{D}^{(l)} \)-matrices for \( \mathbf{R}_1 \) and \( \mathbf{R}_2 \).
+          
+          This captures how Wigner D-matrices transform under the composition of rotations, which is the group operation of \( \mathrm{SO}(3) \).
+
+          
+<h3>\(S^2\) basis under \(\mathrm{SO}(3)\) action</h3>
+
+We have briefly discussed how \( \mathrm{SO}(3) \) can act on Wigner D-matrices when viewed as functions on the group. This group can also act on spherical harmonics. Here, Wigner D-matrices function as irreducible representations of \( \mathrm{SO}(3) \), through which the group acts on these basis functions. 
+
+Wigner D-matrix encodes the rotation \(\mathbf{R}\) in the space of spherical harmonics. Consider a point \( x \) on the unit sphere \( \mathrm{S}^2 \) and a rotation matrix \( \mathbf{R} \). The spherical harmonic \( Y_n^l \) evaluated at the rotated point \( \mathbf{R} x \) can be expressed as a linear combination of the spherical harmonics \( Y_{m'}^l \) evaluated at the original point \( x \). We can express this relationship by:
+
+\[
+Y_n^l\left(\mathbf{R}^{-1} x\right)=\sum_{m^{\prime}} Y_{m^{\prime}}^l(x) D_{m^{\prime}, n}^l(\mathbf{R}) ,
+\]
+where \( D_{m', n}^l(\mathbf{R}) \) is an element of the Wigner D-matrix, which encodes the rotation \( \mathbf{R} \) in the space of spherical harmonics.
+
+We can obtain the value of the spherical harmonic \( Y_n^l \) at a rotated point \( \mathbf{R} x \) by taking a linear combination of the spherical harmonics \( Y_{m^{\prime}}^l \) at the original point \( x \). The coefficients for this linear combination are given by the Wigner D-matrix \( D_{m^{\prime}, n}^l(\mathbf{R}) \).
+
+
+
+Let us give an example of how Wigner D-matrices act on spherical harmonics. First, we make a spherical harmonics embedding of a vector. Given a three-dimensional vector \(\mathbf{v} = (x, y, z)\), we transform its Cartesian coordinates to spherical ones to find \(r\) (the radial distance), \(\theta\) (the colatitudinal or polar angle), and \(\phi\) (the longitudinal or azimuthal angle). These conversions are:
+
+\[
+\begin{aligned}
+\theta &= \arccos \left( \frac{z}{r} \right), \quad 
+\phi &= \operatorname{sgn}(y) \arccos \left( \frac{x}{\sqrt{x^2+y^2}} \right) .
+\end{aligned}
+\]
+
+
+Having the spherical coordinates \(r\), \(\theta\), and \(\phi\), we can compute the spherical harmonics:
+
+\[
+\tilde{\mathbf{v}}^{(l)} =
+Y^{(l)}_m(\mathbf{v}) = 
+\left(\begin{smallmatrix} 
+Y^{l=0}_{m=0}(\mathbf{v}) \\ 
+Y^{l=1}_{m=-1}(\mathbf{v}) \\ 
+Y^{l=1}_{m=0}(\mathbf{v}) \\ 
+Y^{l=1}_{m=1}(\mathbf{v}) \\
+\vdots
+\end{smallmatrix}\right) 
+= 
+\left(\begin{smallmatrix} 
+\sqrt{\frac{1}{4 \pi}} \\ 
+\sqrt{\frac{3}{8 \pi}} \sin \theta e^{-i \phi} \\ 
+\sqrt{\frac{3}{4 \pi}} \cos \theta  \\ 
+-\sqrt{\frac{3}{8 \pi}} \sin \theta e^{i \phi} \\
+\vdots
+\end{smallmatrix}\right)
+\]
+
+Consequently, we have generated the spherical harmonic embedding, \(\tilde{\mathbf{v}}^{(l)}\), of our initial vector. 
+
+
+Let us consider the the Wigner D-matrix for a three-dimensional vector such as \(\mathbf{v}\). 
+Employing the Tait-Bryan angle convention (XYZ convention), the rotation matrix  \(\mathbf{R}\) for type-1 vector can be defined as the product of three individual rotation matrices around the fixed coordinate axes:
+\[
+\mathbf{R}(\alpha, \beta, \gamma) = \mathbf{R}_z(\gamma) \ \mathbf{R}_y(\beta) \ \mathbf{R}_x(\alpha) ,
+\]
+where \(\mathbf{R}_x(\alpha)\) represents the rotation matrix around the x-axis by angle \(\alpha\), \(\mathbf{R}_y(\beta)\) represents the rotation matrix around the y-axis by angle \(\beta\), and \(\mathbf{R}_z(\gamma)\) represents the rotation matrix around the z-axis by angle \(\gamma\). These rotation matrices are given as:
+\[
+%\begin{aligned}
+\mathbf{R}_x(\alpha)= 
+\left(\begin{smallmatrix}
+1 & 0 & 0 \\
+0 & \cos(\gamma) & -\sin(\gamma) \\
+0 & \sin(\gamma) & \cos(\gamma)
+\end{smallmatrix}\right) , 
+\
+\mathbf{R}_y(\beta)= 
+\left(\begin{smallmatrix}
+\cos(\beta) & 0 & \sin(\beta) \\
+0 & 1 & 0 \\
+-\sin(\beta) & 0 & \cos(\beta)
+\end{smallmatrix}\right) ,
+\
+\mathbf{R}_z(\gamma)= 
+\left(\begin{smallmatrix}
+\cos(\alpha) & -\sin(\alpha) & 0 \\
+\sin(\alpha) & \cos(\alpha) & 0 \\
+0 & 0 & 1
+\end{smallmatrix}\right) .
+%\end{aligned} 
+\]
+
+The rotation matrix \(\mathbf{R}(\alpha, \beta, \gamma)\) blends the three individual rotations to a combined rotation about the z-axis, y-axis, and x-axis, in that order, yielding:
+\[
+\mathbf{R}(\alpha, \beta, \gamma) =
+\left(\begin{smallmatrix}
+\cos(\alpha) \cos(\gamma) - \sin(\alpha) \cos(\beta) \sin(\gamma) & \sin(\beta) \sin(\gamma) & \cos(\alpha) \cos(\beta) \sin(\gamma) + \sin(\alpha) \cos(\gamma) \\
+\sin(\alpha) \sin(\beta) & \cos(\beta) & -\cos(\alpha) \sin(\beta) \\
+-\sin(\alpha) \cos(\beta) \cos(\gamma) - \cos(\alpha) \sin(\gamma) & \sin(\beta) \cos(\gamma) & \cos(\alpha) \cos(\beta) \cos(\gamma) - \sin(\alpha) \sin(\gamma)
+\end{smallmatrix}\right)
+\]
+
+
+With the Euler angles parameterisation and the Tait-Bryan angles convention, the elements of the Wigner D-matrix, \(D_{m'm}^{(1)}\bigl(\mathbf{R}(\alpha, \beta, \gamma)\bigr)\),  are given by Eq. \ref{eq-d-matrix-element}. 
+
+The Wigner D-matrix is thus given by:
+\begin{equation} \label{wig-d-mat-l-1}
+\begin{aligned}
+\mathbf{D}^{(1)}\bigl(\mathbf{R}(\alpha, \beta, \gamma)\bigr) 
+&= 
+\left(\begin{smallmatrix}
+D_{-1,-1}^{(1)} & D_{-1,0}^{(1)} & D_{-1,1}^{(1)} \\
+D_{0,-1}^{(1)} & D_{0,0}^{(1)} & D_{0,1}^{(1)} \\
+D_{1,-1}^{(1)} & D_{1,0}^{(1)} & D_{1,1}^{(1)}
+\end{smallmatrix}\right) \\
+&=
+\left(\begin{smallmatrix}
+e^{-i\alpha}d_{-1,-1}^{(1)}(\beta)e^{i\gamma} & e^{-i\alpha}d_{-1,0}^{(1)}(\beta)e^{0} & e^{-i\alpha}d_{-1,1}^{(1)}(\beta)e^{-i\gamma} \\
+e^{0}d_{0,-1}^{(1)}(\beta)e^{i\gamma} & e^{0}d_{0,0}^{(1)}(\beta)e^{0} & e^{0}d_{0,1}^{(1)}(\beta)e^{-i\gamma} \\
+e^{i\alpha}d_{1,-1}^{(1)}(\beta)e^{i\gamma} & e^{i\alpha}d_{1,0}^{(1)}(\beta)e^{0} & e^{i\alpha}d_{1,1}^{(1)}(\beta)e^{-i\gamma}
+\end{smallmatrix}\right) ,
+\end{aligned}
+\end{equation}
+where \(\alpha\), \(\beta\), and \(\gamma\) are the Euler angles representing rotations around the X, Y, and Z axes, respectively. The term \(d_{m' m}^{(l)}(\beta)\) represents the Wigner D-function associated with the rotation angle \(\beta\). 
+
+It is worth noting that the type-\(1\) vector \(\mathbf{\tilde{v}}\) transforms directly via the rotation matrix \(\mathbf{R} \in \mathrm{SO}(3)\):
+\[
+\mathbf{D}^{(1)}\bigl(\mathbf{R}(\alpha, \beta, \gamma)\bigr) \ \mathbf{\tilde{v}} = \mathbf{R}(\alpha, \beta, \gamma) \ \mathbf{\tilde{v}}
+\]
+In this case, the associated Wigner D-matrix does not alter the rotation matrix. We will omit the proof of this, since it would involve extensive algebraic manipulations.
+
+
+We have explored the transformation of spherical harmonics through Wigner D-matrices, focusing particularly on their role as irreducible representations of the \( \mathrm{SO}(3) \) group. We have examined how these matrices act on spherical harmonics and extended our discussion to the specific case of type-1 vectors and their associated rotation matrices. Now, we will extend our focus and generalise to include vector spaces \( V_{l} \) of varying types \( l \).
+
+
+Given a transformation group with parameters \(g\), the transformation of the vector \(\tilde{\mathbf{v}}\) can be represented as \(\mathbf{D}(g)\tilde{\mathbf{v}}\). An illustration is the transformation of a Euclidean vector in \(\mathbb{R}^3\), which is steerable for rotations defined by \(g = \mathbf{R} \in \mathrm{SO}(3)\). Thus, the vector transformation becomes \(\mathbf{D}(g) = \mathbf{R}\).
+
+Steerability is not confined solely to 3D vectors. Steerable vector spaces are constructed to extend the concept of 3D rotations to vectors of larger dimensions. These type-\(l\) steerable vector spaces, \(\tilde{V}_l=\mathbb{R}^{2 l+1}\), are acted upon by the Wigner-D matrices \(\mathbf{D}^{(l)}(g)\), whose dimensionality is \((2 l + 1) \times (2 l + 1)\). A vector belonging to this space, \(\tilde{\mathbf{v}} \in \tilde{V}_l\), is termed a type-\(l\) vector.
+
+The merging of independent steerable vector spaces \(V_{l}\) of varying types \(l\) forms the direct sum 
+\(\tilde{V}_L = \tilde{V}_{l_0} \oplus \tilde{V}_{l_1} \oplus \dots \oplus \tilde{V}_{l_L}\).
+To facilitate the transformation of this aggregated space, we utilise the direct sum of Wigner-D matrices:
+\(
+{\mathbf{D}_L(g) = \mathbf{D}^{(l_1)}(g) \oplus \mathbf{D}^{(l_2)}(g) \dots \oplus \mathbf{D}^{(l_L)}(g)} .
+\)
+
+This matrix is block-diagonal, with each block corresponding to a Wigner-D matrix for its respective type-\(l\) steerable vector space. As a result, a steerable vector \(\tilde{\mathbf{v}}\) can transform so:
+\[
+\mathbf{D}_L(g)\tilde{\mathbf{v}} =
+\left(\begin{smallmatrix}
+\mathbf{D}^{l_1}(g) & & & \\
+ & & & & \\
+ & \mathbf{D}^{l_2}(g) & & \\
+ &  & \ddots & \\
+ & & & & \\
+ &  &  &  \mathbf{D}^{l_L}(g)
+ & & & & \\
+\end{smallmatrix}\right)
+\left(\begin{smallmatrix} 
+    \left(\begin{smallmatrix} 
+        \tilde{v}^{l_0}_{m_0}
+    \end{smallmatrix}\right) \\ 
+    \left(\begin{smallmatrix} 
+        \tilde{v}^{l_1}_{m_{-1}} \\ 
+        \tilde{v}^{l_1}_{m_0} \\ 
+        \tilde{v}^{l_1}_{m_1} 
+    \end{smallmatrix}\right) \\
+\vdots \\
+    \left(\begin{smallmatrix} 
+        \tilde{v}^{l_L}_{m_{-M}} \\
+        \vdots  \\
+        \tilde{v}^{l_L}_{m_{M}}
+    \end{smallmatrix}\right) \\ 
+\end{smallmatrix}\right) .
+\]
+
+The construction of the direct sum matrix \( \mathbf{D}_L(g) \), which aggregates Wigner-D matrices across varying type-\( l \) steerable spaces \( \tilde{V}_l \), provides a framework for simultaneously transforming vectors of different dimensionalities. The block-diagonal structure of \( \mathbf{D}_L(g) \) allows for the efficient execution of group operations on a composite vector \( \tilde{\mathbf{v}} \) within the aggregate space \( \tilde{V}_L \), while strictly adhering to the transformation rules of each constituent type-\( l \) space. This methodology is computationally advantageous when multi-dimensional, rotation-like transformations are required, as it minimizes computational complexity without compromising the algebraic consistency dictated by \( \mathrm{SO}(3) \) representation theory.
+
+
+          
+          
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
