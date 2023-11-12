@@ -436,9 +436,9 @@
 Graphs offer a versatile and easily analysable structure that extends sets by incorporating relationships between entities. We will explore this domain by considering both the basic structure of sets and the more intricate structure of topological graphs, focusing on permutation group invariance and equivariance.
 
 A set \( S = (V) \) consists of nodes \( V = \{v_1, v_2, \ldots, v_n\}\). A graph \({\Gamma = (V,E)}\), on the other hand, consists of nodes and edges, where \(E \subseteq V \times V\), i.e., edges are a subset of the Cartesian product of the nodes with themselves and form a set of pairs of nodes. In graph theory, edges \(E\) can be represented in an adjacency matrix \(\mathbf{A}\), which is a symmetric matrix where the value of 1 indicates a connection, or edge \((i,j)\), between two nodes \(i\) and \(j\), and 0 otherwise:
-$$
+\[
 a_{i j}= \begin{cases} 1 & \text{ if } (i,j) \in E \\ 0 & \text{ if } (i,j) \notin E \end{cases}
-$$
+\]
 
 Each node \(v_i\) contains a feature vector \(\mathbf{x}_i\), and these features lie in a channel space \( C = \mathbb{R}^k \). The node features are assembled into a matrix \(\mathbf{X}\) of shape \(n \times k\): \(\mathbf{X} = {(\mathbf{x}_1, \dots, \mathbf{x}_n)}^T\), associating the \(i\)-th row with \(\mathbf{x}_i\).
 
@@ -465,9 +465,9 @@ where we compute outputs over the input set given by the node feature matrix \( 
 Here, \( \bigoplus \) represents a binary operation that combines two elements in a way that is insensitive to their order; it is any permutation-invariant operator.
 
 Having an additional object — edges \( e_{ij} \) — in graphs means that the permutation matrix does not act only on the nodes, but also on the edges. Permutation invariance over graphs is thus expressed as:
-$$
-f(\rho(g)x, \rho(g) e_{ij}) = f(x, e_{ij}) \quad \forall \rho(g) \in G
-$$
+\[
+f(\rho(g)x, \rho(g) e_{ij}) = f(x, e_{ij}) \quad \forall \rho(g) \in G .
+\]
 
 Edges are represented by an adjacency matrix \( \mathbf{A} \). Permuting \( \mathbf{A} \) implies a permutation of both its rows and its columns. The permutation takes the linear-algebraic form \( \mathbf{PAP}^T \) and the invariance wrt permutation over graphs is expressed as \( f(\mathbf{PX},\mathbf{PAP}^T) = f(\mathbf{X},\mathbf{A}) \).
 
@@ -480,17 +480,17 @@ For the outputs at the level of a node, we need functions that do not influence 
 This leads us to the notion of \( G \)-map for the specific case of permutation group \( G = \mathrm{Sym}(M) \). 
 
 We say that \( f(x) \) is permutation group equivariant over sets if 
-$$
+\[
 f(\rho(g)x) = \rho(g) f(x) \quad \forall \rho(g) \in G
-$$
+\]
 In linear-algebraic terms, this corresponds to 
 \( \forall \mathbf{P}, f(\mathbf{PX}) = \mathbf{P}f(\mathbf{X}) \), i.e.,
-$f(\mathbf{X})$ is permutation equivariant if, regardless of what permutation matrix we choose, it does not matter whether $\mathbf{P}$ is applied before or after applying the function $f$; it should return the same result.
+\( f(\mathbf{X}) \) is permutation equivariant if, regardless of what permutation matrix we choose, it does not matter whether \( \mathbf{P} \) is applied before or after applying the function \( f \); it should return the same result.
 
-$G$-map wrt permutation over graphs is expressed as
-$$
+\( G \)-map wrt permutation over graphs is expressed as:
+\[
 f(\rho(g)x,  \rho(g) e_{ij}) = \rho(g) f(x, e_{ij}) \quad \forall \rho(g) \in G
-$$
+\]
 which corresponds to as \( f(\mathbf{PX},\mathbf{PAP}^T) = \mathbf{P}f(\mathbf{X},\mathbf{A}) \).
 
 
@@ -502,36 +502,35 @@ which corresponds to as \( f(\mathbf{PX},\mathbf{PAP}^T) = \mathbf{P}f(\mathbf{X
 
 Like with sets and graphs, we require a permutation \( G \)-map over simplicial complexes due to the possible relabeling of simplices in the complex.
 
-One approach to permuting a simplicial complex \( K \) of dimension \( k \) is to permute the underlying \( k=0$ \) simplices, or vertices. This would induce the permutation of the higher order simplices \( k>0 \). The other approach is to permute all the simplices in \( K$ that are of the same dimension independently, which is the approach we are going to take.
+One approach to permuting a simplicial complex \( K \) of dimension \( k \) is to permute the underlying \( k=0 \) simplices, or vertices. This would induce the permutation of the higher order simplices \( k>0 \). The other approach is to permute all the simplices in \( K \) that are of the same dimension independently, which is the approach we are going to take.
 
 Recall that the boundary operator of a simplex is a linear map \( \partial_k: C_k \rightarrow C_{k-1} \), assigning to each \( k \)-simplex \( \sigma \) in a simplicial complex a \( (k-1) \)-chain \( \partial_k(\sigma) \). This chain is the formal sum of its \( (k-1) \)-dimensional faces with alternating signs, where \( C_k \) is the \( k \)-th chain group of the simplicial complex. 
 We denote the collection of all boundary operators of a simplicial complex \( K \) of dimension \( k \) by \( \{\partial_i\}_{i=1}^{k} \).
 
 Now, we can define invariance wrt permutation over simplicial complexes as:
-$$
+\[
 f(\rho(g) x, \rho(g) \{\partial_i\}_{i=1}^{k}) = f(x, \{\partial_i\}_{i=1}^{k}) \quad \forall \rho(g) \in G
-$$
+\]
 
 \( G \)-map wrt permutation over simplicial complexes is expressed as:
-$$
+\[
 f(\rho(g) x, \rho(g) \{\partial_i\}_{i=1}^{k}) = \rho(g) f(x, \{\partial_i\}_{i=1}^{k}) \quad \forall \rho(g) \in G
-$$
+\]
 
 \begin{tikzcd}[row sep=large]
     (x,\{\partial_i\}_{i=1}^{k}) \arrow[r, "f"{description}] \arrow[d, "{\rho(g)}"{description}] & f(x,\{\partial_i\}_{i=1}^{k}) \arrow[d, "{\rho(g)}"{description}] \\
     (\rho(g) x, \rho(g) \{\partial_i\}_{i=1}^{k}) \arrow[r, "f"{description}] & f(\rho(g) x, \rho(g) \{\partial_i\}_{i=1}^{k}) = \rho(g) f(x,\{\partial_i\}_{i=1}^{k})
 \end{tikzcd}
-$$
-$$
+
 Recall that the boundary matrix \( \mathbf{B}_k \) represents the boundary operator. \( \mathbf{B}_k \) maps the set of \( k \)-simplices, \( \sigma^k \), to the set of \( (k-1) \)-simplices. In this mapping, each row \( i \) of the matrix corresponds to a unique \( (k-1) \)-dimensional simplex in the boundary of \( \sigma^k \), and each column \( j \) of the matrix corresponds to a unique \( k \)-dimensional simplex \( \sigma^k \). The entry in row \( i \) and column \( j \) of \( \mathbf{B}_k \) is \( +1 \) if \( i \) and \( j \) have the same relative orientations, \( -1 \) if \( i \) and \( j \) have inverse relative orientations, and \( 0 \) if \( j \) does not contain \( i \) as a face. 
-\( \mathbf{B}_k \) is a \( (n_{k-1}) \times n_k$ matrix, where $n_k$ is the number of \( k$-dimensional simplices in \( K \). 
+\( \mathbf{B}_k \) is a \( (n_{k-1}) \times n_k \) matrix, where \( n_k \) is the number of \( k \)-dimensional simplices in \( K \). 
 
 A simplicial complex \( K \) of dimension \( k \) can be represented by all of its boundary matrices \( \mathbf{B} = (\mathbf{B}_1, \mathbf{B}_2, \dots , \mathbf{B}_k) \). 
 
-Let \( \mathbf{P} = (\mathbf{P}_0, \mathbf{P}_1, \dots , \mathbf{P}_k) \) be a finite ordered sequence of permutation matrices. Permutation of \( \mathbf{B} \) takes the linear-algebraic form
-$$
-\mathbf{PB} = ( \mathbf{P}_0 \mathbf{B}_1 \mathbf{P}^{\top}_1, \mathbf{P}_1 \mathbf{B}_2 \mathbf{P}^{\top}_2, \dots , \mathbf{P}_{k-1} \mathbf{B}_k \mathbf{P}^{\top}_k)
-$$
+Let \( \mathbf{P} = (\mathbf{P}_0, \mathbf{P}_1, \dots , \mathbf{P}_k) \) be a finite ordered sequence of permutation matrices. Permutation of \( \mathbf{B} \) takes the linear-algebraic form:
+\[
+\mathbf{PB} = ( \mathbf{P}_0 \mathbf{B}_1 \mathbf{P}^{\top}_1, \mathbf{P}_1 \mathbf{B}_2 \mathbf{P}^{\top}_2, \dots , \mathbf{P}_{k-1} \mathbf{B}_k \mathbf{P}^{\top}_k) ,
+\]
 where \( \mathbf{P}_0 \mathbf{B}_1 \mathbf{P}^{\top}_1 \) denotes a permutation of the rows of \( \mathbf{B}_1 \) by the node permutation matrix \( \mathbf{P}_0 \) and columns by the edge permutation matrix \( \mathbf{P}^{\top}_1 \).
 
 
@@ -539,14 +538,14 @@ Features of a simplicial complex are given by a collection of feature matrices, 
 \( {\mathbf{PX} = ( \mathbf{P}_0 \mathbf{X}_0, \mathbf{P}_1 \mathbf{X}_1, \dots , \mathbf{P}_{k} \mathbf{X}_k)} \).
 
 Thus, we can define permutation invariance wrt simplicial complexes as: 
-$$
+\[
 f(\mathbf{PB},\mathbf{P} \mathbf{X}) =  f(\mathbf{B},\mathbf{X})
-$$
+\]
 
 Permutation \( G \)-map over simplicial complexes takes the form:
-$$
+\[
 f(\mathbf{PB}, \mathbf{P} \mathbf{X}) = \mathbf{P} f(\mathbf{B},\mathbf{X})
-$$
+\]
 
 \[\begin{tikzcd}[row sep=large]
     (\mathbf{B}, \mathbf{X}) \arrow[r, "f"{description}] \arrow[d, "\mathbf{P}"{description}] & f(\mathbf{B}, \mathbf{X}) \arrow[d, "\mathbf{P}"{description}] \\
@@ -565,7 +564,7 @@ In the case where a cell complex consists entirely of cells of the same dimensio
 
 Another approach is to employ a dual complex where vertices correspond to the \(k\)-cells of the original complex, and edges in the dual connect vertices corresponding to adjacent \(k\)-cells in the original. This dual complex can have an adjacency matrix \(\mathbf{A}\) in the usual graph-theoretic sense, providing a matrix representation for adjacency within a uniform dimension cell complex.
 
-Permutation $G$-invariance and $G$-equivariance can be defined over cell complexes, much like in simplicial complexes. For incidence matrices, the permutation might be expressed through a sequence of permutation matrices \(\mathbf{P} = (\mathbf{P}_0, \mathbf{P}_1, \ldots, \mathbf{P}_{k-1})\), with the transformation given by:
+Permutation \( G \)-invariance and \( G \)-map can be defined over cell complexes, much like in simplicial complexes. For incidence matrices, the permutation might be expressed through a sequence of permutation matrices \(\mathbf{P} = (\mathbf{P}_0, \mathbf{P}_1, \ldots, \mathbf{P}_{k-1})\), with the transformation given by:
 \[
 \mathbf{PI} = ( \mathbf{P}_0 \mathbf{I}_0 \mathbf{P}^{\top}_1, \mathbf{P}_1 \mathbf{I}_1 \mathbf{P}^{\top}_2, \ldots, \mathbf{P}_{k-2} \mathbf{I}_{k-1} \mathbf{P}^{\top}_{k-1})
 \]
