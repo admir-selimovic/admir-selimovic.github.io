@@ -1,1 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>G-Morphic Multilayer Perceptron: Linearity - Admir Selimovic Research+Dev Index</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Computer+Modern+Serif:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://tikzjax.com/v1/fonts.css"
+    />
+    <script src="https://tikzjax.com/v1/tikzjax.js"></script>
+    <script
+      type="text/javascript"
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
 
+    <!-- Mathjax Configuration -->
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [
+            ["$", "$"],
+            ["\\(", "\\)"],
+          ],
+          displayMath: [
+            ["$$", "$$"],
+            ["\\[", "\\]"],
+          ],
+          tags: "ams",
+          packages: { "[+]": ["ams"] },
+        },
+        startup: {
+          ready: function () {
+            MathJax.startup.defaultReady();
+            MathJax.startup.promise.then(function () {
+              // Adjust styles here, if needed
+            });
+          },
+        },
+      };
+    </script>
+
+    <style>
+      body {
+        font-family: "Roboto", Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        counter-reset: figure-counter;
+        counter-reset: table-counter;
+      }
+
+      h1 {
+        font-size: 1.3em; /* Change this according to your desired size if needed */
+        margin: 0.67em 0; /* Default browser styles for h1 */
+        font-weight: normal;
+      }
+
+      h1 a {
+        text-decoration: none;
+        color: #333; /* Set the desired color, this is black for instance */
+        font-weight: normal;
+        border: none; /* Reset the default border */
+        padding: 0; /* Reset the default padding */
+      }
+
+      h1 a:hover {
+        text-decoration: none;
+        font-weight: normal;
+      }
+
+      .article-container {
+        max-width: 750px; /* Make this consistent with the article-title max-width */
+        margin: 0 auto; /* This will center the container */
+        padding: 20px 20px 50px 20px; /* Add some right padding to avoid touching the screen's right edge */
+      }
+
+      .article-title {
+        max-width: 800px; /* Adjust this value if you want the title to break into more or fewer lines */
+        margin: 10% 5% 0 20%;
+        font-size: 38px;
+        text-align: left; /* Align the title to the left */
+        padding: 0 20px 0 0; /* Add padding only to the right to avoid touching the screen's right edge */
+      }
+
+      .article-content {
+        font-size: 22px;
+        counter-reset: figure-counter; /* Initializes the counter */
+      }
+
+      .article-content p {
+        margin-bottom: 20px;
+        text-align: justify;
+        font-size: 22px;
+      }
+
+      .article-content,
+      .article-content h3,
+      .article-content h4 {
+        font-family: "Computer Modern Serif", serif;
+      }
+
+      a {
+        text-decoration: none;
+        color: #333;
+      }
+
+      a[href^="#fig-"] {
+        color: blue;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      figure {
+        text-align: center; /* centers the content */
+        margin: 50px 0; /* adds some margin on top and bottom */
+        counter-increment: figure-counter;
+      }
+
+      figcaption {
+        font-style: italic;
+        font-size: 0.8em; /* makes the caption slightly smaller than regular text */
+        color: #000000; /* makes the caption a bit lighter than regular text */
+        padding-top: 10px; /* adds some padding between image and caption */
+        margin: 0 10%;
+        text-align: justify;
+      }
+
+      figcaption::before {
+        content: "Figure " counter(figure-counter) ": ";
+      }
+
+      table {
+        counter-increment: table-counter;
+        font-size: 0.8em;
+        width: 80%;
+        margin: 50px 10%;
+        border-collapse: collapse;
+      }
+
+      th {
+        text-align: left;
+        padding: 8px;
+      }
+
+      td {
+        text-align: left;
+        padding: 8px;
+      }
+
+      /* Thick line above the header */
+      thead tr:first-child {
+        border-top: 1pt solid black;
+      }
+
+      /* Thin line below the header */
+      thead tr:last-child {
+        border-bottom: 1px solid black;
+      }
+
+      /* Thick line at the bottom of the table */
+      tbody tr:last-child {
+        border-bottom: 1pt solid black;
+      }
+
+      table + figcaption::before {
+        content: "Table " counter(table-counter) ": ";
+        text-align: justify;
+      }
+
+      .article-content img {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .citation {
+        font-size: 0.9em;
+        margin-top: 20px;
+        padding: 5px 0;
+      }
+
+      .citation a {
+        color: blue;
+      }
+
+      .citation-link {
+        text-decoration: none;
+        color: blue;
+      }
+
+      .citation-link:hover {
+        text-decoration: underline;
+      }
+
+      .reference {
+        color: blue;
+        text-decoration: none;
+      }
+
+      .references-section {
+        margin-top: 40px;
+        border-top: 1px solid #ccc;
+        padding-top: 20px;
+      }
+
+      .references-section h2 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+      }
+
+      .content p {
+        margin-bottom: 1em; // or any other styling you want for paragraphs
+      }
+
+      .equation {
+        text-align: center;
+        position: relative;
+      }
+
+      .eq-number {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .tikz-figure {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      a.external-link {
+          color: blue;
+      }
+
+      pre {
+          background-color: #f6f8fa;
+          border-radius: 3px;
+          padding: 10px;
+          font-family: "Courier New", monospace;
+          overflow-x: auto;
+      }
+      code {
+          color: #000000; 
+      }
+
+      .github-badge img {
+          width: 120px; /* Value to set the desired width for the badge */
+          transition: background-color 0.3s ease; /* Transition effect for hover */
+      }
+  
+      .github-badge:hover img {
+          filter: brightness(90%); /* Slightly darken the badge on hover to indicate it's clickable */
+      }
+
+     .badge-container {
+          display: inline-block;
+      }
+      
+      .badge {
+          height: 20px;
+          display: inline-block;
+          vertical-align: middle;
+      }
+      a[data-eq-ref] {
+	      color: blue;
+      }
+      
+      @media screen and (max-width: 768px) {
+        /* adjust 768px if needed */
+        h1 {
+          font-size: 1.2em; /* adjust this to the desired size for mobile */
+        }
+        .article-title {
+          margin: 10% 5% 0 5%;
+          font-size: 1.3em; /* adjust this to the desired size for mobile */
+        }
+        .article-content {
+          font-size: 1em; /* adjust this to the desired size for mobile */
+        }
+        .article-content p {
+          font-size: 1em; /* adjust this to the desired size for mobile */
+        }
+        table {
+          font-size: 0.6em;
+          width: 90%; /* Adjusted for the 5% margins on each side */
+          margin: 5% 5% 0 5%;
+        }
+        .references-section h2 {
+          font-size: 1em;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Auto-numbering for figures
+    const figures = document.querySelectorAll(".auto-number-figure");
+    figures.forEach((fig, index) => {
+      const number = index + 1;
+      fig.setAttribute("data-number", number);
+    });
+
+    // Auto-numbering for tables
+    const tables = document.querySelectorAll("table");
+    tables.forEach((table, index) => {
+      const number = index + 1;
+      table.setAttribute("data-number", number);
+    });
+
+    // Update links for figures and tables
+    document.querySelectorAll('a[href^="#fig-"], a[href^="#tab-"]').forEach((link) => {
+      const targetId = link.getAttribute("href");
+      const targetItem = document.querySelector(targetId);
+      if (targetItem) {
+        const itemNumber = targetItem.getAttribute("data-number");
+        if (targetId.startsWith("#fig-")) {
+          link.innerHTML = `Figure ${itemNumber}`;
+          link.style.color = "blue";
+        } else if (targetId.startsWith("#tab-")) {
+          link.innerHTML = `Table ${itemNumber}`;
+          link.style.color = "blue";
+        }
+      }
+    });
+
+    // Auto-numbering for equations
+    document.querySelectorAll(".equation").forEach((equation, index) => {
+      const number = index + 1;
+      equation.querySelector(".eq-number").innerText = `(${number})`;
+    });
+
+    // Update references for equations
+    document.querySelectorAll("a[data-eq-ref]").forEach(link => {
+      let eqId = link.getAttribute("data-eq-ref");
+      let equation = document.getElementById(eqId);
+      if (equation) {
+        let eqNumber = equation.querySelector(".eq-number").innerText;
+        link.textContent = `${eqNumber}`;
+        link.href = "#" + eqId;
+      }
+    });
+
+    // Update citations in the text
+    document.querySelectorAll(".autocite").forEach((placeholder) => {
+      const refId = placeholder.getAttribute("data-ref");
+      const targetCitation = document.querySelector(`#${refId}`);
+      if (targetCitation) {
+        const authors = targetCitation.getAttribute("data-authors").split(",");
+        const year = targetCitation.getAttribute("data-year");
+        let citationText = `<a href="#${refId}" class="citation-link">(`;
+        if (authors.length === 1) {
+          citationText += `${authors[0]} ${year}`;
+        } else {
+          citationText += `${authors[0]} et al. ${year}`;
+        }
+        citationText += `)</a>`;
+        placeholder.innerHTML = citationText;
+      }
+    });
+
+    // Automatic Paragraphing
+    const content = document.querySelector(".content");
+    if (content) {
+      const paragraphs = content.innerHTML.split(/\n\s*\n/);
+      content.innerHTML = paragraphs.map(p => `<p>${p.trim()}</p>`).join("");
+    }
+
+    // Update references for equations to be blue
+    document.querySelectorAll("a[data-eq-ref]").forEach(link => {
+      link.style.color = "blue";
+    });	  
+	  
+  });
+</script>
+
+    
+    <h1><a href="/"> &nbsp;&nbsp;Admir Selimovic Research<sup style="color: #FF0000;">+Dev</sup> Index</a></h1>
+
+    <div class="content">
+      <h2 class="article-title">G-Morphic Multilayer Perceptron: Linearity</h2>
+    
+      <div class="article-container">
+        <div class="article-content">
+
+          <div align="center">
+            <img src="assets/orient-g-map-inv-0.png" />
+          </div>
+
+          <div class="badge-container">
+              <img src="https://img.shields.io/badge/Mathematical%20Study-DAF7A6" alt="Mathematical Study" class="badge">
+          </div>
+
+          Forthcoming.
+</div>
+        
+      </div>
+    </div>
+  </body>
+</html>
